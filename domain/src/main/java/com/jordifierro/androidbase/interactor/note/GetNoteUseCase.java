@@ -26,9 +26,8 @@ public class GetNoteUseCase extends UseCase {
         this.sessionRepository = sessionRepository;
     }
 
-    public void execute(Subscriber useCaseSubscriber, int noteId) {
+    public void setParams(int noteId) {
         this.noteId = noteId;
-        super.execute(useCaseSubscriber);
     }
 
     @Override

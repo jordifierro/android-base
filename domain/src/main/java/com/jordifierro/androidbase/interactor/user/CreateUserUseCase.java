@@ -8,7 +8,6 @@ import com.jordifierro.androidbase.repository.UserRepository;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.Subscriber;
 
 public class CreateUserUseCase extends UseCase {
 
@@ -25,12 +24,10 @@ public class CreateUserUseCase extends UseCase {
         this.userRepository = userRepository;
     }
 
-    public void execute(Subscriber useCaseSubscriber,
-                        String email, String password, String confirmationPassword) {
+    public void setParams(String email, String password, String confirmationPassword) {
         this.email = email;
         this.password = password;
         this.confirmationPassword = confirmationPassword;
-        super.execute(useCaseSubscriber);
     }
 
     @Override

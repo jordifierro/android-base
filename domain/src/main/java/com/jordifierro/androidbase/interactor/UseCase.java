@@ -23,10 +23,16 @@ public abstract class UseCase {
 
     protected abstract Observable buildUseCaseObservable();
 
-    public void execute(Subscriber useCaseSubscriber) {
+    public final void execute(Subscriber useCaseSubscriber) {
         this.subscription = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler())
                 .subscribe(useCaseSubscriber);
+    }
+
+    public void unsubscribe() {
+        if (!this.subscription.isUnsubscribed()) {
+            this.subscription.unsubscribe();
+        }
     }
 }

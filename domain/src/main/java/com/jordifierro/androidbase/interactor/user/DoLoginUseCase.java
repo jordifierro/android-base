@@ -24,11 +24,9 @@ public class DoLoginUseCase extends UseCase {
         this.sessionRepository = sessionRepository;
     }
 
-    public void execute(Subscriber useCaseSubscriber,
-                        String email, String password) {
+    public void setParams(String email, String password) {
         this.email = email;
         this.password = password;
-        super.execute(useCaseSubscriber);
     }
 
     @Override

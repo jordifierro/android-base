@@ -10,7 +10,6 @@ import com.jordifierro.androidbase.repository.SessionRepository;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.Subscriber;
 
 public class UpdateNoteUseCase extends UseCase {
 
@@ -27,9 +26,8 @@ public class UpdateNoteUseCase extends UseCase {
         this.sessionRepository = sessionRepository;
     }
 
-    public void execute(Subscriber useCaseSubscriber, NoteEntity note) {
+    public void setParams(NoteEntity note) {
         this.note = note;
-        super.execute(useCaseSubscriber);
     }
 
     @Override

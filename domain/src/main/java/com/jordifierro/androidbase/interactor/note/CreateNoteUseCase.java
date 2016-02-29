@@ -27,9 +27,8 @@ public class CreateNoteUseCase extends UseCase {
         this.sessionRepository = sessionRepository;
     }
 
-    public void execute(Subscriber useCaseSubscriber, NoteEntity note) {
+    public void setParams(NoteEntity note) {
         this.note = note;
-        super.execute(useCaseSubscriber);
     }
 
     @Override

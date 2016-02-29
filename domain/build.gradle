@@ -1,20 +1,8 @@
-apply plugin: 'java'
-
-configurations {
-    provided
-}
-
-sourceSets {
-    main {
-        compileClasspath += configurations.provided
-    }
-}
+apply plugin: "java"
 
 dependencies {
-    provided "com.google.dagger:dagger-compiler:2.0.2"
-
-    compile "com.google.dagger:dagger:2.0.2"
-    compile 'io.reactivex:rxjava:1.1.1'
+    compile "javax.inject:javax.inject:1"
+    compile "io.reactivex:rxjava:1.1.1"
 
     testCompile "junit:junit:4.12"
     testCompile "org.mockito:mockito-core:2.0.43-beta"

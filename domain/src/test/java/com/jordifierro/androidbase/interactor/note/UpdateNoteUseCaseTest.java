@@ -21,23 +21,19 @@ public class UpdateNoteUseCaseTest {
     private static final String FAKE_TITLE = "MyTitle";
     private static final String FAKE_CONTENT = "MyContent";
 
-    private UpdateNoteUseCase updateNoteUseCase;
-
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private NoteRepository mockNoteRepository;
     @Mock private SessionRepository mockSessionRepository;
 
     @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        updateNoteUseCase = new UpdateNoteUseCase(mockThreadExecutor, mockPostExecutionThread,
-                                                  mockNoteRepository, mockSessionRepository);
-    }
+    public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
     public void testUpdateNoteUseCaseSuccess() {
         NoteEntity note = new NoteEntity(FAKE_ID, FAKE_TITLE, FAKE_CONTENT);
+        UpdateNoteUseCase updateNoteUseCase = new UpdateNoteUseCase(mockThreadExecutor,
+                mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
 
         updateNoteUseCase.setParams(note);
         updateNoteUseCase.buildUseCaseObservable();

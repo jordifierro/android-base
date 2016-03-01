@@ -18,22 +18,18 @@ public class DeleteNoteUseCaseTest {
 
     private static final int FAKE_ID = 1;
 
-    private DeleteNoteUseCase deleteNoteUseCase;
-
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private NoteRepository mockNoteRepository;
     @Mock private SessionRepository mockSessionRepository;
 
     @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        deleteNoteUseCase = new DeleteNoteUseCase(mockThreadExecutor, mockPostExecutionThread,
-                                                  mockNoteRepository, mockSessionRepository);
-    }
+    public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
     public void testDeleteNoteUseCaseSuccess() {
+        DeleteNoteUseCase deleteNoteUseCase = new DeleteNoteUseCase(mockThreadExecutor,
+                mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
 
         deleteNoteUseCase.setParams(FAKE_ID);
         deleteNoteUseCase.buildUseCaseObservable();

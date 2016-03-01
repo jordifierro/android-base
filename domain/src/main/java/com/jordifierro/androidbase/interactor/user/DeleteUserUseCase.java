@@ -9,6 +9,7 @@ import com.jordifierro.androidbase.repository.UserRepository;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Action0;
 
 public class DeleteUserUseCase extends UseCase {
 
@@ -25,6 +26,12 @@ public class DeleteUserUseCase extends UseCase {
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.userRepository.deleteUser(this.sessionRepository.getCurrentUser());
+        return this.userRepository.deleteUser(this.sessionRepository.getCurrentUser())
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+                        sessionRepository.invalidateSession();
+                    }
+                });
     }
 }

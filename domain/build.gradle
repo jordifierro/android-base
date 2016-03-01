@@ -6,4 +6,5 @@ dependencies {
 
     testCompile "junit:junit:4.12"
     testCompile "org.mockito:mockito-core:2.0.43-beta"
+    testCompile "org.jetbrains:annotations-java5:15.0"
 }

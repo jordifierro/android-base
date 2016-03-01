@@ -1,6 +1,5 @@
 package com.jordifierro.androidbase.interactor.user;
 
-import com.jordifierro.androidbase.entity.SessionEntity;
 import com.jordifierro.androidbase.executor.PostExecutionThread;
 import com.jordifierro.androidbase.executor.ThreadExecutor;
 import com.jordifierro.androidbase.repository.SessionRepository;
@@ -17,27 +16,26 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class DoLogoutUseCaseTest {
 
-    private DoLogoutUseCase doLogoutUseCase;
-
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
+    @Mock private UserRepository mockUserRepository;
     @Mock private SessionRepository mockSessionRepository;
 
     @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        doLogoutUseCase = new DoLogoutUseCase(mockThreadExecutor, mockPostExecutionThread,
-                                              mockSessionRepository);
-    }
+    public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
-    public void testDeleteUserUseCaseSuccess() {
+    public void testDoLogoutUseCaseSuccess() {
+        DoLogoutUseCase doLogoutUseCase = new DoLogoutUseCase(mockThreadExecutor,
+                mockPostExecutionThread, mockUserRepository, mockSessionRepository);
 
         doLogoutUseCase.buildUseCaseObservable();
 
         verify(mockSessionRepository).getCurrentUser();
-        verify(mockSessionRepository).logoutUser(null);
+        verify(mockSessionRepository).invalidateSession();
         verifyNoMoreInteractions(mockSessionRepository);
+        verify(mockUserRepository).logoutUser(null);
+        verifyNoMoreInteractions(mockUserRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);
     }

@@ -1,6 +1,5 @@
 package com.jordifierro.androidbase.interactor.note;
 
-import com.jordifierro.androidbase.entity.NoteEntity;
 import com.jordifierro.androidbase.executor.PostExecutionThread;
 import com.jordifierro.androidbase.executor.ThreadExecutor;
 import com.jordifierro.androidbase.repository.NoteRepository;
@@ -19,22 +18,18 @@ public class GetNoteUseCaseTest {
 
     private static final int FAKE_ID = 1;
 
-    private GetNoteUseCase getNoteUseCase;
-
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private NoteRepository mockNoteRepository;
     @Mock private SessionRepository mockSessionRepository;
 
     @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        getNoteUseCase = new GetNoteUseCase(mockThreadExecutor, mockPostExecutionThread,
-                                            mockNoteRepository, mockSessionRepository);
-    }
+    public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
     public void testGetNoteUseCaseSuccess() {
+        GetNoteUseCase getNoteUseCase = new GetNoteUseCase(mockThreadExecutor,
+                mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
 
         getNoteUseCase.setParams(FAKE_ID);
         getNoteUseCase.buildUseCaseObservable();

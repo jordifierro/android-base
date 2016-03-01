@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.interactor;
 import com.jordifierro.androidbase.executor.PostExecutionThread;
 import com.jordifierro.androidbase.executor.ThreadExecutor;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,8 +22,7 @@ public class UseCaseTest {
     private TestSubscriber<Integer> testSubscriber;
     private FakeUseCase fakeUseCase;
 
-    @Mock
-    private PostExecutionThread mockPostExecutionThread;
+    @Mock private PostExecutionThread mockPostExecutionThread;
 
     @Before
     public void setUp() {
@@ -66,9 +66,8 @@ public class UseCaseTest {
 
     private static class CurrentThreadExecutor implements ThreadExecutor {
 
-        public void execute(Runnable r) {
+        public void execute(@NotNull Runnable r) {
             r.run();
         }
     }
-
 }

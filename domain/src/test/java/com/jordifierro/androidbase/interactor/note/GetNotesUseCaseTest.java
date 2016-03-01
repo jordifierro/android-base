@@ -16,22 +16,18 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class GetNotesUseCaseTest {
 
-    private GetNotesUseCase getNotesUseCase;
-
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private NoteRepository mockNoteRepository;
     @Mock private SessionRepository mockSessionRepository;
 
     @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        getNotesUseCase = new GetNotesUseCase(mockThreadExecutor, mockPostExecutionThread,
-                                              mockNoteRepository, mockSessionRepository);
-    }
+    public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
     public void testGetNotesUseCaseSuccess() {
+        GetNotesUseCase getNotesUseCase = new GetNotesUseCase(mockThreadExecutor,
+                mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
 
         getNotesUseCase.buildUseCaseObservable();
 

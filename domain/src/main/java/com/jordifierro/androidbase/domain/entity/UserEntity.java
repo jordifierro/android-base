@@ -4,6 +4,8 @@ public class UserEntity {
 
     private String email;
     private String authToken;
+    private String password;
+    private String confirmationPassword;
 
     public UserEntity(String email) {
         this.email = email;
@@ -23,5 +25,21 @@ public class UserEntity {
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmationPassword() {
+        return confirmationPassword;
+    }
+
+    public void setConfirmationPassword(String confirmationPassword) {
+        this.confirmationPassword = confirmationPassword;
     }
 }

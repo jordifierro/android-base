@@ -18,7 +18,6 @@ public class DoLoginUseCase extends UseCase {
     private SessionRepository sessionRepository;
 
     private UserEntity user;
-    private String password;
 
     @Inject
     public DoLoginUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
@@ -28,14 +27,13 @@ public class DoLoginUseCase extends UseCase {
         this.sessionRepository = sessionRepository;
     }
 
-    public void setParams(UserEntity user, String password) {
+    public void setParams(UserEntity user) {
         this.user = user;
-        this.password = password;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.userRepository.loginUser(this.user, this.password)
+        return this.userRepository.loginUser(this.user)
                 .doOnNext(new Action1<UserEntity>() {
                     @Override
                     public void call(UserEntity userEntity) {

@@ -34,20 +34,21 @@ public class DoLoginUseCaseTest {
     public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testDoLoginUseCaseSuccess() {
         DoLoginUseCase doLoginUseCase = new DoLoginUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
         TestScheduler testScheduler = new TestScheduler();
-        given(mockUserRepository.loginUser(mockUser, FAKE_PASS))
+        given(mockUserRepository.loginUser(mockUser))
                 .willReturn(Observable.just(mockUser));
 
-        doLoginUseCase.setParams(mockUser, FAKE_PASS);
+        doLoginUseCase.setParams(mockUser);
         doLoginUseCase.buildUseCaseObservable()
                 .observeOn(testScheduler)
                 .subscribe(new TestSubscriber<UserEntity>());
         testScheduler.triggerActions();
 
-        verify(mockUserRepository).loginUser(mockUser, FAKE_PASS);
+        verify(mockUserRepository).loginUser(mockUser);
         verifyNoMoreInteractions(mockUserRepository);
         verify(mockSessionRepository).setCurrentUser(mockUser);
         verifyNoMoreInteractions(mockSessionRepository);

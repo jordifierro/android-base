@@ -39,16 +39,16 @@ public class CreateUserUseCaseTest {
         CreateUserUseCase createUserUseCase = new CreateUserUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
         TestScheduler testScheduler = new TestScheduler();
-        given(mockUserRepository.createUser(mockUser, FAKE_PASS, FAKE_PASS))
+        given(mockUserRepository.createUser(mockUser))
                 .willReturn(Observable.just(mockUser));
 
-        createUserUseCase.setParams(mockUser, FAKE_PASS, FAKE_PASS);
+        createUserUseCase.setParams(mockUser);
         createUserUseCase.buildUseCaseObservable()
                 .observeOn(testScheduler)
                 .subscribe(new TestSubscriber<UserEntity>());
         testScheduler.triggerActions();
 
-        verify(mockUserRepository).createUser(mockUser, FAKE_PASS, FAKE_PASS);
+        verify(mockUserRepository).createUser(mockUser);
         verifyNoMoreInteractions(mockUserRepository);
         verify(mockSessionRepository).setCurrentUser(mockUser);
         verifyNoMoreInteractions(mockSessionRepository);

@@ -20,8 +20,8 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<UserEntity> createUser(UserEntity user, String password, String confirmationPassword) {
-        return this.restApi.createUser(user.getEmail(), password, confirmationPassword)
+    public Observable<UserEntity> createUser(UserEntity user) {
+        return this.restApi.createUser(user)
                 .map(new Func1<Response<UserEntity>, UserEntity>() {
                     @Override
                     public UserEntity call(Response<UserEntity> userEntityResponse) {
@@ -44,8 +44,8 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<UserEntity> loginUser(UserEntity user, String password) {
-        return this.restApi.doLogin(user.getEmail(), password)
+    public Observable<UserEntity> loginUser(UserEntity user) {
+        return this.restApi.doLogin(user)
                 .map(new Func1<Response<UserEntity>, UserEntity>() {
                     @Override
                     public UserEntity call(Response<UserEntity> userEntityResponse) {

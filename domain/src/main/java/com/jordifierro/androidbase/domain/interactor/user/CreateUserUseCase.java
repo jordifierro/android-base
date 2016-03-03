@@ -17,8 +17,6 @@ public class CreateUserUseCase extends com.jordifierro.androidbase.domain.intera
     private SessionRepository sessionRepository;
 
     private UserEntity user;
-    private String password;
-    private String confirmationPassword;
 
     @Inject
     public CreateUserUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread,
@@ -28,15 +26,13 @@ public class CreateUserUseCase extends com.jordifierro.androidbase.domain.intera
         this.sessionRepository = sessionRepository;
     }
 
-    public void setParams(UserEntity user, String password, String confirmationPassword) {
+    public void setParams(UserEntity user) {
         this.user = user;
-        this.password = password;
-        this.confirmationPassword = confirmationPassword;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return this.userRepository.createUser(this.user, this.password, this.confirmationPassword)
+        return this.userRepository.createUser(this.user)
                 .doOnNext(new Action1<UserEntity>() {
                     @Override
                     public void call(UserEntity userEntity) {

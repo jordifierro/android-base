@@ -1,9 +1,9 @@
 package com.jordifierro.androidbase.domain.interactor;
 
+import com.jordifierro.androidbase.domain.executor.DefaultThreadExecutor;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -28,7 +28,7 @@ public class UseCaseTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         this.testSubscriber = new TestSubscriber<>();
-        this.fakeUseCase = new FakeUseCase(new CurrentThreadExecutor(), mockPostExecutionThread);
+        this.fakeUseCase = new FakeUseCase(new DefaultThreadExecutor(), mockPostExecutionThread);
     }
 
     @Test
@@ -64,10 +64,4 @@ public class UseCaseTest {
         }
     }
 
-    private static class CurrentThreadExecutor implements ThreadExecutor {
-
-        public void execute(@NotNull Runnable r) {
-            r.run();
-        }
-    }
 }

@@ -21,18 +21,18 @@ public class NoteEntityTest {
 
     @Test
     public void testSessionConstructor() {
-        assertThat(this.note.getNoteId(), is(FAKE_ID));
+        assertThat(this.note.getId(), is(FAKE_ID));
         assertThat(this.note.getTitle(), is(FAKE_TITLE));
         assertThat(this.note.getContent(), is(FAKE_CONTENT));
     }
 
     @Test
     public void testUserSetEmail() {
-        this.note.setNoteId(2);
+        this.note.setId(2);
         this.note.setTitle("AnotherTitle");
         this.note.setContent("AnotherContent");
 
-        assertThat(this.note.getNoteId(), is(2));
+        assertThat(this.note.getId(), is(2));
         assertThat(this.note.getTitle(), is("AnotherTitle"));
         assertThat(this.note.getContent(), is("AnotherContent"));
     }

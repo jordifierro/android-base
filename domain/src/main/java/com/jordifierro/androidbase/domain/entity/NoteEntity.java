@@ -2,22 +2,22 @@ package com.jordifierro.androidbase.domain.entity;
 
 public class NoteEntity {
 
-    private int noteId;
+    private int id;
     private String title;
     private String content;
 
-    public NoteEntity(int noteId, String title, String content) {
-        this.noteId = noteId;
+    public NoteEntity(int id, String title, String content) {
+        this.id = id;
         this.title = title;
         this.content = content;
     }
 
-    public int getNoteId() {
-        return noteId;
+    public int getId() {
+        return id;
     }
 
-    public void setNoteId(int noteId) {
-        this.noteId = noteId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

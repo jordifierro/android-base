@@ -3,7 +3,7 @@ package com.jordifierro.androidbase.domain.entity;
 public class UserEntity {
 
     private String email;
-    private String token;
+    private String authToken;
 
     public UserEntity(String email) {
         this.email = email;
@@ -17,11 +17,11 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getToken() {
-        return token;
+    public String getAuthToken() {
+        return authToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 }

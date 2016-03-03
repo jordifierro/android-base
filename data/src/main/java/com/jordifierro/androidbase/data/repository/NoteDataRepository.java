@@ -13,7 +13,7 @@ import retrofit2.Response;
 import rx.Observable;
 import rx.functions.Func1;
 
-public class NoteDataRepository implements NoteRepository {
+public class NoteDataRepository extends RestApiRepository implements NoteRepository {
 
     private final RestApi restApi;
 
@@ -28,7 +28,7 @@ public class NoteDataRepository implements NoteRepository {
                 .map(new Func1<Response<NoteEntity>, NoteEntity>() {
                     @Override
                     public NoteEntity call(Response<NoteEntity> noteEntityResponse) {
-                        if (!noteEntityResponse.isSuccess()) throw new RuntimeException();
+                        handleResponseError(noteEntityResponse);
                         return noteEntityResponse.body();
                     }
                 });
@@ -40,7 +40,7 @@ public class NoteDataRepository implements NoteRepository {
                 .map(new Func1<Response<NoteEntity>, NoteEntity>() {
                     @Override
                     public NoteEntity call(Response<NoteEntity> noteEntityResponse) {
-                        if (!noteEntityResponse.isSuccess()) throw new RuntimeException();
+                        handleResponseError(noteEntityResponse);
                         return noteEntityResponse.body();
                     }
                 });
@@ -52,7 +52,7 @@ public class NoteDataRepository implements NoteRepository {
                 .map(new Func1<Response<List<NoteEntity>>, List<NoteEntity>>() {
                     @Override
                     public List<NoteEntity> call(Response<List<NoteEntity>> listResponse) {
-                        if (!listResponse.isSuccess()) throw new RuntimeException();
+                        handleResponseError(listResponse);
                         return listResponse.body();
                     }
                 });
@@ -64,7 +64,7 @@ public class NoteDataRepository implements NoteRepository {
                 .map(new Func1<Response<NoteEntity>, NoteEntity>() {
                     @Override
                     public NoteEntity call(Response<NoteEntity> noteEntityResponse) {
-                        if (!noteEntityResponse.isSuccess()) throw new RuntimeException();
+                        handleResponseError(noteEntityResponse);
                         return noteEntityResponse.body();
                     }
                 });
@@ -76,7 +76,7 @@ public class NoteDataRepository implements NoteRepository {
                 .map(new Func1<Response, Void>() {
                     @Override
                     public Void call(Response response) {
-                        if (!response.isSuccess()) throw new RuntimeException();
+                        handleResponseError(response);
                         return null;
                     }
                 });

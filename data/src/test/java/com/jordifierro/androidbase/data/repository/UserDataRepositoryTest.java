@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.data.repository;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.jordifierro.androidbase.data.net.RestApi;
+import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
 import com.jordifierro.androidbase.data.utils.TestUtils;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.executor.DefaultThreadExecutor;
@@ -24,9 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 @SuppressWarnings("unchecked")
 public class UserDataRepositoryTest{
@@ -90,7 +90,10 @@ public class UserDataRepositoryTest{
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(422, error.getStatusCode());
+        assertEquals("Email has already been taken", error.getMessage());
     }
 
     @Test
@@ -117,7 +120,10 @@ public class UserDataRepositoryTest{
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(401, error.getStatusCode());
+        assertTrue(error.getMessage().length() > 0);
     }
 
     @Test
@@ -152,7 +158,10 @@ public class UserDataRepositoryTest{
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(422, error.getStatusCode());
+        assertEquals("Invalid email or password.", error.getMessage());
     }
 
     @Test
@@ -179,7 +188,10 @@ public class UserDataRepositoryTest{
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(401, error.getStatusCode());
+        assertTrue(error.getMessage().length() > 0);
     }
 
 }

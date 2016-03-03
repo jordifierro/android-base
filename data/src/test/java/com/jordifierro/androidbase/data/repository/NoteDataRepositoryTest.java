@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.data.repository;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.jordifierro.androidbase.data.net.RestApi;
+import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
 import com.jordifierro.androidbase.data.utils.TestUtils;
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
@@ -26,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -95,7 +97,10 @@ public class NoteDataRepositoryTest {
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                                                    this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(422, error.getStatusCode());
+        assertEquals("Title can't be blank", error.getMessage());
     }
 
     @Test
@@ -131,7 +136,10 @@ public class NoteDataRepositoryTest {
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(404, error.getStatusCode());
+        assertEquals("not found.", error.getMessage());
     }
 
     @Test
@@ -163,7 +171,10 @@ public class NoteDataRepositoryTest {
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(401, error.getStatusCode());
+        assertTrue(error.getMessage().length() > 0);
     }
 
     @Test
@@ -197,7 +208,10 @@ public class NoteDataRepositoryTest {
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(404, error.getStatusCode());
+        assertEquals("not found.", error.getMessage());
     }
 
     @Test
@@ -224,7 +238,10 @@ public class NoteDataRepositoryTest {
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
-        assertThat(this.testSubscriber.getOnErrorEvents().size(), is(1));
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(401, error.getStatusCode());
+        assertTrue(error.getMessage().length() > 0);
     }
 
 }

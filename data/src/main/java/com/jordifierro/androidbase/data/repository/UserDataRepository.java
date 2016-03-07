@@ -1,6 +1,7 @@
 package com.jordifierro.androidbase.data.repository;
 
 import com.jordifierro.androidbase.data.net.RestApi;
+import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
 
@@ -45,7 +46,7 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
 
     @Override
     public Observable<UserEntity> loginUser(UserEntity user) {
-        return this.restApi.doLogin(user)
+        return this.restApi.doLogin(new UserWrapper(user))
                 .map(new Func1<Response<UserEntity>, UserEntity>() {
                     @Override
                     public UserEntity call(Response<UserEntity> userEntityResponse) {

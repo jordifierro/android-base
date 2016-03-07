@@ -1,5 +1,6 @@
 package com.jordifierro.androidbase.data.net;
 
+import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 
@@ -17,7 +18,7 @@ import rx.Observable;
 
 public interface RestApi {
 
-    String URL_BASE = "127.0.0.1:3000";
+    String URL_BASE = "http://localhost:3000";
 
     @POST("/users")
     Observable<Response<UserEntity>> createUser(@Body UserEntity user);
@@ -26,7 +27,7 @@ public interface RestApi {
     Observable<Response<Void>> deleteUser(@Header("Authorization") String token);
 
     @POST("/users/login")
-    Observable<Response<UserEntity>> doLogin(@Body UserEntity user);
+    Observable<Response<UserEntity>> doLogin(@Body UserWrapper user);
 
     @DELETE("/users/logout")
     Observable<Response<Void>> doLogout(@Header("Authorization") String token);

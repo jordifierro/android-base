@@ -1,4 +1,6 @@
-package com.jordifierro.androidbase.data.net.error;
+package com.jordifierro.androidbase.data.net.wrapper;
+
+import com.jordifierro.androidbase.data.net.error.ResponseErrorEntity;
 
 public class ResponseErrorWrapper {
 

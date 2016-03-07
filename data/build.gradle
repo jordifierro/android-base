@@ -2,14 +2,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
+        versionCode rootProject.ext.appVersionCode
+        versionName rootProject.ext.appVersionName
     }
     buildTypes {
         release {
@@ -27,19 +27,19 @@ task copyResDirectoryToClasses(type: Copy){
 assembleDebug.dependsOn(copyResDirectoryToClasses)
 
 dependencies {
+    def dataDependencies = rootProject.ext.dataDependencies
+    def dataTestDependencies = rootProject.ext.dataTestDependencies
+
     compile project(':domain')
 
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
+    compile dataDependencies.javaxAnnotation
+    compile dataDependencies.rxJava
+    compile dataDependencies.retrofit
+    compile dataDependencies.retrofitGson
+    compile dataDependencies.retrofitRxJava
 
-    compile 'javax.annotation:jsr250-api:1.0'
-    compile 'io.reactivex:rxjava:1.1.1'
-    compile 'com.google.dagger:dagger:2.0.2'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.0.43-beta'
-    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
-    testCompile 'commons-io:commons-io:2.4'
+    testCompile dataTestDependencies.junit
+    testCompile dataTestDependencies.mockito
+    testCompile dataTestDependencies.mockWebServer
+    testCompile dataTestDependencies.commonsIO
 }

@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "com.jordifierro.androidbase"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
+        versionCode rootProject.ext.appVersionCode
+        versionName rootProject.ext.appVersionName
     }
     buildTypes {
         release {
@@ -21,19 +21,22 @@ android {
 }
 
 dependencies {
+    def presentationDependencies = rootProject.ext.presentationDependencies
+    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
+
     compile project(':domain')
     compile project(':data')
 
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
+    apt presentationDependencies.daggerCompiler
 
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:design:23.2.0'
-    compile 'com.android.support:support-v4:23.2.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.google.dagger:dagger:2.0.2'
-    compile 'javax.annotation:jsr250-api:1.0'
-    compile 'io.reactivex:rxjava:1.1.1'
-    compile 'io.reactivex:rxandroid:1.1.0'
+    compile presentationDependencies.androidDesign
+    compile presentationDependencies.androidSupportv4
+    compile presentationDependencies.androidCompatv7
+    compile presentationDependencies.dagger
+    compile presentationDependencies.butterKnife
+    compile presentationDependencies.javaxAnnotation
+    compile presentationDependencies.rxJava
+    compile presentationDependencies.rxAndroid
 
-    testCompile 'junit:junit:4.12'
+    testCompile presentationTestDependencies.junit
 }

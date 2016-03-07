@@ -1,10 +1,13 @@
 apply plugin: "java"
 
 dependencies {
-    compile "javax.inject:javax.inject:1"
-    compile "io.reactivex:rxjava:1.1.1"
+    def domainDependencies = rootProject.ext.domainDependencies
+    def domainTestDependencies = rootProject.ext.domainTestDependencies
 
-    testCompile "junit:junit:4.12"
-    testCompile "org.mockito:mockito-core:2.0.43-beta"
-    testCompile "org.jetbrains:annotations-java5:15.0"
+    compile domainDependencies.javaxInject
+    compile domainDependencies.rxJava
+
+    testCompile domainTestDependencies.junit
+    testCompile domainTestDependencies.mockito
+    testCompile domainTestDependencies.jetAnnotations
 }

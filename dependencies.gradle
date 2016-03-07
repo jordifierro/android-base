@@ -1,0 +1,78 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    appVersionCode = 1
+    appVersionName = '1.0'
+    androidBuildToolsVersion = '23.0.2'
+    androidMinSdkVersion = 15
+    androidTargetSdkVersion = 23
+    androidCompileSdkVersion = 23
+
+    //Libraries
+    androidSupportVersion = '23.2.0'
+    daggerVersion = '2.0.2'
+    butterKnifeVersion = '7.0.1'
+    rxJavaVersion = '1.1.1'
+    rxAndroidVersion = '1.1.0'
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+    retrofitVersion = '2.0.0-beta4'
+
+    //Testing
+    jUnitVersion = '4.12'
+    mockitoVersion = '2.0.43-beta'
+    mockWebServerVersion = '3.2.0'
+    commonsIOVersion = '2.4'
+    jetAnnotationVersion = '15.0'
+
+    domainDependencies = [
+            retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitGson:       "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitRxJava:     "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}",
+            javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
+            rxJava:             "io.reactivex:rxjava:${rxJavaVersion}"
+    ]
+
+    domainTestDependencies = [
+            junit:              "junit:junit:${jUnitVersion}",
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}",
+            jetAnnotations:     "org.jetbrains:annotations-java5:${jetAnnotationVersion}"
+    ]
+
+    dataDependencies = [
+            retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitGson:       "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitRxJava:     "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}",
+            javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            rxJava:             "io.reactivex:rxjava:${rxJavaVersion}"
+    ]
+
+    dataTestDependencies = [
+            junit:              "junit:junit:${jUnitVersion}",
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}",
+            mockWebServer:      "com.squareup.okhttp3:mockwebserver:${mockWebServerVersion}",
+            commonsIO:          "commons-io:commons-io:${commonsIOVersion}"
+    ]
+
+    presentationDependencies = [
+            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:             "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife:        "com.jakewharton:butterknife:${butterKnifeVersion}",
+            rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid:          "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            androidCompatv7:    "com.android.support:appcompat-v7:${androidSupportVersion}",
+            androidSupportv4:   "com.android.support:support-v4:${androidSupportVersion}",
+            androidDesign:      "com.android.support:design:${androidSupportVersion}"
+    ]
+
+    presentationTestDependencies = [
+            junit:              "junit:junit:${jUnitVersion}"
+    ]
+
+}

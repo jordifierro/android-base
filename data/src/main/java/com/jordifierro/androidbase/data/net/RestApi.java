@@ -21,13 +21,13 @@ public interface RestApi {
     String URL_BASE = "http://localhost:3000";
 
     @POST("/users")
-    Observable<Response<UserEntity>> createUser(@Body UserEntity user);
+    Observable<Response<UserEntity>> createUser(@Body UserWrapper userWrapper);
 
     @DELETE("/users")
     Observable<Response<Void>> deleteUser(@Header("Authorization") String token);
 
     @POST("/users/login")
-    Observable<Response<UserEntity>> doLogin(@Body UserWrapper user);
+    Observable<Response<UserEntity>> doLogin(@Body UserWrapper userWrapper);
 
     @DELETE("/users/logout")
     Observable<Response<Void>> doLogout(@Header("Authorization") String token);

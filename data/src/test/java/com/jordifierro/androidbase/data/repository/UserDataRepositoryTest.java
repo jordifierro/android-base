@@ -12,7 +12,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
@@ -31,11 +30,10 @@ import static junit.framework.Assert.assertTrue;
 @SuppressWarnings("unchecked")
 public class UserDataRepositoryTest{
 
-    private MockWebServer mockWebServer;
     private UserDataRepository userDataRepository;
     private TestSubscriber testSubscriber;
-
-    @Mock UserEntity mockUser;
+    private MockWebServer mockWebServer;
+    private UserEntity mockUser;
 
     @Before
     public void setUp() throws IOException {
@@ -53,6 +51,9 @@ public class UserDataRepositoryTest{
         );
         this.testSubscriber = new TestSubscriber();
         MockitoAnnotations.initMocks(this);
+        this.mockUser = new UserEntity("mock@mail.com");
+        this.mockUser.setPassword("1234");
+        this.mockUser.setConfirmationPassword("1234");
     }
 
     @After
@@ -66,7 +67,7 @@ public class UserDataRepositoryTest{
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/user_create_ok.json"))));
 
-        this.userDataRepository.createUser(mockUser)
+        this.userDataRepository.createUser(this.mockUser)
                                     .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                                     .observeOn(Schedulers.io())
                                     .subscribe(this.testSubscriber);
@@ -83,7 +84,7 @@ public class UserDataRepositoryTest{
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/user_create_error.json"))));
 
-        this.userDataRepository.createUser(mockUser)
+        this.userDataRepository.createUser(this.mockUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -100,7 +101,7 @@ public class UserDataRepositoryTest{
     public void testDeleteUserSuccess() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.userDataRepository.deleteUser(mockUser)
+        this.userDataRepository.deleteUser(this.mockUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -113,7 +114,7 @@ public class UserDataRepositoryTest{
     public void testDeleteUserError() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.userDataRepository.deleteUser(mockUser)
+        this.userDataRepository.deleteUser(this.mockUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -133,7 +134,7 @@ public class UserDataRepositoryTest{
                         TestUtils.getFileFromPath(this, "res/session_login_ok.json"))));
 
 
-        this.userDataRepository.loginUser(mockUser)
+        this.userDataRepository.loginUser(this.mockUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -151,7 +152,7 @@ public class UserDataRepositoryTest{
                         TestUtils.getFileFromPath(this, "res/session_login_error.json"))));
 
 
-        this.userDataRepository.loginUser(mockUser)
+        this.userDataRepository.loginUser(this.mockUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -168,7 +169,7 @@ public class UserDataRepositoryTest{
     public void testLogoutUserSuccess() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.userDataRepository.logoutUser(mockUser)
+        this.userDataRepository.logoutUser(this.mockUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -181,7 +182,7 @@ public class UserDataRepositoryTest{
     public void testLogoutUserError() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.userDataRepository.logoutUser(mockUser)
+        this.userDataRepository.logoutUser(this.mockUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);

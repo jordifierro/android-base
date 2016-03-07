@@ -22,7 +22,7 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
 
     @Override
     public Observable<UserEntity> createUser(UserEntity user) {
-        return this.restApi.createUser(user)
+        return this.restApi.createUser(new UserWrapper(user))
                 .map(new Func1<Response<UserEntity>, UserEntity>() {
                     @Override
                     public UserEntity call(Response<UserEntity> userEntityResponse) {

@@ -37,11 +37,12 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(context(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(context(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
     }
+
 }

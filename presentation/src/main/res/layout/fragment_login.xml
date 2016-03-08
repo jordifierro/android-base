@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jordifierro.androidbase.presentation.view.fragment.LoginFragment">
+    tools:context="com.jordifierro.androidbase.presentation.view.fragment.LoginFragment"
+    android:padding="@dimen/padding_normal">
 
     <EditText android:id="@+id/et_email"
         android:layout_width="match_parent"

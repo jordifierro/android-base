@@ -2,17 +2,26 @@ package com.jordifierro.androidbase.presentation.presenter;
 
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.interactor.user.DoLoginUseCase;
+import com.jordifierro.androidbase.presentation.view.BaseView;
+import com.jordifierro.androidbase.presentation.view.LoginView;
 
 import javax.inject.Inject;
 
 public class LoginPresenter extends BasePresenter implements Presenter {
 
     private DoLoginUseCase doLoginUseCase;
+    private LoginView loginView;
 
     @Inject
     public LoginPresenter(DoLoginUseCase doLoginUseCase) {
         super(doLoginUseCase);
         this.doLoginUseCase = doLoginUseCase;
+    }
+
+    @Override
+    public void initWithView(BaseView view) {
+        super.initWithView(view);
+        this.loginView = (LoginView) view;
     }
 
     public void loginUser(String email, String password) {
@@ -21,7 +30,16 @@ public class LoginPresenter extends BasePresenter implements Presenter {
 
         this.showLoader();
         this.doLoginUseCase.setParams(user);
-        this.doLoginUseCase.execute(new BaseSubscriber());
+        this.doLoginUseCase.execute(new LoginSubscriber());
+    }
+
+    protected class LoginSubscriber extends BaseSubscriber<UserEntity> {
+
+        @Override
+        public void onNext(UserEntity user) {
+            LoginPresenter.this.hideLoader();
+            LoginPresenter.this.loginView.navigateToNotes();
+        }
     }
 
 }

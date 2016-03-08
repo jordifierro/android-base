@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AndroidBase</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_notes">NotesActivity</string>
     <string name="button_login">LOGIN</string>
     <string name="edittext_email">Email…</string>
     <string name="edittext_password">Password…</string>

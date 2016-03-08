@@ -4,6 +4,7 @@ import com.jordifierro.androidbase.presentation.dependency.module.ApplicationMod
 import com.jordifierro.androidbase.presentation.dependency.module.DataModule;
 import com.jordifierro.androidbase.presentation.dependency.module.UserModule;
 import com.jordifierro.androidbase.presentation.view.fragment.LoginFragment;
+import com.jordifierro.androidbase.presentation.view.fragment.NotesFragment;
 
 import javax.inject.Singleton;
 
@@ -14,5 +15,6 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     void inject(LoginFragment loginFragment);
+    void inject(NotesFragment notesFragment);
 
 }

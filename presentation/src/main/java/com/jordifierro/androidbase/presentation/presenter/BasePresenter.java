@@ -57,6 +57,7 @@ public class BasePresenter implements Presenter {
         }
 
         @Override public void onNext(T t) {
+            BasePresenter.this.hideLoader();
             BasePresenter.this.showMessage(t.toString());
         }
     }

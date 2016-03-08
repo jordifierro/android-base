@@ -22,14 +22,14 @@ public class LoginPresenterTest {
     @Mock Observable mockObservable;
 
     private LoginPresenter loginPresenter;
-    private BasePresenter.BaseSubscriber baseSubscriber;
+    private LoginPresenter.LoginSubscriber loginSubscriber;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         this.loginPresenter = new LoginPresenter(this.mockDoLoginUseCase);
         this.loginPresenter.initWithView(this.mockLoginView);
-        this.baseSubscriber = this.loginPresenter.new BaseSubscriber();
+        this.loginSubscriber = this.loginPresenter.new LoginSubscriber();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class LoginPresenterTest {
     @Test
     public void testSubscriberOnCompleted() {
 
-        this.baseSubscriber.onCompleted();
+        this.loginSubscriber.onCompleted();
 
         verify(this.mockLoginView).hideLoader();
     }
@@ -61,7 +61,7 @@ public class LoginPresenterTest {
     @Test
     public void testSubscriberOnError() {
 
-        this.baseSubscriber.onError(new RestApiErrorException("Error message", 500));
+        this.loginSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockLoginView).hideLoader();
         verify(this.mockLoginView).showError(any(String.class));
@@ -71,9 +71,10 @@ public class LoginPresenterTest {
     @SuppressWarnings("unchecked")
     public void testSubscriberOnNext() {
 
-        this.baseSubscriber.onNext(new UserEntity("email"));
+        this.loginSubscriber.onNext(new UserEntity("email"));
 
-        verify(this.mockLoginView).showMessage(any(String.class));
+        verify(this.mockLoginView).hideLoader();
+        verify(this.mockLoginView).navigateToNotes();
     }
 
 }

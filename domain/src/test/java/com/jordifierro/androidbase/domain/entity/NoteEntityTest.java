@@ -20,14 +20,14 @@ public class NoteEntityTest {
     }
 
     @Test
-    public void testSessionConstructor() {
+    public void tesNoteConstructor() {
         assertThat(this.note.getId(), is(FAKE_ID));
         assertThat(this.note.getTitle(), is(FAKE_TITLE));
         assertThat(this.note.getContent(), is(FAKE_CONTENT));
     }
 
     @Test
-    public void testUserSetEmail() {
+    public void testNoteSetters() {
         this.note.setId(2);
         this.note.setTitle("AnotherTitle");
         this.note.setContent("AnotherContent");

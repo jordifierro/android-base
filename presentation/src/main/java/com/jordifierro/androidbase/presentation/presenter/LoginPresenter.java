@@ -23,14 +23,10 @@ public class LoginPresenter implements Presenter {
     }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
     public void destroy() {
@@ -59,7 +55,7 @@ public class LoginPresenter implements Presenter {
         this.loginView.showError(message);
     }
 
-    private final class LoginSubscriber extends rx.Subscriber<UserEntity> {
+    final class LoginSubscriber extends rx.Subscriber<UserEntity> {
 
         @Override public void onCompleted() {
             LoginPresenter.this.hideLoader();

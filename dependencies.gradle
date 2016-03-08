@@ -72,7 +72,8 @@ ext {
     ]
 
     presentationTestDependencies = [
-            junit:              "junit:junit:${jUnitVersion}"
+            junit:              "junit:junit:${jUnitVersion}",
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}"
     ]
 
 }

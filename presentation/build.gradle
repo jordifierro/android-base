@@ -39,4 +39,5 @@ dependencies {
     compile presentationDependencies.rxAndroid
 
     testCompile presentationTestDependencies.junit
+    testCompile presentationTestDependencies.mockito
 }

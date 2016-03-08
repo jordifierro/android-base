@@ -23,7 +23,8 @@ public abstract class UseCase {
 
     protected abstract Observable buildUseCaseObservable();
 
-    public final void execute(Subscriber useCaseSubscriber) {
+    @SuppressWarnings("unchecked")
+    public void execute(Subscriber useCaseSubscriber) {
         this.subscription = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler())

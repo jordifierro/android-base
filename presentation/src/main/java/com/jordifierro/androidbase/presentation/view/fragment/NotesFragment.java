@@ -8,6 +8,7 @@ import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.NotesPresenter;
 import com.jordifierro.androidbase.presentation.view.NotesView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
+import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
 import com.jordifierro.androidbase.presentation.view.adapter.NotesAdapter;
 
 import java.util.List;
@@ -51,4 +52,8 @@ public class NotesFragment extends BaseFragment implements NotesView {
         listView.setAdapter(adapter);
     }
 
+    @Override
+    public void navigateToNoteDetail(int noteId) {
+        getActivity().startActivity(NoteDetailActivity.getCallingIntent(getActivity(), noteId));
+    }
 }

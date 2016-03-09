@@ -1,7 +1,5 @@
 package com.jordifierro.androidbase.presentation.presenter;
 
-import android.widget.Toast;
-
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.interactor.note.GetNotesUseCase;
 import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
@@ -42,7 +40,7 @@ public class NotesPresenter extends BasePresenter implements Presenter {
     }
 
     public void onNoteSelected(NoteEntity note) {
-        Toast.makeText(this.notesView.context(), note.getTitle(), Toast.LENGTH_LONG).show();
+        this.notesView.navigateToNoteDetail(note.getId());
     }
 
 }

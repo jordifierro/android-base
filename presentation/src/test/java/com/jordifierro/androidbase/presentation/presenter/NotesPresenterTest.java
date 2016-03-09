@@ -78,4 +78,13 @@ public class NotesPresenterTest {
         verify(this.mockNotesView).showNotes(any(List.class));
     }
 
+    @Test
+    public void testOnNoteSelected() {
+        NoteEntity note = new NoteEntity(5, "", "");
+
+        this.notesPresenter.onNoteSelected(note);
+
+        verify(this.mockNotesView).navigateToNoteDetail(5);
+    }
+
 }

@@ -87,4 +87,12 @@ public class NotesPresenterTest {
         verify(this.mockNotesView).navigateToNoteDetail(5);
     }
 
+    @Test
+    public void testCreateNewNoteButtonPressed() {
+
+        this.notesPresenter.createNewNoteButtonPressed();
+
+        verify(this.mockNotesView).navigateToNoteCreator();
+    }
+
 }

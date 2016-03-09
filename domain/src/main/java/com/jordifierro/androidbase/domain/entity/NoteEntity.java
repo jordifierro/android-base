@@ -6,6 +6,11 @@ public class NoteEntity {
     private String title;
     private String content;
 
+    public NoteEntity(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public NoteEntity(int id, String title, String content) {
         this.id = id;
         this.title = title;

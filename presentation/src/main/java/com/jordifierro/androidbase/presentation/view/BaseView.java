@@ -10,4 +10,6 @@ public interface BaseView {
     void hideLoader();
     void showError(String message);
     void showMessage(String message);
+
+    void close();
 }

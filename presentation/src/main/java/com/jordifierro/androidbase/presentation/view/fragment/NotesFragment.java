@@ -1,5 +1,6 @@
 package com.jordifierro.androidbase.presentation.view.fragment;
 
+import android.content.Intent;
 import android.widget.ListView;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
@@ -8,6 +9,7 @@ import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.NotesPresenter;
 import com.jordifierro.androidbase.presentation.view.NotesView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
+import com.jordifierro.androidbase.presentation.view.activity.NoteCreateActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
 import com.jordifierro.androidbase.presentation.view.adapter.NotesAdapter;
 
@@ -16,6 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class NotesFragment extends BaseFragment implements NotesView {
 
@@ -52,8 +55,18 @@ public class NotesFragment extends BaseFragment implements NotesView {
         listView.setAdapter(adapter);
     }
 
+    @OnClick(R.id.btn_create_new_note)
+    public void createNewNoteButtonPressed() {
+        this.notesPresenter.createNewNoteButtonPressed();
+    }
+
     @Override
     public void navigateToNoteDetail(int noteId) {
         getActivity().startActivity(NoteDetailActivity.getCallingIntent(getActivity(), noteId));
+    }
+
+    @Override
+    public void navigateToNoteCreator() {
+        getActivity().startActivity(new Intent(getActivity(), NoteCreateActivity.class));
     }
 }

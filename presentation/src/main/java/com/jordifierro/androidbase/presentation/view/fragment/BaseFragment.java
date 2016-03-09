@@ -13,6 +13,7 @@ import com.jordifierro.androidbase.presentation.BaseApplication;
 import com.jordifierro.androidbase.presentation.dependency.component.ApplicationComponent;
 import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.view.BaseView;
+import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
 
 import butterknife.ButterKnife;
 
@@ -94,4 +95,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         Toast.makeText(context(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void close() {
+        ((BaseActivity)getActivity()).close();
+    }
 }

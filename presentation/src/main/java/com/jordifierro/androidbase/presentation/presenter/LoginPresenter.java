@@ -2,11 +2,13 @@ package com.jordifierro.androidbase.presentation.presenter;
 
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.interactor.user.DoLoginUseCase;
+import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.view.BaseView;
 import com.jordifierro.androidbase.presentation.view.LoginView;
 
 import javax.inject.Inject;
 
+@ActivityScope
 public class LoginPresenter extends BasePresenter implements Presenter {
 
     private DoLoginUseCase doLoginUseCase;

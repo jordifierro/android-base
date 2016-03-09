@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.interactor.note.GetNotesUseCase;
+import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.view.BaseView;
 import com.jordifierro.androidbase.presentation.view.NotesView;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+@ActivityScope
 public class NotesPresenter extends BasePresenter implements Presenter {
 
     private GetNotesUseCase getNotesUseCase;

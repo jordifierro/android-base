@@ -8,11 +8,13 @@ import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Response;
 import rx.Observable;
 import rx.functions.Func1;
 
+@Singleton
 public class NoteDataRepository extends RestApiRepository implements NoteRepository {
 
     private final RestApi restApi;

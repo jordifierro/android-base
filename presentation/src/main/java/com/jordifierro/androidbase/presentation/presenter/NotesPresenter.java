@@ -26,7 +26,10 @@ public class NotesPresenter extends BasePresenter implements Presenter {
     public void initWithView(BaseView view) {
         super.initWithView(view);
         this.notesView = (NotesView) view;
+    }
 
+    @Override
+    public void resume() {
         this.showLoader();
         this.getNotesUseCase.execute(new NotesSubscriber());
     }

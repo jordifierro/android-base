@@ -46,6 +46,8 @@ public class NotesPresenterTest {
     @Test
     public void testGetNotes() throws Exception {
 
+        this.notesPresenter.resume();
+
         verify(this.mockNotesView).showLoader();
         verify(this.getNotesUseCase).execute(any(BasePresenter.BaseSubscriber.class));
     }
@@ -73,7 +75,6 @@ public class NotesPresenterTest {
 
         this.notesSubscriber.onNext(new ArrayList<NoteEntity>());
 
-        verify(this.mockNotesView).showLoader();
         verify(this.mockNotesView).hideLoader();
         verify(this.mockNotesView).showNotes(any(List.class));
     }

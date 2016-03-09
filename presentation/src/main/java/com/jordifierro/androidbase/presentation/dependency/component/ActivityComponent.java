@@ -4,6 +4,7 @@ import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.view.fragment.LoginFragment;
 import com.jordifierro.androidbase.presentation.view.fragment.NoteCreateFragment;
 import com.jordifierro.androidbase.presentation.view.fragment.NoteDetailFragment;
+import com.jordifierro.androidbase.presentation.view.fragment.NoteEditFragment;
 import com.jordifierro.androidbase.presentation.view.fragment.NotesFragment;
 import com.jordifierro.androidbase.presentation.view.fragment.RegisterFragment;
 
@@ -18,5 +19,6 @@ public interface ActivityComponent {
     void inject(NotesFragment notesFragment);
     void inject(NoteDetailFragment noteDetailFragment);
     void inject(NoteCreateFragment noteCreateFragment);
+    void inject(NoteEditFragment noteEditFragment);
 
 }

@@ -24,7 +24,10 @@ public class NoteDetailPresenter extends BasePresenter implements Presenter {
     public void initWithView(BaseView view) {
         super.initWithView(view);
         this.noteDetailView = (NoteDetailView) view;
+    }
 
+    @Override
+    public void resume() {
         this.showLoader();
         this.getNoteUseCase.setParams(this.noteDetailView.getNoteId());
         this.getNoteUseCase.execute(new NoteDetailSubscriber());
@@ -37,5 +40,10 @@ public class NoteDetailPresenter extends BasePresenter implements Presenter {
             NoteDetailPresenter.this.noteDetailView.showNote(note);
         }
     }
+
+    public void editNoteButtonPressed() {
+        this.noteDetailView.navigateToEdit();
+    }
+
 
 }

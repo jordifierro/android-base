@@ -6,12 +6,15 @@
     <string name="title_activity_notes">NotesActivity</string>
     <string name="title_activity_note_detail">NoteDetailActivity</string>
     <string name="title_activity_note_create">NoteCreateActivity</string>
+    <string name="title_activity_note_edit">NoteEditActivity</string>
 
     <string name="button_login">LOGIN</string>
     <string name="button_register">REGISTER</string>
     <string name="button_goto_login">I already have an account</string>
     <string name="button_create_new_note">CREATE A NEW NOTE</string>
     <string name="button_create">CREATE</string>
+    <string name="button_save">SAVE</string>
+    <string name="button_edit">EDIT</string>
 
     <string name="edittext_email">Email…</string>
     <string name="edittext_password">Password…</string>

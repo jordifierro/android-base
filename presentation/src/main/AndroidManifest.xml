@@ -37,6 +37,10 @@
             android:name=".view.activity.NoteCreateActivity"
             android:label="@string/title_activity_note_create"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.NoteEditActivity"
+            android:label="@string/title_activity_note_edit"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

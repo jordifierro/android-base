@@ -43,6 +43,8 @@ public class NoteDetailPresenterTest {
     @Test
     public void testGetNote() throws Exception {
 
+        this.noteDetailPresenter.resume();
+
         verify(this.mockNoteDetailView).getNoteId();
         verify(this.mockNoteDetailView).showLoader();
         verify(this.getNoteUseCase).setParams(any(int.class));
@@ -72,9 +74,16 @@ public class NoteDetailPresenterTest {
 
         this.noteDetailSubscriber.onNext(new NoteEntity(1, "", ""));
 
-        verify(this.mockNoteDetailView).showLoader();
         verify(this.mockNoteDetailView).hideLoader();
         verify(this.mockNoteDetailView).showNote(any(NoteEntity.class));
+    }
+
+    @Test
+    public void testEditNoteButtonPressed() {
+
+        this.noteDetailPresenter.editNoteButtonPressed();
+
+        verify(this.mockNoteDetailView).navigateToEdit();
     }
 
 }

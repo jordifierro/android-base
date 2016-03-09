@@ -18,6 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_divider"
+        android:layout_above="@+id/btn_edit"
         android:textSize="@dimen/text_normal" />
+
+    <Button android:id="@+id/btn_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/button_edit"/>
 
 </RelativeLayout>

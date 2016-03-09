@@ -20,8 +20,7 @@ import static org.mockito.Mockito.verify;
 
 public class NotesPresenterTest {
 
-    @Mock
-    GetNotesUseCase getNotesUseCase;
+    @Mock GetNotesUseCase getNotesUseCase;
     @Mock NotesView mockNotesView;
     @Mock Observable mockObservable;
 

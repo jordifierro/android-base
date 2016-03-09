@@ -53,7 +53,7 @@ public class UserDataRepositoryTest{
         MockitoAnnotations.initMocks(this);
         this.mockUser = new UserEntity("mock@mail.com");
         this.mockUser.setPassword("1234");
-        this.mockUser.setConfirmationPassword("1234");
+        this.mockUser.setPasswordConfirmation("1234");
     }
 
     @After

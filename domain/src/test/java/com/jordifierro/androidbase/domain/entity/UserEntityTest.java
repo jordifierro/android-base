@@ -27,11 +27,11 @@ public class UserEntityTest {
         this.user.setEmail("another@email.com");
         this.user.setAuthToken("1234TOKEN");
         this.user.setPassword("password");
-        this.user.setConfirmationPassword("conf_password");
+        this.user.setPasswordConfirmation("conf_password");
 
         assertThat(this.user.getEmail(), is("another@email.com"));
         assertThat(this.user.getAuthToken(), is("1234TOKEN"));
         assertThat(this.user.getPassword(), is("password"));
-        assertThat(this.user.getConfirmationPassword(), is("conf_password"));
+        assertThat(this.user.getPasswordConfirmation(), is("conf_password"));
     }
 }

@@ -17,10 +17,23 @@
         android:inputType="textPassword"
         android:hint="@string/edittext_password"/>
 
-    <Button android:id="@+id/btn_login"
+    <EditText android:id="@+id/et_password_confirmation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_password"
-        android:text="@string/button_login"/>
+        android:inputType="textPassword"
+        android:hint="@string/edittext_password_confirmation"/>
+
+    <Button android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_password_confirmation"
+        android:text="@string/button_register"/>
+
+    <Button android:id="@+id/btn_goto_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_register"
+        android:text="@string/button_goto_login"/>
 
 </RelativeLayout>

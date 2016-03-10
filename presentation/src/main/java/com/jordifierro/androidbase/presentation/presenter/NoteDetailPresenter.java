@@ -12,7 +12,7 @@ import javax.inject.Inject;
 public class NoteDetailPresenter extends BasePresenter implements Presenter {
 
     private GetNoteUseCase getNoteUseCase;
-    private NoteDetailView noteDetailView;
+    NoteDetailView noteDetailView;
 
     @Inject
     public NoteDetailPresenter(GetNoteUseCase getNoteUseCase) {
@@ -31,6 +31,12 @@ public class NoteDetailPresenter extends BasePresenter implements Presenter {
         this.showLoader();
         this.getNoteUseCase.setParams(this.noteDetailView.getNoteId());
         this.getNoteUseCase.execute(new NoteDetailSubscriber());
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        this.noteDetailView = null;
     }
 
     protected class NoteDetailSubscriber extends BaseSubscriber<NoteEntity> {

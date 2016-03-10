@@ -12,7 +12,7 @@ import javax.inject.Inject;
 public class RegisterPresenter extends BasePresenter implements Presenter {
 
     private CreateUserUseCase createUserUseCase;
-    private RegisterView registerView;
+    RegisterView registerView;
 
     @Inject
     public RegisterPresenter(CreateUserUseCase createUserUseCase) {
@@ -24,6 +24,12 @@ public class RegisterPresenter extends BasePresenter implements Presenter {
     public void initWithView(BaseView view) {
         super.initWithView(view);
         this.registerView = (RegisterView) view;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        this.registerView = null;
     }
 
     public void registerUser(String email, String password, String passwordConfirmation) {

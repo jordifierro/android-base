@@ -14,7 +14,7 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
 
     private UpdateNoteUseCase updateNoteUseCase;
     private GetNoteUseCase getNoteUseCase;
-    private NoteEditView noteEditView;
+    NoteEditView noteEditView;
 
     @Inject
     public NoteEditPresenter(UpdateNoteUseCase updateNoteUseCase, GetNoteUseCase getNoteUseCase) {
@@ -37,6 +37,7 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
     public void destroy() {
         super.destroy();
         this.getNoteUseCase.unsubscribe();
+        this.noteEditView = null;
     }
 
     protected class GetNoteSubscriber extends BaseSubscriber<NoteEntity> {

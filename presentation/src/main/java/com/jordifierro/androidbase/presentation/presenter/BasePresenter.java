@@ -5,7 +5,7 @@ import com.jordifierro.androidbase.presentation.view.BaseView;
 
 public class BasePresenter implements Presenter {
 
-    private BaseView view;
+    BaseView view;
     private UseCase useCase;
 
     public BasePresenter(UseCase useCase) {

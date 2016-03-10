@@ -15,6 +15,7 @@ import java.util.List;
 
 import rx.Observable;
 
+import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -40,7 +41,9 @@ public class NotesPresenterTest {
 
         this.notesPresenter.destroy();
 
-        verify(getNotesUseCase).unsubscribe();
+        verify(this.getNotesUseCase).unsubscribe();
+        assertNull(this.notesPresenter.notesView);
+        assertNull(this.notesPresenter.view);
     }
 
     @Test

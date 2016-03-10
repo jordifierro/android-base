@@ -12,7 +12,7 @@ import javax.inject.Inject;
 public class NoteCreatePresenter extends BasePresenter implements Presenter {
 
     private CreateNoteUseCase createNoteUseCase;
-    private NoteCreateView noteCreateView;
+    NoteCreateView noteCreateView;
 
     @Inject
     public NoteCreatePresenter(CreateNoteUseCase createNoteUseCase) {
@@ -24,6 +24,12 @@ public class NoteCreatePresenter extends BasePresenter implements Presenter {
     public void initWithView(BaseView view) {
         super.initWithView(view);
         this.noteCreateView = (NoteCreateView) view;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        this.noteCreateView = null;
     }
 
     public void createButtonPressed(String title, String content) {

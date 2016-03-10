@@ -12,7 +12,7 @@ import javax.inject.Inject;
 public class LoginPresenter extends BasePresenter implements Presenter {
 
     private DoLoginUseCase doLoginUseCase;
-    private LoginView loginView;
+    LoginView loginView;
 
     @Inject
     public LoginPresenter(DoLoginUseCase doLoginUseCase) {
@@ -24,6 +24,12 @@ public class LoginPresenter extends BasePresenter implements Presenter {
     public void initWithView(BaseView view) {
         super.initWithView(view);
         this.loginView = (LoginView) view;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        this.loginView = null;
     }
 
     public void loginUser(String email, String password) {

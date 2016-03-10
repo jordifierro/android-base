@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 
+import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
@@ -44,6 +45,8 @@ public class NoteEditPresenterTest {
 
         verify(this.getNoteUseCase).unsubscribe();
         verify(this.updateNoteUseCase).unsubscribe();
+        assertNull(this.noteEditPresenter.noteEditView);
+        assertNull(this.noteEditPresenter.view);
     }
 
     @Test

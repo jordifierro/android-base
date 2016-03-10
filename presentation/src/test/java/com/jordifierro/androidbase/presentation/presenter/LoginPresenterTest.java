@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 
+import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -37,7 +38,9 @@ public class LoginPresenterTest {
 
         this.loginPresenter.destroy();
 
-        verify(mockDoLoginUseCase).unsubscribe();
+        verify(this.mockDoLoginUseCase).unsubscribe();
+        assertNull(this.loginPresenter.loginView);
+        assertNull(this.loginPresenter.view);
     }
 
     @Test

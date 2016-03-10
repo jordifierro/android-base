@@ -24,7 +24,13 @@
     <Button android:id="@+id/btn_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/btn_delete"
         android:text="@string/button_edit"/>
+
+    <Button android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/button_delete"/>
 
 </RelativeLayout>

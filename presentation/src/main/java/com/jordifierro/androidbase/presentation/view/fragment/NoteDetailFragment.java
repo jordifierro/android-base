@@ -51,7 +51,7 @@ public class NoteDetailFragment extends BaseFragment implements NoteDetailView {
     }
 
     @OnClick(R.id.btn_edit)
-    public void loginButtonPressed() {
+    public void editNoteButtonPressed() {
         this.noteDetailPresenter.editNoteButtonPressed();
     }
 
@@ -59,5 +59,10 @@ public class NoteDetailFragment extends BaseFragment implements NoteDetailView {
     public void navigateToEdit() {
         getActivity().startActivity(
                 NoteEditActivity.getCallingIntent(getActivity(), this.getNoteId()));
+    }
+
+    @OnClick(R.id.btn_delete)
+    public void deleteNoteButtonPressed() {
+        this.noteDetailPresenter.deleteNoteButtonPressed();
     }
 }

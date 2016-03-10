@@ -23,7 +23,7 @@ public interface RestApi {
     @POST("/users")
     Observable<Response<UserEntity>> createUser(@Body UserWrapper userWrapper);
 
-    @DELETE("/users")
+    @DELETE("/users/0")
     Observable<Response<Void>> deleteUser(@Header("Authorization") String token);
 
     @POST("/users/login")

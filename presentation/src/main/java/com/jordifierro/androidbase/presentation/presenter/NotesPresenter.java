@@ -52,8 +52,4 @@ public class NotesPresenter extends BasePresenter implements Presenter {
         this.notesView.navigateToNoteDetail(note.getId());
     }
 
-    public void createNewNoteButtonPressed() {
-        this.notesView.navigateToNoteCreator();
-    }
-
 }

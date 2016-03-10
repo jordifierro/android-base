@@ -7,6 +7,8 @@ public class UserEntity {
     private String password;
     private String passwordConfirmation;
 
+    public UserEntity() {}
+
     public UserEntity(String email) {
         this.email = email;
     }

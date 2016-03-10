@@ -29,7 +29,8 @@ public class SessionDataRepositoryTest extends InstrumentationTestCase {
     }
 
     public void testGetWithoutSetReturnsNull(){
-        assertNull(this.sessionDataRepository.getCurrentUser());
+        assertNull(this.sessionDataRepository.getCurrentUser().getEmail());
+        assertNull(this.sessionDataRepository.getCurrentUser().getAuthToken());
     }
 
     public void testSetAndGetSettedUser() {
@@ -44,6 +45,7 @@ public class SessionDataRepositoryTest extends InstrumentationTestCase {
         this.sessionDataRepository.setCurrentUser(this.user);
         this.sessionDataRepository.invalidateSession();
 
-        assertNull(this.sessionDataRepository.getCurrentUser());
+        assertNull(this.sessionDataRepository.getCurrentUser().getEmail());
+        assertNull(this.sessionDataRepository.getCurrentUser().getAuthToken());
     }
 }

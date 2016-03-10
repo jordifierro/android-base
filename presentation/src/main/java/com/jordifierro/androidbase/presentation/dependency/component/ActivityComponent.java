@@ -7,6 +7,7 @@ import com.jordifierro.androidbase.presentation.view.fragment.NoteDetailFragment
 import com.jordifierro.androidbase.presentation.view.fragment.NoteEditFragment;
 import com.jordifierro.androidbase.presentation.view.fragment.NotesFragment;
 import com.jordifierro.androidbase.presentation.view.fragment.RegisterFragment;
+import com.jordifierro.androidbase.presentation.view.fragment.SettingsFragment;
 
 import dagger.Component;
 
@@ -20,5 +21,6 @@ public interface ActivityComponent {
     void inject(NoteDetailFragment noteDetailFragment);
     void inject(NoteCreateFragment noteCreateFragment);
     void inject(NoteEditFragment noteEditFragment);
+    void inject(SettingsFragment settingsFragment);
 
 }

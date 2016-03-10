@@ -11,6 +11,7 @@ import com.jordifierro.androidbase.presentation.view.NotesView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NoteCreateActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
+import com.jordifierro.androidbase.presentation.view.activity.SettingsActivity;
 import com.jordifierro.androidbase.presentation.view.adapter.NotesAdapter;
 
 import java.util.List;
@@ -57,7 +58,12 @@ public class NotesFragment extends BaseFragment implements NotesView {
 
     @OnClick(R.id.btn_create_new_note)
     public void createNewNoteButtonPressed() {
-        this.notesPresenter.createNewNoteButtonPressed();
+        getActivity().startActivity(new Intent(getActivity(), NoteCreateActivity.class));
+    }
+
+    @OnClick(R.id.btn_settings)
+    public void settingsButtonPressed() {
+        getActivity().startActivity(new Intent(getActivity(), SettingsActivity.class));
     }
 
     @Override
@@ -65,8 +71,4 @@ public class NotesFragment extends BaseFragment implements NotesView {
         getActivity().startActivity(NoteDetailActivity.getCallingIntent(getActivity(), noteId));
     }
 
-    @Override
-    public void navigateToNoteCreator() {
-        getActivity().startActivity(new Intent(getActivity(), NoteCreateActivity.class));
-    }
 }

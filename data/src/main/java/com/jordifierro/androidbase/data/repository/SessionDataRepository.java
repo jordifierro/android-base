@@ -28,7 +28,7 @@ public class SessionDataRepository implements SessionRepository {
             user.setAuthToken(sharedPreferences.getString(AUTH_TOKEN, null));
             return user;
         }
-        return null;
+        return new UserEntity();
     }
 
     @Override

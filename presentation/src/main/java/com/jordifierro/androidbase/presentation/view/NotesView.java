@@ -8,6 +8,5 @@ public interface NotesView extends BaseView {
 
     void showNotes(List<NoteEntity> notes);
     void navigateToNoteDetail(int noteId);
-    void navigateToNoteCreator();
 
 }

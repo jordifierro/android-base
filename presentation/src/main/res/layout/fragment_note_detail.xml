@@ -1,36 +1,28 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding_normal">
+    android:layout_height="match_parent">
 
-    <TextView android:id="@+id/tv_title"
+    <RelativeLayout android:id="@+id/rl_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_normal" />
-    
-    <RelativeLayout android:id="@+id/rl_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/tv_title"
-        android:background="@color/colorPrimary"/>
+        android:padding="@dimen/padding_normal">
 
-    <TextView android:id="@+id/tv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_divider"
-        android:layout_above="@+id/btn_edit"
-        android:textSize="@dimen/text_normal" />
+        <TextView android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <Button android:id="@+id/btn_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_delete"
-        android:text="@string/button_edit"/>
+        <RelativeLayout android:id="@+id/rl_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/tv_title"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:background="@color/brown"/>
 
-    <Button android:id="@+id/btn_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/button_delete"/>
+        <TextView android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_divider" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

@@ -68,4 +68,7 @@ public class NoteEditFragment extends BaseFragment implements NoteEditView {
         return ((NoteEditActivity)getActivity()).getNoteId();
     }
 
+    public NoteEditPresenter getNoteEditPresenter() {
+        return noteEditPresenter;
+    }
 }

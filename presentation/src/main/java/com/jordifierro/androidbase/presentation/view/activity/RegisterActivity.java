@@ -14,4 +14,9 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected boolean useToolbar() {
+        return false;
+    }
+
 }

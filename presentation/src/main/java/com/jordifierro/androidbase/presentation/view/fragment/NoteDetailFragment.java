@@ -9,12 +9,10 @@ import com.jordifierro.androidbase.presentation.presenter.NoteDetailPresenter;
 import com.jordifierro.androidbase.presentation.view.NoteDetailView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NoteEditActivity;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 public class NoteDetailFragment extends BaseFragment implements NoteDetailView {
 
@@ -50,19 +48,4 @@ public class NoteDetailFragment extends BaseFragment implements NoteDetailView {
         return ((NoteDetailActivity)getActivity()).getNoteId();
     }
 
-    @OnClick(R.id.btn_edit)
-    public void editNoteButtonPressed() {
-        this.noteDetailPresenter.editNoteButtonPressed();
-    }
-
-    @Override
-    public void navigateToEdit() {
-        getActivity().startActivity(
-                NoteEditActivity.getCallingIntent(getActivity(), this.getNoteId()));
-    }
-
-    @OnClick(R.id.btn_delete)
-    public void deleteNoteButtonPressed() {
-        this.noteDetailPresenter.deleteNoteButtonPressed();
-    }
 }

@@ -3,6 +3,9 @@ package com.jordifierro.androidbase.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.fragment.NoteDetailFragment;
@@ -39,4 +42,25 @@ public class NoteDetailActivity extends BaseActivity {
     public int getNoteId() {
         return this.noteId;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_note_detail, menu);
+        this.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.item_edit) {
+                    NoteDetailActivity.this.navigateToEdit();
+                    return true;
+                }
+                return false;
+            }
+        });
+        return true;
+    }
+
+    public void navigateToEdit() {
+        startActivity(NoteEditActivity.getCallingIntent(this, this.getNoteId()));
+    }
+
 }

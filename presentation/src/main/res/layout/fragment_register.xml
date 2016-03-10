@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:padding="@dimen/padding_normal">
 
     <EditText android:id="@+id/et_email"
@@ -30,9 +31,10 @@
         android:layout_below="@+id/et_password_confirmation"
         android:text="@string/button_register"/>
 
-    <Button android:id="@+id/btn_goto_login"
-        android:layout_width="match_parent"
+    <TextView android:id="@+id/btn_goto_login"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/btn_register"
         android:text="@string/button_goto_login"/>
 

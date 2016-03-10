@@ -11,7 +11,6 @@ import com.jordifierro.androidbase.presentation.view.NotesView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NoteCreateActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
-import com.jordifierro.androidbase.presentation.view.activity.SettingsActivity;
 import com.jordifierro.androidbase.presentation.view.adapter.NotesAdapter;
 
 import java.util.List;
@@ -45,7 +44,7 @@ public class NotesFragment extends BaseFragment implements NotesView {
 
     @Override
     public void showNotes(List<NoteEntity> notes) {
-        NotesAdapter adapter = new NotesAdapter(context());
+        NotesAdapter adapter = new NotesAdapter(getActivity());
         adapter.setOnItemClickListener(new NotesAdapter.OnItemClickListener() {
             @Override
             public void onNoteItemClicked(NoteEntity note) {
@@ -59,11 +58,6 @@ public class NotesFragment extends BaseFragment implements NotesView {
     @OnClick(R.id.btn_create_new_note)
     public void createNewNoteButtonPressed() {
         getActivity().startActivity(new Intent(getActivity(), NoteCreateActivity.class));
-    }
-
-    @OnClick(R.id.btn_settings)
-    public void settingsButtonPressed() {
-        getActivity().startActivity(new Intent(getActivity(), SettingsActivity.class));
     }
 
     @Override

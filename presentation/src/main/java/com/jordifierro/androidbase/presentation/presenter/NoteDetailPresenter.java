@@ -1,7 +1,6 @@
 package com.jordifierro.androidbase.presentation.presenter;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
-import com.jordifierro.androidbase.domain.interactor.note.DeleteNoteUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.GetNoteUseCase;
 import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.view.BaseView;
@@ -13,14 +12,12 @@ import javax.inject.Inject;
 public class NoteDetailPresenter extends BasePresenter implements Presenter {
 
     private GetNoteUseCase getNoteUseCase;
-    private DeleteNoteUseCase deleteNoteUseCase;
     NoteDetailView noteDetailView;
 
     @Inject
-    public NoteDetailPresenter(GetNoteUseCase getNoteUseCase, DeleteNoteUseCase deleteNoteUseCase) {
+    public NoteDetailPresenter(GetNoteUseCase getNoteUseCase) {
         super(getNoteUseCase);
         this.getNoteUseCase = getNoteUseCase;
-        this.deleteNoteUseCase = deleteNoteUseCase;
     }
 
     @Override
@@ -44,28 +41,15 @@ public class NoteDetailPresenter extends BasePresenter implements Presenter {
 
     protected class NoteDetailSubscriber extends BaseSubscriber<NoteEntity> {
 
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            NoteDetailPresenter.this.noteDetailView.close();
+        }
+
         @Override public void onNext(NoteEntity note) {
             NoteDetailPresenter.this.hideLoader();
             NoteDetailPresenter.this.noteDetailView.showNote(note);
-        }
-    }
-
-    public void editNoteButtonPressed() {
-        this.noteDetailView.navigateToEdit();
-    }
-
-    public void deleteNoteButtonPressed() {
-        this.showLoader();
-        this.deleteNoteUseCase.setParams(this.noteDetailView.getNoteId());
-        this.deleteNoteUseCase.execute(new NoteDeleteSubscriber());
-    }
-
-    protected class NoteDeleteSubscriber extends BaseSubscriber<Void> {
-
-        @Override
-        public void onNext(Void aVoid) {
-            NoteDetailPresenter.this.hideLoader();
-            NoteDetailPresenter.this.noteDetailView.close();
         }
     }
 

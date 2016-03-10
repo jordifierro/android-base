@@ -14,4 +14,8 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected boolean useToolbar() {
+        return false;
+    }
 }

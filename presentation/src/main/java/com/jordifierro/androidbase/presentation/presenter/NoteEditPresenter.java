@@ -1,6 +1,7 @@
 package com.jordifierro.androidbase.presentation.presenter;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
+import com.jordifierro.androidbase.domain.interactor.note.DeleteNoteUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.GetNoteUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.UpdateNoteUseCase;
 import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
@@ -14,13 +15,16 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
 
     private UpdateNoteUseCase updateNoteUseCase;
     private GetNoteUseCase getNoteUseCase;
+    private DeleteNoteUseCase deleteNoteUseCase;
     NoteEditView noteEditView;
 
     @Inject
-    public NoteEditPresenter(UpdateNoteUseCase updateNoteUseCase, GetNoteUseCase getNoteUseCase) {
+    public NoteEditPresenter(UpdateNoteUseCase updateNoteUseCase,
+                             GetNoteUseCase getNoteUseCase, DeleteNoteUseCase deleteNoteUseCase) {
         super(updateNoteUseCase);
         this.updateNoteUseCase = updateNoteUseCase;
         this.getNoteUseCase = getNoteUseCase;
+        this.deleteNoteUseCase = deleteNoteUseCase;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
     public void destroy() {
         super.destroy();
         this.getNoteUseCase.unsubscribe();
+        this.deleteNoteUseCase.unsubscribe();
         this.noteEditView = null;
     }
 
@@ -63,6 +68,22 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
             NoteEditPresenter.this.hideLoader();
             NoteEditPresenter.this.noteEditView.close();
         }
+
+    }
+
+    public void deleteNoteButtonPressed(){
+        this.noteEditView.showLoader();
+        this.deleteNoteUseCase.setParams(this.noteEditView.getNoteId());
+        this.deleteNoteUseCase.execute(new DeleteNoteSubscriber());
+    }
+
+    protected class DeleteNoteSubscriber extends BaseSubscriber<Void> {
+
+        @Override public void onNext(Void v) {
+            NoteEditPresenter.this.hideLoader();
+            NoteEditPresenter.this.noteEditView.close();
+        }
+
     }
 
 }

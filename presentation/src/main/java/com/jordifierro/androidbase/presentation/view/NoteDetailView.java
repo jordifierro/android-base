@@ -6,6 +6,5 @@ public interface NoteDetailView extends BaseView {
 
     void showNote(NoteEntity note);
     int getNoteId();
-    void navigateToEdit();
 
 }

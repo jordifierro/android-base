@@ -11,13 +11,8 @@
     <Button android:id="@+id/btn_create_new_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_settings"
-        android:text="@string/button_create_new_note"/>
-
-    <Button android:id="@+id/btn_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/button_settings"/>
+        android:layout_margin="@dimen/padding_normal"
+        android:text="@string/button_create_new_note"/>
 
 </RelativeLayout>

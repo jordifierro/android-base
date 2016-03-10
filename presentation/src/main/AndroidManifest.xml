@@ -14,12 +14,14 @@
         <activity
             android:name=".view.activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".view.activity.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -43,7 +45,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.SettingsActivity"
-            android:label="@string/title_activity_note_edit"
+            android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

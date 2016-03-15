@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.fragment.NotesFragment;
 
-public class NotesActivity extends BaseActivity {
+public class NotesActivity extends BaseActivity implements NotesFragment.Listener {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class NotesActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.item_settings) {
-                    NotesActivity.this.navigateToSettings();
+                    NotesActivity.this.displaySettings();
                     return true;
                 }
                 return false;
@@ -39,7 +39,17 @@ public class NotesActivity extends BaseActivity {
         return true;
     }
 
-    public void navigateToSettings() {
+    public void displaySettings() {
         startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    @Override
+    public void diplayNoteCreator() {
+        startActivity(new Intent(this, NoteCreateActivity.class));
+    }
+
+    @Override
+    public void showNote(int noteId) {
+        startActivity(NoteDetailActivity.getCallingIntent(this, noteId));
     }
 }

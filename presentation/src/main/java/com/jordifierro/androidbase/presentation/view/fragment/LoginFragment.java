@@ -1,6 +1,5 @@
 package com.jordifierro.androidbase.presentation.view.fragment;
 
-import android.content.Intent;
 import android.widget.EditText;
 
 import com.jordifierro.androidbase.presentation.R;
@@ -8,7 +7,6 @@ import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.LoginPresenter;
 import com.jordifierro.androidbase.presentation.view.LoginView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NotesActivity;
 
 import javax.inject.Inject;
 
@@ -44,7 +42,17 @@ public class LoginFragment extends BaseFragment implements LoginView {
     }
 
     @Override
-    public void navigateToNotes() {
-        getActivity().startActivity(new Intent(getActivity(), NotesActivity.class));
+    public void viewNotes() {
+        ((Listener)getActivity()).viewNotes();
+    }
+
+    @OnClick(R.id.btn_register)
+    public void registerButtonPressed() {
+        ((Listener)getActivity()).displayRegister();
+    }
+
+    public interface Listener {
+        void viewNotes();
+        void displayRegister();
     }
 }

@@ -8,6 +8,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.activity.LoginActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NotesActivity;
+import com.jordifierro.androidbase.presentation.view.activity.RegisterActivity;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -48,12 +49,22 @@ public class LoginViewTest {
     }
 
     @Test
-    public void testNavigateToNotes() {
+    public void testViewNotes() {
         Intents.init();
 
-        this.loginFragment.navigateToNotes();
+        this.loginFragment.viewNotes();
 
         intended(hasComponent(NotesActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void testRegisterButton() {
+        Intents.init();
+
+        onView(withId(R.id.btn_register)).perform(click());
+
+        intended(hasComponent(RegisterActivity.class.getName()));
         Intents.release();
     }
 }

@@ -13,7 +13,6 @@ import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.NoteEditPresenter;
 import com.jordifierro.androidbase.presentation.view.NoteEditView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NoteEditActivity;
 
 import javax.inject.Inject;
 
@@ -65,7 +64,11 @@ public class NoteEditFragment extends BaseFragment implements NoteEditView {
 
     @Override
     public int getNoteId() {
-        return ((NoteEditActivity)getActivity()).getNoteId();
+        return ((Listener)getActivity()).getNoteId();
+    }
+
+    public interface Listener {
+        int getNoteId();
     }
 
     public NoteEditPresenter getNoteEditPresenter() {

@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.fragment.NoteEditFragment;
 
-public class NoteEditActivity extends BaseActivity {
+public class NoteEditActivity extends BaseActivity implements NoteEditFragment.Listener {
 
     public static final String PARAM_NOTE_ID = "param_note_id";
 

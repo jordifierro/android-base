@@ -54,11 +54,12 @@ public class BasePresenter implements Presenter {
         @Override public void onError(Throwable e) {
             BasePresenter.this.hideLoader();
             BasePresenter.this.showError(e.getMessage());
+            e.printStackTrace();
         }
 
         @Override public void onNext(T t) {
             BasePresenter.this.hideLoader();
-            BasePresenter.this.showMessage(t.toString());
+            //BasePresenter.this.showMessage(t.toString());
         }
     }
 }

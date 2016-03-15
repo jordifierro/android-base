@@ -77,7 +77,7 @@ public class RegisterPresenterTest {
         this.registerSubscriber.onNext(new UserEntity("email"));
 
         verify(this.mockRegisterView).hideLoader();
-        verify(this.mockRegisterView).navigateToNotes();
+        verify(this.mockRegisterView).viewNotes();
     }
 
 }

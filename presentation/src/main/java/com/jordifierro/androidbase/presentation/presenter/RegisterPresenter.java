@@ -47,8 +47,9 @@ public class RegisterPresenter extends BasePresenter implements Presenter {
         @Override
         public void onNext(UserEntity user) {
             RegisterPresenter.this.hideLoader();
-            RegisterPresenter.this.registerView.navigateToNotes();
+            RegisterPresenter.this.registerView.viewNotes();
         }
+
     }
 
 }

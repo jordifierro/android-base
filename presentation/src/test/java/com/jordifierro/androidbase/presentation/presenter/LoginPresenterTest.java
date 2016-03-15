@@ -77,7 +77,7 @@ public class LoginPresenterTest {
         this.loginSubscriber.onNext(new UserEntity("email"));
 
         verify(this.mockLoginView).hideLoader();
-        verify(this.mockLoginView).navigateToNotes();
+        verify(this.mockLoginView).viewNotes();
     }
 
 }

@@ -30,8 +30,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -69,6 +67,7 @@ public class NotesViewTest {
 
     @Test
     public void testNoteSelected() {
+        Intents.init();
         this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -77,15 +76,6 @@ public class NotesViewTest {
         });
 
         onView(withText("Second title")).perform(click());
-
-        verify(this.notesFragment.notesPresenter).onNoteSelected(any(NoteEntity.class));
-    }
-
-    @Test
-    public void testNavigateToNote() {
-        Intents.init();
-
-        this.notesFragment.navigateToNoteDetail(2);
 
         intended(allOf(
                 hasComponent(NoteDetailActivity.class.getName()),
@@ -112,4 +102,5 @@ public class NotesViewTest {
         intended(hasComponent(SettingsActivity.class.getName()));
         Intents.release();
     }
+
 }

@@ -48,8 +48,4 @@ public class NotesPresenter extends BasePresenter implements Presenter {
         }
     }
 
-    public void onNoteSelected(NoteEntity note) {
-        this.notesView.navigateToNoteDetail(note.getId());
-    }
-
 }

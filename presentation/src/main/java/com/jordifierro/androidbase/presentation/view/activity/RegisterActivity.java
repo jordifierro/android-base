@@ -1,11 +1,12 @@
 package com.jordifierro.androidbase.presentation.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.fragment.RegisterFragment;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity implements RegisterFragment.Listener {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {
@@ -17,6 +18,11 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected boolean useToolbar() {
         return false;
+    }
+
+    @Override
+    public void viewNotes() {
+        startActivity(new Intent(this, NotesActivity.class));
     }
 
 }

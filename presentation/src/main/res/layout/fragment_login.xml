@@ -24,4 +24,10 @@
         android:layout_below="@+id/et_password"
         android:text="@string/button_login"/>
 
+    <Button android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_login"
+        android:text="@string/button_register"/>
+
 </RelativeLayout>

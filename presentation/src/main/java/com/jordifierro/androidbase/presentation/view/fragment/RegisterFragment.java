@@ -1,6 +1,5 @@
 package com.jordifierro.androidbase.presentation.view.fragment;
 
-import android.content.Intent;
 import android.widget.EditText;
 
 import com.jordifierro.androidbase.presentation.R;
@@ -8,8 +7,6 @@ import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.RegisterPresenter;
 import com.jordifierro.androidbase.presentation.view.RegisterView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
-import com.jordifierro.androidbase.presentation.view.activity.LoginActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NotesActivity;
 
 import javax.inject.Inject;
 
@@ -47,18 +44,13 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
                                             passwordConfirmationEditText.getText().toString());
     }
 
-    @OnClick(R.id.btn_goto_login)
-    public void gotoLoginButtonPressed() {
-        this.navigateToLogin();
+    @Override
+    public void viewNotes() {
+        ((Listener)getActivity()).viewNotes();
     }
 
-    @Override
-    public void navigateToNotes() {
-        getActivity().startActivity(new Intent(getActivity(), NotesActivity.class));
+    public interface Listener {
+        void viewNotes();
     }
 
-    @Override
-    public void navigateToLogin() {
-        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-    }
 }

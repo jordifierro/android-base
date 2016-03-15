@@ -46,8 +46,9 @@ public class LoginPresenter extends BasePresenter implements Presenter {
         @Override
         public void onNext(UserEntity user) {
             LoginPresenter.this.hideLoader();
-            LoginPresenter.this.loginView.navigateToNotes();
+            LoginPresenter.this.loginView.viewNotes();
         }
+
     }
 
 }

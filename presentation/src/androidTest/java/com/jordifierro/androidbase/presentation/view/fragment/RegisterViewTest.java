@@ -6,7 +6,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.view.activity.LoginActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NotesActivity;
 import com.jordifierro.androidbase.presentation.view.activity.RegisterActivity;
 
@@ -51,20 +50,10 @@ public class RegisterViewTest {
     }
 
     @Test
-    public void testNavigateToLogin() {
-        Intents.init();
-
-        onView(withId(R.id.btn_goto_login)).perform(click());
-
-        intended(hasComponent(LoginActivity.class.getName()));
-        Intents.release();
-    }
-
-    @Test
     public void testNavigateToNotes() {
         Intents.init();
 
-        this.registerFragment.navigateToNotes();
+        this.registerFragment.viewNotes();
 
         intended(hasComponent(NotesActivity.class.getName()));
         Intents.release();

@@ -8,7 +8,6 @@ import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.NoteDetailPresenter;
 import com.jordifierro.androidbase.presentation.view.NoteDetailView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
 
 import javax.inject.Inject;
 
@@ -45,7 +44,11 @@ public class NoteDetailFragment extends BaseFragment implements NoteDetailView {
 
     @Override
     public int getNoteId() {
-        return ((NoteDetailActivity)getActivity()).getNoteId();
+        return ((Listener)getActivity()).getNoteId();
+    }
+
+    public interface Listener {
+        int getNoteId();
     }
 
 }

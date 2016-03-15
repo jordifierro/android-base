@@ -23,4 +23,5 @@ public class RestApiErrorException extends RuntimeException {
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
     }
+
 }

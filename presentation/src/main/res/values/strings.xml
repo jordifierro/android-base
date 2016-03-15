@@ -30,4 +30,6 @@
     <string name="textview_title">Title:</string>
     <string name="textview_content">Content:</string>
 
+    <string name="message_error">Some error occurred</string>
+
 </resources>

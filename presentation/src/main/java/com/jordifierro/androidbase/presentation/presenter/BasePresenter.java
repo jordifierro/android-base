@@ -37,8 +37,8 @@ public class BasePresenter implements Presenter {
         this.view.hideLoader();
     }
 
-    public void showError(String message) {
-        this.view.showError(message);
+    public void handleError(Throwable error) {
+        this.view.handleError(error);
     }
 
     public void showMessage(String message) {
@@ -53,7 +53,7 @@ public class BasePresenter implements Presenter {
 
         @Override public void onError(Throwable e) {
             BasePresenter.this.hideLoader();
-            BasePresenter.this.showError(e.getMessage());
+            BasePresenter.this.handleError(e);
             e.printStackTrace();
         }
 

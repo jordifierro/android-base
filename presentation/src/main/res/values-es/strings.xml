@@ -30,4 +30,6 @@
     <string name="title_activity_notes">Tus notas</string>
     <string name="title_activity_register">Registro</string>
     <string name="title_activity_settings">Ajustes de usuario</string>
+
+    <string name="message_error">Ha ocurrido un error</string>
 </resources>

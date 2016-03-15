@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
 import com.jordifierro.androidbase.presentation.BaseApplication;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.dependency.component.FragmentInjector;
@@ -93,8 +95,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
-    public void showError(String message) {
-        Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
+    public void handleError(Throwable error) {
+        if (error instanceof RestApiErrorException) {
+            if (((RestApiErrorException) error).getStatusCode()
+                    == RestApiErrorException.UNAUTHORIZED) displayLogin();
+            else showMessage(error.getMessage());
+        }
+        else Toast.makeText(context(), getResources().getString(R.string.message_error),
+                                                                        Toast.LENGTH_LONG).show();
+    }
+
+    private void displayLogin() {
+        Intent notesIntent = new Intent(this, LoginActivity.class);
+        notesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(notesIntent);
     }
 
     @Override

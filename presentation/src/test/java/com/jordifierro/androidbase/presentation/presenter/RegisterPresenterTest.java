@@ -67,7 +67,7 @@ public class RegisterPresenterTest {
         this.registerSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockRegisterView).hideLoader();
-        verify(this.mockRegisterView).showError(any(String.class));
+        verify(this.mockRegisterView).handleError(any(Throwable.class));
     }
 
     @Test

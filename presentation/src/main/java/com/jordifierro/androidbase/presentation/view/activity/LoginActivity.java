@@ -22,7 +22,9 @@ public class LoginActivity extends BaseActivity implements LoginFragment.Listene
 
     @Override
     public void viewNotes() {
-        startActivity(new Intent(this, NotesActivity.class));
+        Intent notesIntent = new Intent(this, NotesActivity.class);
+        notesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(notesIntent);
     }
 
     @Override

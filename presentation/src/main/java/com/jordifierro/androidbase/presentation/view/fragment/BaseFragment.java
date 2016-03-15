@@ -80,8 +80,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     }
 
     @Override
-    public void showError(String message) {
-        Toast.makeText(context(), message, Toast.LENGTH_LONG).show();
+    public void handleError(Throwable error) {
+        ((BaseActivity)getActivity()).handleError(error);
     }
 
     @Override

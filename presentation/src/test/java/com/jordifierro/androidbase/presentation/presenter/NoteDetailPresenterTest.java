@@ -69,7 +69,7 @@ public class NoteDetailPresenterTest {
         this.noteDetailSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockNoteDetailView).hideLoader();
-        verify(this.mockNoteDetailView).showError(any(String.class));
+        verify(this.mockNoteDetailView).handleError(any(Throwable.class));
         verify(this.mockNoteDetailView).close();
     }
 

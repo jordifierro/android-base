@@ -67,7 +67,7 @@ public class LoginPresenterTest {
         this.loginSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockLoginView).hideLoader();
-        verify(this.mockLoginView).showError(any(String.class));
+        verify(this.mockLoginView).handleError(any(Throwable.class));
     }
 
     @Test

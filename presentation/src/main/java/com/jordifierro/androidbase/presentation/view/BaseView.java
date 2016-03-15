@@ -8,7 +8,7 @@ public interface BaseView {
 
     void showLoader();
     void hideLoader();
-    void showError(String message);
+    void handleError(Throwable error);
     void showMessage(String message);
 
     void close();

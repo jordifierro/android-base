@@ -57,7 +57,7 @@ public class NoteCreatePresenterTest {
         this.noteCreateSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockNoteCreateView).hideLoader();
-        verify(this.mockNoteCreateView).showError(any(String.class));
+        verify(this.mockNoteCreateView).handleError(any(Throwable.class));
     }
 
     @Test

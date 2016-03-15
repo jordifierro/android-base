@@ -78,7 +78,7 @@ public class NoteEditPresenterTest {
         this.getNoteSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockNoteEditView).hideLoader();
-        verify(this.mockNoteEditView).showError(any(String.class));
+        verify(this.mockNoteEditView).handleError(any(Throwable.class));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class NoteEditPresenterTest {
         this.updateNoteSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockNoteEditView).hideLoader();
-        verify(this.mockNoteEditView).showError(any(String.class));
+        verify(this.mockNoteEditView).handleError(any(Throwable.class));
     }
 
     @Test
@@ -155,7 +155,7 @@ public class NoteEditPresenterTest {
         this.deleteNoteSubscriber.onError(new RestApiErrorException("Error message", 500));
 
         verify(this.mockNoteEditView).hideLoader();
-        verify(this.mockNoteEditView).showError(any(String.class));
+        verify(this.mockNoteEditView).handleError(any(Throwable.class));
     }
 
     @Test

@@ -24,7 +24,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
     @Override
     protected void callInjection() {
-        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        ((BaseActivity)getActivity()).getFragmentInjector().inject(this);
     }
 
     @Override

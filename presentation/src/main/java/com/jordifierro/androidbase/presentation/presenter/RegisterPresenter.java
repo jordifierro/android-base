@@ -42,10 +42,6 @@ public class RegisterPresenter extends BasePresenter implements Presenter {
         this.createUserUseCase.execute(new RegisterSubscriber());
     }
 
-    public void loginButtonClick() {
-        this.registerView.navigateToLogin();
-    }
-
     protected class RegisterSubscriber extends BaseSubscriber<UserEntity> {
 
         @Override

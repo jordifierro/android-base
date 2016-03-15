@@ -11,12 +11,17 @@ android {
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
+        testInstrumentationRunner 'com.jordifierro.androidbase.presentation.unittest.TestMockRunner'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
+        exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
     }
 }
 
@@ -40,4 +45,14 @@ dependencies {
 
     testCompile presentationTestDependencies.junit
     testCompile presentationTestDependencies.mockito
+
+    androidTestCompile presentationTestDependencies.androidAnnotations
+    androidTestCompile presentationTestDependencies.mockito
+    androidTestCompile presentationTestDependencies.dexmaker
+    androidTestCompile presentationTestDependencies.dexmakerDx
+    androidTestCompile presentationTestDependencies.dexmakerParent
+    androidTestCompile presentationTestDependencies.dexmakerMockito
+    androidTestCompile presentationTestDependencies.espresso
+    androidTestCompile presentationTestDependencies.espressoIntents
+    androidTestCompile presentationTestDependencies.daggerCompiler
 }

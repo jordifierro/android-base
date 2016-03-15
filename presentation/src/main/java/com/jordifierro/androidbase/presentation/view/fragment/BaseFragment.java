@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.jordifierro.androidbase.presentation.BaseApplication;
-import com.jordifierro.androidbase.presentation.dependency.component.ApplicationComponent;
 import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.view.BaseView;
 import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
@@ -20,10 +18,6 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment implements BaseView {
 
     private ProgressDialog progressDialog;
-
-    protected ApplicationComponent getApplicationComponent() {
-        return ((BaseApplication)getActivity().getApplication()).getApplicationComponent();
-    }
 
     protected abstract void callInjection();
 

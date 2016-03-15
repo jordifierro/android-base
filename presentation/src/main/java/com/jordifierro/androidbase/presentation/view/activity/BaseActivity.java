@@ -13,8 +13,7 @@ import android.widget.Toast;
 
 import com.jordifierro.androidbase.presentation.BaseApplication;
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.dependency.component.ActivityComponent;
-import com.jordifierro.androidbase.presentation.dependency.component.DaggerActivityComponent;
+import com.jordifierro.androidbase.presentation.dependency.component.FragmentInjector;
 import com.jordifierro.androidbase.presentation.view.BaseView;
 
 import butterknife.Bind;
@@ -22,7 +21,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
-    private ActivityComponent activityComponent;
+    private FragmentInjector fragmentInjector;
 
     private ProgressDialog progressDialog;
 
@@ -39,10 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     private void initializeActivityComponent() {
-        if (this.activityComponent == null) {
-            this.activityComponent = DaggerActivityComponent.builder()
-                .applicationComponent(((BaseApplication)getApplication()).getApplicationComponent())
-                .build();
+        if (this.fragmentInjector == null) {
+            this.fragmentInjector = ((BaseApplication)getApplication()).getFragmentInjector();
         }
     }
 
@@ -52,8 +49,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         if (this.useToolbar()) {
             setSupportActionBar(this.toolbar);
             if (this.useBackToolbar()) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setDisplayShowHomeEnabled(true);
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setDisplayShowHomeEnabled(true);
+                }
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -67,8 +66,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected boolean useToolbar() { return true; }
     protected boolean useBackToolbar() { return true; }
 
-    public ActivityComponent getActivityComponent() {
-        return this.activityComponent;
+    public FragmentInjector getFragmentInjector() {
+        return this.fragmentInjector;
     }
 
     protected void addFragment(int containerViewId, Fragment fragment) {

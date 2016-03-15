@@ -25,10 +25,12 @@ ext {
 
     //Testing
     jUnitVersion = '4.12'
-    mockitoVersion = '2.0.43-beta'
+    mockitoVersion = '1.9.5'//'2.0.43-beta', wait for dexmaker
+    dexmakerVersion = '1.4'
     mockWebServerVersion = '3.2.0'
     commonsIOVersion = '2.4'
     jetAnnotationVersion = '15.0'
+    espressoVersion = '2.2.1'
 
     domainDependencies = [
             retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
@@ -70,10 +72,18 @@ ext {
             androidSupportv4:   "com.android.support:support-v4:${androidSupportVersion}",
             androidDesign:      "com.android.support:design:${androidSupportVersion}"
     ]
-
     presentationTestDependencies = [
             junit:              "junit:junit:${jUnitVersion}",
-            mockito:            "org.mockito:mockito-core:${mockitoVersion}"
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}",
+            dexmaker:           "com.crittercism.dexmaker:dexmaker:${dexmakerVersion}",
+            dexmakerDx:         "com.crittercism.dexmaker:dexmaker-dx:${dexmakerVersion}",
+            dexmakerParent:     "com.crittercism.dexmaker:dexmaker-parent:${dexmakerVersion}",
+            dexmakerMockito:    "com.crittercism.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            androidAnnotations: "com.android.support:support-annotations:${androidSupportVersion}",
+            espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            espressoIntents:    "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
+            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}"
     ]
+
 
 }

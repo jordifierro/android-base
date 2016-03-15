@@ -27,7 +27,7 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
 
     @Override
     protected void callInjection() {
-        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        ((BaseActivity)getActivity()).getFragmentInjector().inject(this);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
 
     @OnClick(R.id.btn_goto_login)
     public void gotoLoginButtonPressed() {
-        this.registerPresenter.loginButtonClick();
+        this.navigateToLogin();
     }
 
     @Override

@@ -16,7 +16,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
 
     @Override
     protected void callInjection() {
-        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        ((BaseActivity)getActivity()).getFragmentInjector().inject(this);
     }
 
     @Override

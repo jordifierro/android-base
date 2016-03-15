@@ -31,7 +31,7 @@ public class NoteEditFragment extends BaseFragment implements NoteEditView {
 
     @Override
     protected void callInjection() {
-        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        ((BaseActivity)getActivity()).getFragmentInjector().inject(this);
     }
 
     @Override

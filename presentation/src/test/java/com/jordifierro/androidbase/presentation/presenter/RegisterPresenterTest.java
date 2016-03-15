@@ -80,12 +80,4 @@ public class RegisterPresenterTest {
         verify(this.mockRegisterView).navigateToNotes();
     }
 
-    @Test
-    public void testGotoLoginButtonClick() {
-
-        this.registerPresenter.loginButtonClick();
-
-        verify(this.mockRegisterView).navigateToLogin();
-    }
-
 }

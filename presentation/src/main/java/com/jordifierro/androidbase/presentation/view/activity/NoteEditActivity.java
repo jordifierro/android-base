@@ -12,7 +12,7 @@ import com.jordifierro.androidbase.presentation.view.fragment.NoteEditFragment;
 
 public class NoteEditActivity extends BaseActivity {
 
-    private static final String PARAM_NOTE_ID = "param_note_id";
+    public static final String PARAM_NOTE_ID = "param_note_id";
 
     private int noteId;
     private NoteEditFragment noteEditFragment;

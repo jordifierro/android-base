@@ -23,7 +23,7 @@ public class NoteCreateFragment extends BaseFragment implements NoteCreateView {
 
     @Override
     protected void callInjection() {
-        ((BaseActivity)getActivity()).getActivityComponent().inject(this);
+        ((BaseActivity)getActivity()).getFragmentInjector().inject(this);
     }
 
     @Override

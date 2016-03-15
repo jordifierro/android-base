@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.jordifierro.androidbase.data.net.RestApi;
+import com.jordifierro.androidbase.data.net.interceptor.HttpInterceptor;
 import com.jordifierro.androidbase.data.repository.NoteDataRepository;
 import com.jordifierro.androidbase.data.repository.SessionDataRepository;
 import com.jordifierro.androidbase.data.repository.UserDataRepository;
@@ -16,6 +17,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -31,13 +33,14 @@ public class DataModule {
 
     @Provides
     @Singleton
-    RestApi provideRestApi() {
+    RestApi provideRestApi(HttpInterceptor httpInterceptor) {
         return new Retrofit.Builder()
                 .baseUrl(RestApi.URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                         .create()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(new OkHttpClient().newBuilder().addInterceptor(httpInterceptor).build())
                 .build()
                 .create(RestApi.class);
     }

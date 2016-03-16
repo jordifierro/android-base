@@ -1,0 +1,29 @@
+language: android
+
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-23.0.2
+    - android-23
+    - extra-android-support
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-23
+
+before_script:
+  - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a -s WVGA800
+  - emulator -avd test -noaudio -no-window -no-boot-anim -noskin &
+
+script:
+  - ./gradlew build
+  - ./gradlew assembleAndroidTest
+  - android-wait-for-emulator
+  - adb install -r presentation/build/outputs/apk/presentation-debug.apk
+  - adb install -r presentation/build/outputs/apk/presentation-debug-androidTest-unaligned.apk
+  - adb shell input keyevent 82 &
+  - ./travisAndroidTests.sh
+  - ./gradlew :data:cAT

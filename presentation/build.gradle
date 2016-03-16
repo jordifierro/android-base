@@ -49,6 +49,9 @@ dependencies {
     testCompile presentationTestDependencies.junit
     testCompile presentationTestDependencies.mockito
 
+
+    androidTestApt presentationTestDependencies.daggerCompiler
+
     androidTestCompile presentationTestDependencies.androidAnnotations
     androidTestCompile presentationTestDependencies.mockito
     androidTestCompile presentationTestDependencies.dexmaker
@@ -57,5 +60,4 @@ dependencies {
     androidTestCompile presentationTestDependencies.dexmakerMockito
     androidTestCompile presentationTestDependencies.espresso
     androidTestCompile presentationTestDependencies.espressoIntents
-    androidTestCompile presentationTestDependencies.daggerCompiler
 }

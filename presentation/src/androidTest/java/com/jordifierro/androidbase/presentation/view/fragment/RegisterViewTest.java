@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -40,9 +41,10 @@ public class RegisterViewTest {
     @Test
     public void testLoginButton() {
 
-        onView(withId(R.id.et_email)).perform(typeText("email@test.com"));
-        onView(withId(R.id.et_password)).perform(typeText("87654321"));
-        onView(withId(R.id.et_password_confirmation)).perform(typeText("1234"));
+        onView(withId(R.id.et_email)).perform(typeText("email@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(typeText("87654321"), closeSoftKeyboard());
+        onView(withId(R.id.et_password_confirmation))
+                .perform(typeText("1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_register)).perform(click());
 
         verify(this.registerFragment.registerPresenter)

@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -72,16 +73,16 @@ public class NoteEditViewTest {
             @Override
             public void run() {
                 NoteEditViewTest.this.noteEditFragment.showNote(
-                        new NoteEntity("Note title", "Note content..."));
+                        new NoteEntity("Title", "Content"));
             }
         });
 
-        onView(withId(R.id.et_title)).perform(typeText(" updated!"));
+        onView(withId(R.id.et_title)).perform(typeText(" updated!"), closeSoftKeyboard());
         onView(withId(R.id.et_content)).perform(typeText(" changed!"));
         onView(withId(R.id.btn_submit)).perform(click());
 
         verify(this.noteEditFragment.noteEditPresenter).updateNote(
-                "Note title updated!", "Note content... changed!");
+                "Title updated!", "Content changed!");
     }
 
     @Test

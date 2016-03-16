@@ -10,6 +10,7 @@ android {
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
+        testInstrumentationRunner 'android.test.InstrumentationTestRunner'
     }
     buildTypes {
         release {
@@ -17,14 +18,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
-task copyResDirectoryToClasses(type: Copy){
+task copyResToDebugClasses(type: Copy){
     from "${projectDir}/src/test/res"
     into "${buildDir}/intermediates/classes/test/debug/res"
 }
-
-assembleDebug.dependsOn(copyResDirectoryToClasses)
+task copyResToReleaseClasses(type: Copy){
+    from "${projectDir}/src/test/res"
+    into "${buildDir}/intermediates/classes/test/release/res"
+}
+preBuild.dependsOn(copyResToDebugClasses)
+preBuild.dependsOn(copyResToReleaseClasses)
 
 dependencies {
     def dataDependencies = rootProject.ext.dataDependencies

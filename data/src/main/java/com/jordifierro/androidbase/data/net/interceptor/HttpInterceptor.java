@@ -26,7 +26,6 @@ public class HttpInterceptor implements Interceptor {
                 .addHeader("Accept-Language", Locale.getDefault().getLanguage())
                 .addHeader("Accept", "application/vnd.railsapibase.v" + RestApi.API_VERSION)
                 .build();
-        Log.e("Languagee", Locale.getDefault().getLanguage());
         return chain.proceed(request);
     }
 }

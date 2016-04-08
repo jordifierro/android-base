@@ -1,6 +1,6 @@
 #!/bin/sh
 
-androidTestResult=$(adb shell 'am instrument -w com.jordifierro.androidbase.presentation.test/com.jordifierro.androidbase.presentation.unittest.TestMockRunner ; printf "$?"')
+androidTestResult=$(adb shell 'am instrument -w com.jordifierro.androidbase.presentation.test/com.jordifierro.androidbase.presentation.TestMockerRunner ; printf "$?"')
 printf "$androidTestResult\n"
 exitCode=$(printf "$androidTestResult" | tail -1)
 if [ $exitCode != "0" ]; then

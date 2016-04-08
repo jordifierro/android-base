@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.unittest;
+package com.jordifierro.androidbase.presentation;
 
 import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.presenter.LoginPresenter;
@@ -15,7 +15,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class TestMockModule {
+public class TestMockerModule {
 
     @Provides @ActivityScope
     LoginPresenter provideLoginPresenter() {

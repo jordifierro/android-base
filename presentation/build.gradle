@@ -11,7 +11,7 @@ android {
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
-        testInstrumentationRunner 'com.jordifierro.androidbase.presentation.unittest.TestMockRunner'
+        testInstrumentationRunner 'com.jordifierro.androidbase.presentation.TestMockerRunner'
     }
     buildTypes {
         release {

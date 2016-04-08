@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.unittest;
+package com.jordifierro.androidbase.presentation;
 
 import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.dependency.component.ApplicationComponent;
@@ -7,5 +7,5 @@ import com.jordifierro.androidbase.presentation.dependency.component.FragmentInj
 import dagger.Component;
 
 @ActivityScope
-@Component(modules = TestMockModule.class, dependencies = ApplicationComponent.class)
-public interface TestMockComponent extends FragmentInjector {}
+@Component(modules = TestMockerModule.class, dependencies = ApplicationComponent.class)
+public interface TestMockerComponent extends FragmentInjector {}

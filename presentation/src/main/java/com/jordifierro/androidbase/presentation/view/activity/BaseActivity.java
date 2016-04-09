@@ -98,14 +98,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     public void handleError(Throwable error) {
         if (error instanceof RestApiErrorException) {
             if (((RestApiErrorException) error).getStatusCode()
-                    == RestApiErrorException.UNAUTHORIZED) displayLogin();
+                    == RestApiErrorException.UNAUTHORIZED) closeAndDisplayLogin();
             else showMessage(error.getMessage());
         }
         else Toast.makeText(context(), getResources().getString(R.string.message_error),
                                                                         Toast.LENGTH_LONG).show();
     }
 
-    private void displayLogin() {
+    public void closeAndDisplayLogin() {
         Intent notesIntent = new Intent(this, LoginActivity.class);
         notesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(notesIntent);

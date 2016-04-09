@@ -25,5 +25,5 @@ script:
   - adb install -r presentation/build/outputs/apk/presentation-debug.apk
   - adb install -r presentation/build/outputs/apk/presentation-debug-androidTest-unaligned.apk
   - adb shell input keyevent 82 &
-  - ./travisAndroidTests.sh
+  - ./bin/travis_androidtest
   - ./gradlew :data:cAT

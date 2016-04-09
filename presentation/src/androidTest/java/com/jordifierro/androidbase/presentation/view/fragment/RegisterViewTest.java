@@ -6,7 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.view.activity.NotesActivity;
+import com.jordifierro.androidbase.presentation.view.activity.MainActivity;
 import com.jordifierro.androidbase.presentation.view.activity.RegisterActivity;
 
 import org.junit.Before;
@@ -57,7 +57,7 @@ public class RegisterViewTest {
 
         this.registerFragment.viewNotes();
 
-        intended(hasComponent(NotesActivity.class.getName()));
+        intended(hasComponent(MainActivity.class.getName()));
         Intents.release();
     }
 }

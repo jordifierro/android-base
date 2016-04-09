@@ -1,14 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AndroidBase</string>
 
     <string name="title_activity_login">Entrar</string>
     <string name="title_activity_register">Registro</string>
     <string name="title_activity_settings">Ajustes de usuario</string>
-    <string name="title_activity_main">Tus notas</string>
-
-    <string name="title_activity_note_detail">Detalle de la nota</string>
-    <string name="title_activity_note_create">Crear una nueva nota</string>
-    <string name="title_activity_note_edit">Editar nota</string>
+    <string name="title_activity_main">Main Activity</string>
 
     <string name="button_login">Entrar</string>
     <string name="button_logout">Cerrar sesión</string>
@@ -17,21 +14,9 @@
     <string name="button_goto_login">Ya tengo una cuenta</string>
     <string name="button_settings">Ajustes</string>
 
-    <string name="button_create_new_note">Crear una nueva nota</string>
-    <string name="button_create">Crear</string>
-    <string name="button_save">Guardar</string>
-    <string name="button_edit">Editar</string>
-    <string name="button_delete">Borrar</string>
-
     <string name="edittext_email">Email…</string>
     <string name="edittext_password">Contraseña…</string>
     <string name="edittext_password_confirmation">Confirmar contraseña…</string>
-
-    <string name="edittext_title">Título de la nota…</string>
-    <string name="edittext_content">Contenido de la nota…</string>
-
-    <string name="textview_title">Título:</string>
-    <string name="textview_content">Contenido:</string>
 
     <string name="message_error">Ha ocurrido un error</string>
 

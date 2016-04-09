@@ -1,0 +1,30 @@
+package com.jordifierro.androidbase.data.net;
+
+import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
+import com.jordifierro.androidbase.domain.entity.UserEntity;
+
+import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import rx.Observable;
+
+public interface RestApi {
+
+    String URL_BASE = "http://192.168.0.10:3000";
+    int API_VERSION = 1;
+
+    @POST("/users")
+    Observable<Response<UserEntity>> createUser(@Body UserWrapper userWrapper);
+
+    @DELETE("/users/0")
+    Observable<Response<Void>> deleteUser(@Header("Authorization") String token);
+
+    @POST("/users/login")
+    Observable<Response<UserEntity>> doLogin(@Body UserWrapper userWrapper);
+
+    @DELETE("/users/logout")
+    Observable<Response<Void>> doLogout(@Header("Authorization") String token);
+
+}

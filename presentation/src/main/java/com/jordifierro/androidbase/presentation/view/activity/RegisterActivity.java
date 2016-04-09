@@ -22,7 +22,7 @@ public class RegisterActivity extends BaseActivity implements RegisterFragment.L
 
     @Override
     public void viewNotes() {
-        Intent notesIntent = new Intent(this, NotesActivity.class);
+        Intent notesIntent = new Intent(this, MainActivity.class);
         notesIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(notesIntent);
     }

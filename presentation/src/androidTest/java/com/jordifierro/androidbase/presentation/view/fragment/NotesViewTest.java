@@ -9,7 +9,7 @@ import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.activity.NoteCreateActivity;
 import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NotesActivity;
+import com.jordifierro.androidbase.presentation.view.activity.MainActivity;
 import com.jordifierro.androidbase.presentation.view.activity.SettingsActivity;
 
 import org.junit.Before;
@@ -36,8 +36,8 @@ import static org.hamcrest.CoreMatchers.allOf;
 public class NotesViewTest {
 
     @Rule
-    public final ActivityTestRule<NotesActivity> activityTestRule = new ActivityTestRule<>(
-            NotesActivity.class);
+    public final ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(
+            MainActivity.class);
     private NotesFragment notesFragment;
     private List<NoteEntity> notes = new ArrayList<>();
 

@@ -1,0 +1,31 @@
+package com.jordifierro.androidbase.presentation;
+
+import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
+import com.jordifierro.androidbase.presentation.presenter.LoginPresenter;
+import com.jordifierro.androidbase.presentation.presenter.RegisterPresenter;
+import com.jordifierro.androidbase.presentation.presenter.SettingsPresenter;
+
+import org.mockito.Mockito;
+
+import dagger.Module;
+import dagger.Provides;
+
+@Module
+public class TestMockerModule {
+
+    @Provides @ActivityScope
+    LoginPresenter provideLoginPresenter() {
+        return Mockito.mock(LoginPresenter.class);
+    }
+
+    @Provides @ActivityScope
+    RegisterPresenter provideRegisterPresenter() {
+        return Mockito.mock(RegisterPresenter.class);
+    }
+
+    @Provides @ActivityScope
+    SettingsPresenter provideSettingsPresenter() {
+        return Mockito.mock(SettingsPresenter.class);
+    }
+
+}

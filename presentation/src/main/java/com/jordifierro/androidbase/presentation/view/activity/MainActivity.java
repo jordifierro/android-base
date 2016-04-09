@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.fragment.NotesFragment;
 
-public class NotesActivity extends BaseActivity implements NotesFragment.Listener {
+public class MainActivity extends BaseActivity implements NotesFragment.Listener {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {
@@ -25,12 +25,12 @@ public class NotesActivity extends BaseActivity implements NotesFragment.Listene
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_notes, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         this.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.item_settings) {
-                    NotesActivity.this.displaySettings();
+                    MainActivity.this.displaySettings();
                     return true;
                 }
                 return false;

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+rm -rf .git/
+git init
+git add .
+git commit -m "Initialize project from android-base"
+git remote add origin $1
+git push -u origin master
+
+rm bin/reset_git

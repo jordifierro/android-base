@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/jordifierro/android-base.svg?branch=master)](https://travis-ci.org/jordifierro/android-base)
 
+
+
 ## Introduction
 
 This projects aims to be:
@@ -22,6 +24,38 @@ Specification summary:
 
 Here is its counterpart server api from where this app consumes the data
 -> [rails-api-base](https://github.com/jordifierro/rails-api-base)
+
+
+
+## Quick start
+
+* Install Android sdk and your favourite IDE
+([Android Studio installation](http://developer.android.com/sdk/index.html)).
+
+* Clone the repository and get inside it:
+```
+git clone git://github.com/jordifierro/android-base.git --origin android-base YourProjectName
+cd YourProjectName
+```
+
+* Remove all 'note' related code (optional):
+```
+./bin/remove_notes
+```
+
+* Connect a device (or start the emulator) and run the tests:
+```
+./gradlew clean build cAT
+```
+
+* Once all tests are green, create a new remote repository
+and then execute this to reset the repo and push it:
+```
+./bin/reset_git https://github.com/yourusername/YourProjectName.git
+```
+
+That's it, you can now start developing your own app!
+
 
 
 ## Documentation

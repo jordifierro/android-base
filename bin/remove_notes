@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+find . -name "*Note*" -type f -delete
+find . -name "*note*" -type f -delete
+
+rm -rf domain/src/main/java/com/jordifierro/androidbase/domain/interactor/note
+rm -rf domain/src/test/java/com/jordifierro/androidbase/domain/interactor/note
+
+mv reset/RestApi data/src/main/java/com/jordifierro/androidbase/data/net/RestApi.java
+mv reset/en-strings presentation/src/main/res/values/strings.xml
+mv reset/es-strings presentation/src/main/res/values-es/strings.xml
+mv reset/AndroidManifest presentation/src/main/AndroidManifest.xml
+mv reset/DataModule presentation/src/main/java/com/jordifierro/androidbase/presentation/dependency/module/DataModule.java
+sed -i.bak '/Note/d' ./presentation/src/main/java/com/jordifierro/androidbase/presentation/dependency/component/ApplicationComponent.java
+rm presentation/src/main/java/com/jordifierro/androidbase/presentation/dependency/component/ApplicationComponent.java.bak
+mv reset/FragmentInjector presentation/src/main/java/com/jordifierro/androidbase/presentation/dependency/component/FragmentInjector.java
+mv reset/TestMockerModule presentation/src/androidTest/java/com/jordifierro/androidbase/presentation/TestMockerModule.java
+mv reset/MainActivity presentation/src/main/java/com/jordifierro/androidbase/presentation/view/activity/MainActivity.java
+
+rm -rf reset

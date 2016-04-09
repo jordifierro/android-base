@@ -29,8 +29,12 @@ Here is its counterpart server api from where this app consumes the data
 
 ## Quick start
 
-* Install Android sdk and your favourite IDE
-([Android Studio installation](http://developer.android.com/sdk/index.html)).
+* Install your favourite IDE or just the Android sdk
+(buildTools 23.0.2 and compileSdk 23,
+or define your own versions in the `dependencies.gradle`).
+I use
+[Android Studio](http://developer.android.com/sdk/index.html).
+
 
 * Clone the repository and get inside it:
 ```
@@ -43,12 +47,17 @@ cd YourProjectName
 ./bin/remove_notes
 ```
 
+* Rename the project and package name:
+```
+./bin/rename_project YourProjectName your.package.name
+```
+
 * Connect a device (or start the emulator) and run the tests:
 ```
 ./gradlew clean build cAT
 ```
 
-* Once all tests are green, create a new remote repository
+* Once the build is successful, create a new remote repository
 and then execute this to reset the repo and push it:
 ```
 ./bin/reset_git https://github.com/yourusername/YourProjectName.git
@@ -135,7 +144,6 @@ continous integration system to run all the test on each push
 
 #### Todo List
 
-- [ ] Implement reset project scripts and tutorial.
 - [ ] Add sample integration testing.
 - [ ] Add sample privacy policy.
 - [ ] Implement caching.

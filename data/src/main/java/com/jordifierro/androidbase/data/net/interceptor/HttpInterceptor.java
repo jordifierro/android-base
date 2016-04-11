@@ -1,7 +1,5 @@
 package com.jordifierro.androidbase.data.net.interceptor;
 
-import android.util.Log;
-
 import com.jordifierro.androidbase.data.net.RestApi;
 
 import java.io.IOException;
@@ -28,4 +26,5 @@ public class HttpInterceptor implements Interceptor {
                 .build();
         return chain.proceed(request);
     }
+
 }

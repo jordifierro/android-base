@@ -1,6 +1,7 @@
 package com.jordifierro.androidbase.data.repository;
 
 import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
@@ -13,14 +14,13 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.util.List;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -36,17 +36,24 @@ import static org.hamcrest.core.IsNot.not;
 @SuppressWarnings("unchecked")
 public class NoteDataRepositoryTest {
 
+    private static final String USER_EMAIL = "fake_user_email";
+    private static final String AUTH_TOKEN = "fake_auth_token";
+    private static final int NOTE_ID = 3;
+    private static final String NOTE_TITLE = "fake_note_title";
+    private static final String NOTE_CONTENT = "fake_note_content";
+
     private MockWebServer mockWebServer;
     private NoteDataRepository noteDataRepository;
     private TestSubscriber testSubscriber;
 
-    @Mock UserEntity mockUser;
-    @Mock NoteEntity mockNote;
+    private UserEntity fakeUser;
+    private NoteEntity fakeNote;
 
     @Before
     public void setUp() throws IOException {
         this.mockWebServer = new MockWebServer();
         this.mockWebServer.start();
+
         this.noteDataRepository = new NoteDataRepository(
                 new Retrofit.Builder()
                         .baseUrl(mockWebServer.url("/"))
@@ -57,8 +64,12 @@ public class NoteDataRepositoryTest {
                         .build()
                         .create(RestApi.class)
         );
+
         this.testSubscriber = new TestSubscriber();
-        MockitoAnnotations.initMocks(this);
+
+        this.fakeUser = new UserEntity(USER_EMAIL);
+        this.fakeUser.setAuthToken(AUTH_TOKEN);
+        this.fakeNote = new NoteEntity(NOTE_ID, NOTE_TITLE, NOTE_CONTENT);
     }
 
     @After
@@ -67,12 +78,28 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testCreateNoteSuccess() throws Exception {
+    public void testCreateNoteRequest() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse());
+
+        this.noteDataRepository.createNote(this.fakeUser, this.fakeNote)
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+
+        RecordedRequest request = this.mockWebServer.takeRequest();
+        assertEquals("/notes", request.getPath());
+        assertEquals("POST", request.getMethod());
+        assertEquals(AUTH_TOKEN, request.getHeader("Authorization"));
+        assertEquals(new Gson().toJson(this.fakeNote).toString(), request.getBody().readUtf8());
+    }
+
+    @Test
+    public void testCreateNoteSuccessResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(201).setBody(
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_create_ok.json"))));
 
-        this.noteDataRepository.createNote(mockUser, mockNote)
+        this.noteDataRepository.createNote(this.fakeUser, this.fakeNote)
                                     .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                                     .observeOn(Schedulers.io())
                                     .subscribe(this.testSubscriber);
@@ -85,12 +112,12 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testCreateNoteError() throws Exception {
+    public void testCreateNoteErrorResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(422).setBody(
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_create_error.json"))));
 
-        this.noteDataRepository.createNote(mockUser, mockNote)
+        this.noteDataRepository.createNote(this.fakeUser, this.fakeNote)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -104,13 +131,29 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testGetNoteSuccess() throws Exception {
+    public void testGetNoteRequest() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse());
+
+        this.noteDataRepository.getNote(this.fakeUser, this.fakeNote.getId())
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+
+        RecordedRequest request = this.mockWebServer.takeRequest();
+        assertEquals("/notes/" + this.fakeNote.getId(), request.getPath());
+        assertEquals("GET", request.getMethod());
+        assertEquals(AUTH_TOKEN, request.getHeader("Authorization"));
+        assertEquals("", request.getBody().readUtf8());
+    }
+
+    @Test
+    public void testGetNoteSuccessResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody(
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_get_ok.json"))));
 
 
-        this.noteDataRepository.getNote(mockUser, 1)
+        this.noteDataRepository.getNote(this.fakeUser, 1)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -123,13 +166,13 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testGetNoteError() throws Exception {
+    public void testGetNoteErrorResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(404).setBody(
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_get_error.json"))));
 
 
-        this.noteDataRepository.getNote(mockUser, 1)
+        this.noteDataRepository.getNote(this.fakeUser, 1)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -143,12 +186,28 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testGetNotesSuccess() throws Exception {
+    public void testCreateNotesRequest() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse());
+
+        this.noteDataRepository.getNotes(this.fakeUser)
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+
+        RecordedRequest request = this.mockWebServer.takeRequest();
+        assertEquals("/notes", request.getPath());
+        assertEquals("GET", request.getMethod());
+        assertEquals(AUTH_TOKEN, request.getHeader("Authorization"));
+        assertEquals("", request.getBody().readUtf8());
+    }
+
+    @Test
+    public void testGetNotesSuccessResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody(
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_getall_ok.json"))));
 
-        this.noteDataRepository.getNotes(mockUser)
+        this.noteDataRepository.getNotes(this.fakeUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -161,10 +220,10 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testGetNotesError() throws Exception {
+    public void testGetNotesErrorResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.noteDataRepository.getNotes(mockUser)
+        this.noteDataRepository.getNotes(this.fakeUser)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -178,12 +237,28 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testUpdateNoteSuccess() throws Exception {
+    public void testUpdateNoteRequest() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse());
+
+        this.noteDataRepository.updateNote(this.fakeUser, this.fakeNote)
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+
+        RecordedRequest request = this.mockWebServer.takeRequest();
+        assertEquals("/notes/" + this.fakeNote.getId(), request.getPath());
+        assertEquals("PUT", request.getMethod());
+        assertEquals(AUTH_TOKEN, request.getHeader("Authorization"));
+        assertEquals(new Gson().toJson(this.fakeNote).toString(), request.getBody().readUtf8());
+    }
+
+    @Test
+    public void testUpdateNoteSuccessResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody(
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_update_ok.json"))));
 
-        this.noteDataRepository.updateNote(mockUser, mockNote)
+        this.noteDataRepository.updateNote(this.fakeUser, this.fakeNote)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -196,12 +271,12 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testUpdateNoteError() throws Exception {
+    public void testUpdateNoteErrorResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(404).setBody(
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_update_error.json"))));
 
-        this.noteDataRepository.updateNote(mockUser, mockNote)
+        this.noteDataRepository.updateNote(this.fakeUser, this.fakeNote)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -215,10 +290,26 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testDeleteNoteSuccess() throws Exception {
+    public void testDeleteNoteRequest() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse());
+
+        this.noteDataRepository.deleteNote(this.fakeUser, this.fakeNote.getId())
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+
+        RecordedRequest request = this.mockWebServer.takeRequest();
+        assertEquals("/notes/" + this.fakeNote.getId(), request.getPath());
+        assertEquals("DELETE", request.getMethod());
+        assertEquals(AUTH_TOKEN, request.getHeader("Authorization"));
+        assertEquals("", request.getBody().readUtf8());
+    }
+
+    @Test
+    public void testDeleteNoteSuccessResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.noteDataRepository.deleteNote(mockUser, 1)
+        this.noteDataRepository.deleteNote(this.fakeUser, 1)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
@@ -228,10 +319,10 @@ public class NoteDataRepositoryTest {
     }
 
     @Test
-    public void testDeleteUserError() throws Exception {
+    public void testDeleteUserErrorResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.noteDataRepository.deleteNote(mockUser, 1)
+        this.noteDataRepository.deleteNote(this.fakeUser, 1)
                 .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
                 .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);

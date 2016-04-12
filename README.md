@@ -65,7 +65,15 @@ and then execute this to reset the repo and push it:
 
 That's it, you can now start developing your own app!
 
-
+*__Note:__ To run the app (you can run only the tests now)
+remember to setup an api server
+([rails-api-base](https://github.com/jordifierro/rails-api-base)
+is already developed to serve this app,
+but you can also make your own)
+and configure the `RestApi` to connect to it
+(simply modify
+[RestApi.java](https://github.com/jordifierro/android-base/blob/master/data/src/main/java/com/jordifierro/androidbase/data/net/RestApi.java)
+params).*
 
 ## Documentation
 
@@ -137,9 +145,17 @@ Here one of the used resources ->
 
 #### Continuous Integration System
 [![Build Status](https://travis-ci.org/jordifierro/android-base.svg?branch=master)](https://travis-ci.org/jordifierro/android-base)
+
 [Travis-CI](https://travis-ci.org/) has been added as a
 continous integration system to run all the test on each push
 (both java and android tests).
+
+To run the tests locally, simply connect a device
+or run the emulator and execute:
+```
+./gradlew clean build cAT
+```
+That will run both java and Android tests.
 
 
 #### Todo List

@@ -19,6 +19,7 @@ import rx.Observable;
 public interface RestApi {
 
     String URL_BASE = "http://192.168.0.10:3000";
+    String VERSION_HEADER = "application/vnd.railsapibase.v";
     int API_VERSION = 1;
 
     @POST("/users")

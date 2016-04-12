@@ -26,6 +26,12 @@ public class JobExecutorTest extends InstrumentationTestCase {
         this.jobThreadFactory = new JobExecutor.JobThreadFactory();
     }
 
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+        this.threadPoolExecutor.shutdown();
+    }
+
     public void testExecute() {
         ThreadPoolExecutor mockThreadPoolExecutor = Mockito.mock(ThreadPoolExecutor.class);
         this.jobExecutor.threadPoolExecutor = mockThreadPoolExecutor;
@@ -46,18 +52,16 @@ public class JobExecutorTest extends InstrumentationTestCase {
         Runnable mockCommand = Mockito.mock(Runnable.class);
         Thread one = this.jobThreadFactory.newThread(mockCommand);
         Thread two = this.jobThreadFactory.newThread(mockCommand);
-        Thread three = this.jobThreadFactory.newThread(mockCommand);
 
         one.run();
         two.run();
-        three.run();
 
-        verify(mockCommand, times(3)).run();
+        verify(mockCommand, times(2)).run();
         assertNotSame(one, two);
-        assertNotSame(two, three);
         assertEquals(JobExecutor.JobThreadFactory.THREAD_NAME + "0", one.getName());
         assertEquals(JobExecutor.JobThreadFactory.THREAD_NAME + "1", two.getName());
-        assertEquals(JobExecutor.JobThreadFactory.THREAD_NAME + "2", three.getName());
+        one.interrupt();
+        two.interrupt();
     }
 
 }

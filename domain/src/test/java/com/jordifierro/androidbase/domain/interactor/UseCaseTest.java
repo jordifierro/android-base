@@ -15,6 +15,8 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 import rx.schedulers.TestScheduler;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 public class UseCaseTest {
@@ -34,7 +36,7 @@ public class UseCaseTest {
     @Test
     public void testUseCaseExecutionResult() {
         TestScheduler testScheduler = new TestScheduler();
-        given(mockPostExecutionThread.getScheduler()).willReturn(testScheduler);
+        given(this.mockPostExecutionThread.getScheduler()).willReturn(testScheduler);
 
         this.fakeUseCase.execute(testSubscriber);
         testScheduler.triggerActions();
@@ -45,11 +47,14 @@ public class UseCaseTest {
 
     @Test
     public void testUseCaseUnsubscription() {
+        TestScheduler testScheduler = new TestScheduler();
+        given(this.mockPostExecutionThread.getScheduler()).willReturn(testScheduler);
 
         this.fakeUseCase.execute(testSubscriber);
-        this.fakeUseCase.unsubscribe();
+        assertThat(this.fakeUseCase.isUnsubscribed(), is(false));
 
-        this.testSubscriber.assertUnsubscribed();
+        this.fakeUseCase.unsubscribe();
+        assertThat(this.fakeUseCase.isUnsubscribed(), is(true));
     }
 
     private static class FakeUseCase extends UseCase {

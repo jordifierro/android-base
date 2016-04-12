@@ -14,7 +14,7 @@ public abstract class UseCase {
     private final ThreadExecutor threadExecutor;
     private final PostExecutionThread postExecutionThread;
 
-    private Subscription subscription = Subscriptions.empty();
+    protected Subscription subscription = Subscriptions.empty();
 
     protected UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         this.threadExecutor = threadExecutor;
@@ -36,4 +36,9 @@ public abstract class UseCase {
             this.subscription.unsubscribe();
         }
     }
+
+    public boolean isUnsubscribed() {
+        return this.subscription.isUnsubscribed();
+    }
+
 }

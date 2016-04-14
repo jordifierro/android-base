@@ -28,7 +28,7 @@ public class HttpInterceptorTest {
 
         RecordedRequest request = mockWebServer.takeRequest();
         assertEquals(Locale.getDefault().getLanguage(), request.getHeader("Accept-Language"));
-        assertEquals(RestApi.VERSION_HEADER + RestApi.API_VERSION, request.getHeader("Accept"));
+        assertEquals(RestApi.VERSION_HEADER, request.getHeader("Accept"));
 
         mockWebServer.shutdown();
     }

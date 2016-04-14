@@ -18,9 +18,9 @@ import rx.Observable;
 
 public interface RestApi {
 
-    String URL_BASE = "http://192.168.0.10:3000";
-    String VERSION_HEADER = "application/vnd.railsapibase.v";
+    String URL_BASE = "http://192.168.0.11:3000";
     int API_VERSION = 1;
+    String VERSION_HEADER = "application/vnd.railsapibase.v" + API_VERSION;
 
     @POST("/users")
     Observable<Response<UserEntity>> createUser(@Body UserWrapper userWrapper);

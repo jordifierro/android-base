@@ -7,7 +7,7 @@ import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.NotesPresenter;
 import com.jordifierro.androidbase.presentation.view.NotesView;
-import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
+import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
 import com.jordifierro.androidbase.presentation.view.adapter.NotesAdapter;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class NotesFragment extends BaseFragment implements NotesView {
 
     @Override
     protected void callInjection() {
-        ((BaseActivity)getActivity()).getFragmentInjector().inject(this);
+        this.getFragmentInjector().inject(this);
     }
 
     @Override

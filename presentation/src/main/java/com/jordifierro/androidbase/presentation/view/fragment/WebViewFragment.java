@@ -11,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.jordifierro.androidbase.presentation.R;
+import com.jordifierro.androidbase.presentation.view.activity.base.WebViewActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,17 +32,13 @@ public class WebViewFragment extends Fragment {
 
     private void initWebView(){
         webView.setWebChromeClient(new WebChromeClient() {
-            private ProgressDialog mProgress;
-
             @Override
             public void onProgressChanged(WebView view, int progress) {
-                if (mProgress == null) {
-                    mProgress = new ProgressDialog(getActivity());
-                    mProgress.show();
+                if (((WebViewActivity)getActivity()).isLoaderShowing()) {
+                    ((WebViewActivity)getActivity()).showLoader();
                 }
                 if (progress == 100) {
-                    mProgress.dismiss();
-                    mProgress = null;
+                    ((WebViewActivity)getActivity()).hideLoader();
                 }
             }
         });

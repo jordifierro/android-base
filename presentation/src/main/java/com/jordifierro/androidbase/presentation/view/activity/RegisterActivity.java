@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.jordifierro.androidbase.presentation.R;
+import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
+import com.jordifierro.androidbase.presentation.view.activity.base.CleanActivity;
 import com.jordifierro.androidbase.presentation.view.fragment.RegisterFragment;
 
-public class RegisterActivity extends BaseActivity implements RegisterFragment.Listener {
+public class RegisterActivity extends CleanActivity implements RegisterFragment.Listener {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {

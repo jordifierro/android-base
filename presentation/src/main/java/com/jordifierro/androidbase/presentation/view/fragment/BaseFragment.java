@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.jordifierro.androidbase.presentation.dependency.component.FragmentInjector;
 import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.view.BaseView;
-import com.jordifierro.androidbase.presentation.view.activity.BaseActivity;
+import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
+import com.jordifierro.androidbase.presentation.view.activity.base.CleanActivity;
 
 import butterknife.ButterKnife;
 
@@ -81,7 +83,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void handleError(Throwable error) {
-        ((BaseActivity)getActivity()).handleError(error);
+        ((CleanActivity)getActivity()).handleError(error);
     }
 
     @Override
@@ -91,10 +93,14 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void close() {
-        ((BaseActivity)getActivity()).close();
+        ((CleanActivity)getActivity()).close();
     }
 
     public void closeAndDisplayLogin() {
-        ((BaseActivity)getActivity()).closeAndDisplayLogin();
+        ((CleanActivity)getActivity()).closeAndDisplayLogin();
+    }
+
+    protected FragmentInjector getFragmentInjector() {
+        return ((CleanActivity)getActivity()).getFragmentInjector();
     }
 }

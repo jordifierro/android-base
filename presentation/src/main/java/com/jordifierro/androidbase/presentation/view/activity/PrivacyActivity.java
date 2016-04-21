@@ -1,7 +1,7 @@
 package com.jordifierro.androidbase.presentation.view.activity;
 
 import com.jordifierro.androidbase.data.net.RestApi;
-import com.jordifierro.androidbase.presentation.view.fragment.WebViewFragment;
+import com.jordifierro.androidbase.presentation.view.activity.base.WebViewActivity;
 
 public class PrivacyActivity extends WebViewActivity {
 

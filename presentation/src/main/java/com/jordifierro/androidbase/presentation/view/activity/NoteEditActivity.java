@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jordifierro.androidbase.presentation.R;
+import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
+import com.jordifierro.androidbase.presentation.view.activity.base.CleanActivity;
 import com.jordifierro.androidbase.presentation.view.fragment.NoteEditFragment;
 
-public class NoteEditActivity extends BaseActivity implements NoteEditFragment.Listener {
+public class NoteEditActivity extends CleanActivity implements NoteEditFragment.Listener {
 
     public static final String PARAM_NOTE_ID = "param_note_id";
 
@@ -48,7 +50,7 @@ public class NoteEditActivity extends BaseActivity implements NoteEditFragment.L
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_note_edit, menu);
-        this.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        this.getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.item_delete) {

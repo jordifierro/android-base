@@ -36,6 +36,10 @@ public class NoteDetailFragment extends BaseFragment implements NoteDetailView {
         return this.noteDetailPresenter;
     }
 
+    public NoteDetailPresenter getNoteDetailPresenter() {
+        return noteDetailPresenter;
+    }
+
     @Override
     public void showNote(NoteEntity note) {
         titleTV.setText(note.getTitle());

@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.view.fragment;
+package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
@@ -7,7 +7,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.view.activity.NoteEditActivity;
+import com.jordifierro.androidbase.presentation.view.fragment.NoteEditFragment;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class NoteEditViewTest {
+public class NoteEditActivityTest {
 
     @Rule
     public final ActivityTestRule<NoteEditActivity> activityTestRule = new ActivityTestRule<>(
@@ -57,7 +57,7 @@ public class NoteEditViewTest {
         this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NoteEditViewTest.this.noteEditFragment.showNote(
+                NoteEditActivityTest.this.noteEditFragment.showNote(
                         new NoteEntity("Note title", "Note content..."));
             }
         });
@@ -72,7 +72,7 @@ public class NoteEditViewTest {
         this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NoteEditViewTest.this.noteEditFragment.showNote(
+                NoteEditActivityTest.this.noteEditFragment.showNote(
                         new NoteEntity("Title", "Content"));
             }
         });
@@ -81,7 +81,7 @@ public class NoteEditViewTest {
         onView(withId(R.id.et_content)).perform(typeText(" changed!"));
         onView(withId(R.id.btn_submit)).perform(click());
 
-        verify(this.noteEditFragment.noteEditPresenter).updateNote(
+        verify(this.noteEditFragment.getNoteEditPresenter()).updateNote(
                 "Title updated!", "Content changed!");
     }
 
@@ -90,7 +90,7 @@ public class NoteEditViewTest {
 
         onView(withId(R.id.item_delete)).perform(click());
 
-        verify(this.noteEditFragment.noteEditPresenter).deleteNoteButtonPressed();
+        verify(this.noteEditFragment.getNoteEditPresenter()).deleteNoteButtonPressed();
     }
 
 }

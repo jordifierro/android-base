@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.view.fragment;
+package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.content.Intent;
 import android.support.test.espresso.intent.Intents;
@@ -8,8 +8,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NoteEditActivity;
+import com.jordifierro.androidbase.presentation.view.fragment.NoteDetailFragment;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,7 +29,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class NoteDetailViewTest {
+public class NoteDetailActivityTest {
 
     @Rule
     public final ActivityTestRule<NoteDetailActivity> activityTestRule = new ActivityTestRule<>(
@@ -55,7 +54,7 @@ public class NoteDetailViewTest {
         this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NoteDetailViewTest.this.noteDetailFragment.showNote(
+                NoteDetailActivityTest.this.noteDetailFragment.showNote(
                         new NoteEntity("Note title", "Note content..."));
             }
         });

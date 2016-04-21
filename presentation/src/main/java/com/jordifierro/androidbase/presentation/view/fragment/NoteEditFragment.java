@@ -43,6 +43,10 @@ public class NoteEditFragment extends BaseFragment implements NoteEditView {
         return this.noteEditPresenter;
     }
 
+    public NoteEditPresenter getNoteEditPresenter() {
+        return noteEditPresenter;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -71,7 +75,4 @@ public class NoteEditFragment extends BaseFragment implements NoteEditView {
         int getNoteId();
     }
 
-    public NoteEditPresenter getNoteEditPresenter() {
-        return noteEditPresenter;
-    }
 }

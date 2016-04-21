@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.view.fragment;
+package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -6,6 +6,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.activity.NoteCreateActivity;
+import com.jordifierro.androidbase.presentation.view.fragment.NoteCreateFragment;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class NoteCreateViewTest {
+public class NoteCreateActivityTest {
 
     @Rule
     public final ActivityTestRule<NoteCreateActivity> activityTestRule = new ActivityTestRule<>(
@@ -41,7 +42,8 @@ public class NoteCreateViewTest {
         onView(withId(R.id.et_content)).perform(typeText("Content"));
         onView(withId(R.id.btn_submit)).perform(click());
 
-        verify(this.noteCreateFragment.noteCreatePresenter).createButtonPressed("Title", "Content");
+        verify(this.noteCreateFragment.getNoteCreatePresenter()).createButtonPressed("Title",
+                                                                                     "Content");
     }
 
 }

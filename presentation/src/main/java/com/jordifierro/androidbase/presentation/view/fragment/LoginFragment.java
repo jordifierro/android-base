@@ -16,7 +16,8 @@ import butterknife.OnClick;
 
 public class LoginFragment extends BaseFragment implements LoginView {
 
-    @Inject LoginPresenter loginPresenter;
+    @Inject
+    LoginPresenter loginPresenter;
 
     @Bind(R.id.et_email) EditText emailEditText;
     @Bind(R.id.et_password) EditText passwordEditText;
@@ -32,8 +33,12 @@ public class LoginFragment extends BaseFragment implements LoginView {
     }
 
     @Override
-    protected BasePresenter presenter() {
+    public BasePresenter presenter() {
         return this.loginPresenter;
+    }
+
+    public LoginPresenter getLoginPresenter() {
+        return loginPresenter;
     }
 
     @OnClick(R.id.btn_login)

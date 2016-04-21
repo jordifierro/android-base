@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.view.fragment;
+package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
@@ -9,6 +9,7 @@ import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.activity.LoginActivity;
 import com.jordifierro.androidbase.presentation.view.activity.MainActivity;
 import com.jordifierro.androidbase.presentation.view.activity.RegisterActivity;
+import com.jordifierro.androidbase.presentation.view.fragment.LoginFragment;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class LoginViewTest {
+public class LoginActivityTest {
 
     @Rule
     public final ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(
@@ -45,7 +46,7 @@ public class LoginViewTest {
         onView(withId(R.id.et_password)).perform(typeText("87654321"));
         onView(withId(R.id.btn_login)).perform(click());
 
-        verify(this.loginFragment.loginPresenter).loginUser("email@test.com", "87654321");
+        verify(this.loginFragment.getLoginPresenter()).loginUser("email@test.com", "87654321");
     }
 
     @Test

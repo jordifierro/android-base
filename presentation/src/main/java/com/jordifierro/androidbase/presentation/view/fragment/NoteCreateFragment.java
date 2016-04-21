@@ -37,9 +37,14 @@ public class NoteCreateFragment extends BaseFragment implements NoteCreateView {
         return this.noteCreatePresenter;
     }
 
+    public NoteCreatePresenter getNoteCreatePresenter() {
+        return noteCreatePresenter;
+    }
+
     @OnClick(R.id.btn_submit)
     public void createButtonPressed() {
         this.noteCreatePresenter.createButtonPressed(   titleET.getText().toString(),
                                                         contentET.getText().toString());
     }
+
 }

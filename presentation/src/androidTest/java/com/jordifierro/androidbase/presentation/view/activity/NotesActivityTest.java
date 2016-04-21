@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.view.fragment;
+package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
@@ -7,10 +7,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.view.activity.NoteCreateActivity;
-import com.jordifierro.androidbase.presentation.view.activity.NoteDetailActivity;
-import com.jordifierro.androidbase.presentation.view.activity.MainActivity;
-import com.jordifierro.androidbase.presentation.view.activity.SettingsActivity;
+import com.jordifierro.androidbase.presentation.view.fragment.NotesFragment;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,7 +30,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class NotesViewTest {
+public class NotesActivityTest {
 
     @Rule
     public final ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(
@@ -56,7 +53,7 @@ public class NotesViewTest {
         this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NotesViewTest.this.notesFragment.showNotes(NotesViewTest.this.notes);
+                NotesActivityTest.this.notesFragment.showNotes(NotesActivityTest.this.notes);
             }
         });
 
@@ -71,7 +68,7 @@ public class NotesViewTest {
         this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NotesViewTest.this.notesFragment.showNotes(NotesViewTest.this.notes);
+                NotesActivityTest.this.notesFragment.showNotes(NotesActivityTest.this.notes);
             }
         });
 

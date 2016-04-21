@@ -29,6 +29,10 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         return this.settingsPresenter;
     }
 
+    public SettingsPresenter getSettingsPresenter() {
+        return settingsPresenter;
+    }
+
     @OnClick(R.id.btn_logout)
     public void logoutButtonPressed() {
         this.settingsPresenter.logoutUserButtonPressed();

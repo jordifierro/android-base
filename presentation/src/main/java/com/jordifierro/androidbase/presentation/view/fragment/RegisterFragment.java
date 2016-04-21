@@ -37,6 +37,10 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
         return this.registerPresenter;
     }
 
+    public RegisterPresenter getRegisterPresenter() {
+        return registerPresenter;
+    }
+
     @OnClick(R.id.btn_register)
     public void registerButtonPressed() {
         this.registerPresenter.registerUser(emailEditText.getText().toString(),

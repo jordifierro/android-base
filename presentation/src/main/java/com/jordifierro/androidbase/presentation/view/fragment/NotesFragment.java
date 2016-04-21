@@ -39,6 +39,10 @@ public class NotesFragment extends BaseFragment implements NotesView {
         return this.notesPresenter;
     }
 
+    public NotesPresenter getNotesPresenter() {
+        return notesPresenter;
+    }
+
     @Override
     public void showNotes(List<NoteEntity> notes) {
         NotesAdapter adapter = new NotesAdapter(getActivity());

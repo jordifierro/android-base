@@ -1,4 +1,4 @@
-package com.jordifierro.androidbase.presentation.view.fragment;
+package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
@@ -8,6 +8,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.activity.MainActivity;
 import com.jordifierro.androidbase.presentation.view.activity.RegisterActivity;
+import com.jordifierro.androidbase.presentation.view.fragment.RegisterFragment;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class RegisterViewTest {
+public class RegisterActivityTest {
 
     @Rule
     public final ActivityTestRule<RegisterActivity> activityTestRule = new ActivityTestRule<>(
@@ -47,7 +48,7 @@ public class RegisterViewTest {
                 .perform(typeText("1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_register)).perform(click());
 
-        verify(this.registerFragment.registerPresenter)
+        verify(this.registerFragment.getRegisterPresenter())
                 .registerUser("email@test.com", "87654321", "1234");
     }
 

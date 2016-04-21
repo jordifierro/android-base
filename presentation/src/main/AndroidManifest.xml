@@ -48,6 +48,14 @@
             android:name=".view.activity.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.TermsActivity"
+            android:label="@string/title_activity_terms"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.PrivacyActivity"
+            android:label="@string/title_activity_privacy"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

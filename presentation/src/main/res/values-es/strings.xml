@@ -5,6 +5,8 @@
     <string name="title_activity_register">Registro</string>
     <string name="title_activity_settings">Ajustes de usuario</string>
     <string name="title_activity_main">Tus notas</string>
+    <string name="title_activity_terms">Términos y condiciones</string>
+    <string name="title_activity_privacy">Política de privacidad</string>
 
     <string name="title_activity_note_detail">Detalle de la nota</string>
     <string name="title_activity_note_create">Crear una nueva nota</string>

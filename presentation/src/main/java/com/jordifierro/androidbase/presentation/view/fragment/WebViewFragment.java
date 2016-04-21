@@ -42,6 +42,7 @@ public class WebViewFragment extends Fragment {
                 }
             }
         });
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(((Listener)getActivity()).getUrl());
     }
 
@@ -49,4 +50,7 @@ public class WebViewFragment extends Fragment {
         String getUrl();
     }
 
+    public WebView getWebView() {
+        return webView;
+    }
 }

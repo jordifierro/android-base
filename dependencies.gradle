@@ -30,7 +30,7 @@ ext {
     mockWebServerVersion = '3.2.0'
     commonsIOVersion = '2.4'
     jetAnnotationVersion = '15.0'
-    espressoVersion = '2.2.1'
+    espressoVersion = '2.2.2'
 
     domainDependencies = [
             retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
@@ -82,6 +82,7 @@ ext {
             androidAnnotations: "com.android.support:support-annotations:${androidSupportVersion}",
             espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
             espressoIntents:    "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
+            espressoWeb:        "com.android.support.test.espresso:espresso-web:${espressoVersion}",
             daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}"
     ]
 

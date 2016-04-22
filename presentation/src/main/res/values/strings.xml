@@ -13,8 +13,6 @@
     <string name="title_activity_note_edit">Edit note</string>
 
     <string name="button_login">Login</string>
-    <string name="button_logout">Logout</string>
-    <string name="button_delete_account">Delete account</string>
     <string name="button_register">Register</string>
     <string name="button_goto_login">I already have an account</string>
     <string name="button_settings">Settings</string>
@@ -34,6 +32,8 @@
 
     <string name="textview_register_terms">By registering you accept the application \
         <u>Terms &amp; Conditions</u></string>
+    <string name="textview_logout">Logout</string>
+    <string name="textview_delete_account">Delete account</string>
 
     <string name="textview_title">Title:</string>
     <string name="textview_content">Content:</string>

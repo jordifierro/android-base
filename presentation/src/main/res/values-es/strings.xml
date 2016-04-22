@@ -13,8 +13,6 @@
     <string name="title_activity_note_edit">Editar nota</string>
 
     <string name="button_login">Entrar</string>
-    <string name="button_logout">Cerrar sesión</string>
-    <string name="button_delete_account">Borrar cuenta</string>
     <string name="button_register">Registrarse</string>
     <string name="button_goto_login">Ya tengo una cuenta</string>
     <string name="button_settings">Ajustes</string>
@@ -34,6 +32,8 @@
 
     <string name="textview_register_terms">Registrándote aceptas los \
         <u>Términos y Condiciones</u> de la aplicación</string>
+    <string name="textview_logout">Cerrar sesión</string>
+    <string name="textview_delete_account">Borrar cuenta</string>
 
     <string name="textview_title">Título:</string>
     <string name="textview_content">Contenido:</string>

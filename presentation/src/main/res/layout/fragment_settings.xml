@@ -1,18 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_normal">
+    android:background="@color/brown_ultralight">
 
-    <Button android:id="@+id/btn_logout"
+    <TextView android:id="@+id/tv_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="@string/button_logout"/>
+        android:padding="@dimen/padding_large"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:text="@string/textview_logout"/>
 
-    <Button android:id="@+id/btn_delete_account"
+    <TextView android:id="@+id/tv_delete_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_logout"
-        android:text="@string/button_delete_account"/>
+        android:layout_below="@+id/tv_logout"
+        android:padding="@dimen/padding_large"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:text="@string/textview_delete_account"/>
+
+    <TextView android:id="@+id/tv_terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_delete_account"
+        android:padding="@dimen/padding_large"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:text="@string/title_activity_terms"/>
+
+    <TextView android:id="@+id/tv_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_terms"
+        android:padding="@dimen/padding_large"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:text="@string/title_activity_privacy"/>
 
 </RelativeLayout>

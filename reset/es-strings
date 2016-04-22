@@ -10,8 +10,6 @@
     <string name="title_activity_privacy">Política de privacidad</string>
 
     <string name="button_login">Entrar</string>
-    <string name="button_logout">Cerrar sesión</string>
-    <string name="button_delete_account">Borrar cuenta</string>
     <string name="button_register">Registrarse</string>
     <string name="button_goto_login">Ya tengo una cuenta</string>
     <string name="button_settings">Ajustes</string>
@@ -22,6 +20,8 @@
 
     <string name="textview_register_terms">Registrándote aceptas los \
             <u>Términos y Condiciones</u> de la aplicación</string>
+    <string name="button_logout">Cerrar sesión</string>
+    <string name="button_delete_account">Borrar cuenta</string>
 
     <string name="message_error">Ha ocurrido un error</string>
 

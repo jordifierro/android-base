@@ -33,13 +33,28 @@ public class SettingsFragment extends BaseFragment implements SettingsView {
         return settingsPresenter;
     }
 
-    @OnClick(R.id.btn_logout)
+    @OnClick(R.id.tv_logout)
     public void logoutButtonPressed() {
         this.settingsPresenter.logoutUserButtonPressed();
     }
 
-    @OnClick(R.id.btn_delete_account)
+    @OnClick(R.id.tv_delete_account)
     public void deleteAccountButtonPressed() {
         this.settingsPresenter.deleteAccountButtonPressed();
+    }
+
+    @OnClick(R.id.tv_terms)
+    public void termsButtonPressed() {
+        ((Listener)getActivity()).showTerms();
+    }
+
+    @OnClick(R.id.tv_privacy)
+    public void privacyButtonPressed() {
+        ((Listener)getActivity()).showPrivacy();
+    }
+
+    public interface Listener {
+        void showTerms();
+        void showPrivacy();
     }
 }

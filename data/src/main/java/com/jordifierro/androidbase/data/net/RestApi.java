@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.data.net;
 import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
+import com.jordifierro.androidbase.domain.entity.VersionEntity;
 
 import java.util.List;
 
@@ -33,6 +34,10 @@ public interface RestApi {
 
     @DELETE("/users/logout")
     Observable<Response<Void>> doLogout(@Header("Authorization") String token);
+
+    @GET("/versions/expiration")
+    Observable<Response<VersionEntity>> checkVersionExpiration(
+                                                            @Header("Authorization") String token);
 
     @POST("/notes")
     Observable<Response<NoteEntity>> createNote(@Header("Authorization") String token,

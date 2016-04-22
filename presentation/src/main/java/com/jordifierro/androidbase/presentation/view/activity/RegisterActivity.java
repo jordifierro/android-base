@@ -29,4 +29,8 @@ public class RegisterActivity extends CleanActivity implements RegisterFragment.
         startActivity(notesIntent);
     }
 
+    @Override
+    public void showTerms() {
+        startActivity(new Intent(this, TermsActivity.class));
+    }
 }

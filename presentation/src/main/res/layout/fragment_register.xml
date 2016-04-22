@@ -31,4 +31,12 @@
         android:layout_below="@+id/et_password_confirmation"
         android:text="@string/button_register"/>
 
+    <TextView android:id="@+id/tv_terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_register"
+        android:gravity="center"
+        android:textSize="@dimen/textsize_small"
+        android:text="@string/textview_register_terms"/>
+
 </RelativeLayout>

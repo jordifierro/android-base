@@ -19,6 +19,9 @@
     <string name="edittext_password">Password…</string>
     <string name="edittext_password_confirmation">Confirm password…</string>
 
+    <string name="textview_register_terms">By registering you accept the application \
+            <u>Terms &amp; Conditions</u></string>
+
     <string name="message_error">Some error occurred</string>
 
 </resources>

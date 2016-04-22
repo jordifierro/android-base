@@ -32,6 +32,9 @@
     <string name="edittext_title">Título de la nota…</string>
     <string name="edittext_content">Contenido de la nota…</string>
 
+    <string name="textview_register_terms">Registrándote aceptas los \
+        <u>Términos y Condiciones</u> de la aplicación</string>
+
     <string name="textview_title">Título:</string>
     <string name="textview_content">Contenido:</string>
 

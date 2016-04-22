@@ -48,6 +48,11 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
                                             passwordConfirmationEditText.getText().toString());
     }
 
+    @OnClick(R.id.tv_terms)
+    public void termsPressed() {
+        ((Listener)getActivity()).showTerms();
+    }
+
     @Override
     public void viewNotes() {
         ((Listener)getActivity()).viewNotes();
@@ -55,6 +60,7 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
 
     public interface Listener {
         void viewNotes();
+        void showTerms();
     }
 
 }

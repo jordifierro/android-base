@@ -61,4 +61,14 @@ public class RegisterActivityTest {
         intended(hasComponent(MainActivity.class.getName()));
         Intents.release();
     }
+
+    @Test
+    public void testTermsClicked() {
+        Intents.init();
+
+        onView(withId(R.id.tv_terms)).perform(click());
+
+        intended(hasComponent(TermsActivity.class.getName()));
+        Intents.release();
+    }
 }

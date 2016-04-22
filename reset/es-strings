@@ -20,6 +20,9 @@
     <string name="edittext_password">Contraseña…</string>
     <string name="edittext_password_confirmation">Confirmar contraseña…</string>
 
+    <string name="textview_register_terms">Registrándote aceptas los \
+            <u>Términos y Condiciones</u> de la aplicación</string>
+
     <string name="message_error">Ha ocurrido un error</string>
 
 </resources>

@@ -32,6 +32,9 @@
     <string name="edittext_title">Note title…</string>
     <string name="edittext_content">Note content…</string>
 
+    <string name="textview_register_terms">By registering you accept the application \
+        <u>Terms &amp; Conditions</u></string>
+
     <string name="textview_title">Title:</string>
     <string name="textview_content">Content:</string>
 

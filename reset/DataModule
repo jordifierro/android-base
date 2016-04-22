@@ -31,16 +31,21 @@ public class DataModule {
 
     @Provides
     @Singleton
-    RestApi provideRestApi(HttpInterceptor httpInterceptor) {
+    RestApi provideRestApi() {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                                                .addInterceptor(new HttpInterceptor())
+                                                .build();
+
+        GsonConverterFactory factory = GsonConverterFactory.create(new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create());
+
         return new Retrofit.Builder()
-                .baseUrl(RestApi.URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
-                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                        .create()))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(new OkHttpClient().newBuilder().addInterceptor(httpInterceptor).build())
-                .build()
-                .create(RestApi.class);
+                           .baseUrl(RestApi.URL_BASE)
+                           .addConverterFactory(factory)
+                           .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                           .client(client)
+                           .build()
+                           .create(RestApi.class);
     }
 
     @Provides

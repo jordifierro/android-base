@@ -6,6 +6,8 @@
     <string name="title_activity_register">Registro</string>
     <string name="title_activity_settings">Ajustes de usuario</string>
     <string name="title_activity_main">Main Activity</string>
+    <string name="title_activity_terms">Términos y condiciones</string>
+    <string name="title_activity_privacy">Política de privacidad</string>
 
     <string name="button_login">Entrar</string>
     <string name="button_logout">Cerrar sesión</string>

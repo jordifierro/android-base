@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.jordifierro.androidbase.presentation.R;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends CleanActivity {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {}

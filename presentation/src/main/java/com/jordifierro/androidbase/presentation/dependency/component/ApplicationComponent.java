@@ -9,6 +9,7 @@ import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
+import com.jordifierro.androidbase.domain.repository.VersionRepository;
 import com.jordifierro.androidbase.presentation.dependency.module.ApplicationModule;
 import com.jordifierro.androidbase.presentation.dependency.module.DataModule;
 
@@ -29,5 +30,6 @@ public interface ApplicationComponent {
     RestApi restApi();
     UserRepository userRepository();
     NoteRepository noteRepository();
+    VersionRepository versionRepository();
 
 }

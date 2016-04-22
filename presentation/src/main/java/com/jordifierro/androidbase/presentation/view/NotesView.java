@@ -8,5 +8,6 @@ public interface NotesView extends BaseView {
 
     void showNotes(List<NoteEntity> notes);
     void showNote(int noteId);
+    void showExpirationDate(String date);
 
 }

@@ -2,6 +2,7 @@ package com.jordifierro.androidbase.presentation.presenter;
 
 import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
+import com.jordifierro.androidbase.domain.interactor.CheckVersionExpirationUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.GetNotesUseCase;
 import com.jordifierro.androidbase.presentation.view.NotesView;
 
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.verify;
 public class NotesPresenterTest {
 
     @Mock GetNotesUseCase getNotesUseCase;
+    @Mock CheckVersionExpirationUseCase checkVersionExpirationUseCase;
     @Mock NotesView mockNotesView;
     @Mock Observable mockObservable;
 
@@ -31,7 +33,8 @@ public class NotesPresenterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        this.notesPresenter = new NotesPresenter(this.getNotesUseCase);
+        this.notesPresenter = new NotesPresenter(this.getNotesUseCase,
+                                                 this.checkVersionExpirationUseCase);
         this.notesPresenter.initWithView(this.mockNotesView);
         this.notesSubscriber = this.notesPresenter.new NotesSubscriber();
     }

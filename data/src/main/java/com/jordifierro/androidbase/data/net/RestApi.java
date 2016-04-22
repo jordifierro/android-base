@@ -55,6 +55,7 @@ public interface RestApi {
                                                 @Path("id") int noteId, @Body NoteEntity note);
 
     @DELETE("/notes/{id}")
-    Observable<Response<Void>> deleteNote(@Header("Authorization") String token, @Path("id") int noteId);
+    Observable<Response<Void>> deleteNote(@Header("Authorization") String token,
+                                          @Path("id") int noteId);
 
 }

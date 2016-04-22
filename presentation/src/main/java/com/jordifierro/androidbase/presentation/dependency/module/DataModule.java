@@ -9,9 +9,11 @@ import com.jordifierro.androidbase.data.net.interceptor.HttpInterceptor;
 import com.jordifierro.androidbase.data.repository.NoteDataRepository;
 import com.jordifierro.androidbase.data.repository.SessionDataRepository;
 import com.jordifierro.androidbase.data.repository.UserDataRepository;
+import com.jordifierro.androidbase.data.repository.VersionDataRepository;
 import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
+import com.jordifierro.androidbase.domain.repository.VersionRepository;
 
 import javax.inject.Singleton;
 
@@ -60,6 +62,12 @@ public class DataModule {
     @Singleton
     NoteRepository provideNoteRepository(RestApi restApi) {
         return new NoteDataRepository(restApi);
+    }
+
+    @Provides
+    @Singleton
+    VersionRepository provideVersionRepository(RestApi restApi) {
+        return new VersionDataRepository(restApi);
     }
 
 }

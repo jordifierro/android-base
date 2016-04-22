@@ -66,6 +66,12 @@ public class NotesFragment extends BaseFragment implements NotesView {
         ((Listener)getActivity()).showNote(noteId);
     }
 
+    @Override
+    public void showExpirationDate(String date) {
+        showMessage(getResources().getString(R.string.message_expiration) + " " + date + ".\n" +
+                    getResources().getString(R.string.message_update) + ".");
+    }
+
     public interface Listener {
         void diplayNoteCreator();
         void showNote(int noteId);

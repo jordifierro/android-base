@@ -23,5 +23,9 @@
     <string name="textview_delete_account">Delete account</string>
 
     <string name="message_error">Some error occurred</string>
+    <string name="message_expiration">This version expires on: </string>
+    <string name="message_expired">This version has expired</string>
+    <string name="message_update">Please, update the application</string>
+    <string name="message_ok">Ok</string>
 
 </resources>

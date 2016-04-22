@@ -24,5 +24,9 @@
     <string name="textview_delete_account">Borrar cuenta</string>
 
     <string name="message_error">Ha ocurrido un error</string>
+    <string name="message_expiration">Esta versión expira el: </string>
+    <string name="message_expired">Esta versión ha expirado</string>
+    <string name="message_update">Por favor, actualiza la aplicación</string>
+    <string name="message_ok">Aceptar</string>
 
 </resources>

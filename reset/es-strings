@@ -20,8 +20,8 @@
 
     <string name="textview_register_terms">Registrándote aceptas los \
             <u>Términos y Condiciones</u> de la aplicación</string>
-    <string name="button_logout">Cerrar sesión</string>
-    <string name="button_delete_account">Borrar cuenta</string>
+    <string name="textview_logout">Cerrar sesión</string>
+    <string name="textview_delete_account">Borrar cuenta</string>
 
     <string name="message_error">Ha ocurrido un error</string>
 

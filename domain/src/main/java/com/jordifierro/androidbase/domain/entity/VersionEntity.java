@@ -4,6 +4,9 @@ public class VersionEntity {
 
     private String expirationDate;
 
+    public VersionEntity() {
+    }
+
     public VersionEntity(String expirationDate) {
         this.expirationDate = expirationDate;
     }

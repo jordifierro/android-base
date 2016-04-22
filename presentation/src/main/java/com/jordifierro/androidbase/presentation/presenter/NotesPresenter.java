@@ -44,6 +44,7 @@ public class NotesPresenter extends BasePresenter implements Presenter {
     public void destroy() {
         super.destroy();
         this.notesView = null;
+        this.checkVersionExpirationUseCase.unsubscribe();
     }
 
     protected class NotesSubscriber extends BaseSubscriber<List<NoteEntity>> {
@@ -58,7 +59,8 @@ public class NotesPresenter extends BasePresenter implements Presenter {
 
         @Override public void onNext(VersionEntity version) {
             NotesPresenter.this.hideLoader();
-            if (version.getExpirationDate().length() > 0) {
+            if (version.getExpirationDate() != null &&
+                    version.getExpirationDate().length() > 0) {
                 NotesPresenter.this.notesView.showExpirationDate(version.getExpirationDate());
             }
         }

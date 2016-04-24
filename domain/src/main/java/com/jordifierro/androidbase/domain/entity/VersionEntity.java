@@ -4,8 +4,7 @@ public class VersionEntity {
 
     private String expirationDate;
 
-    public VersionEntity() {
-    }
+    public VersionEntity() {}
 
     public VersionEntity(String expirationDate) {
         this.expirationDate = expirationDate;
@@ -18,4 +17,5 @@ public class VersionEntity {
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
+
 }

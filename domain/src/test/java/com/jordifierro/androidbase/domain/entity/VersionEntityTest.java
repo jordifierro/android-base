@@ -8,25 +8,25 @@ import static org.junit.Assert.assertThat;
 
 public class VersionEntityTest {
 
-    private static final String FAKE_MSG = "fake message";
+    private static final String FAKE_EXPIRATION_DATE = "02/02/2002";
 
-    private VersionEntity message;
+    private VersionEntity version;
 
     @Before
     public void setup() {
-        this.message = new VersionEntity(FAKE_MSG);
+        this.version = new VersionEntity(FAKE_EXPIRATION_DATE);
     }
 
     @Test
     public void testMessageConstructor() {
-        assertThat(this.message.getExpirationDate(), is(FAKE_MSG));
+        assertThat(this.version.getExpirationDate(), is(FAKE_EXPIRATION_DATE));
     }
 
     @Test
     public void testUserSetters() {
-        this.message.setExpirationDate("another message");
+        this.version.setExpirationDate("11/11/1111");
 
-        assertThat(this.message.getExpirationDate(), is("another message"));
+        assertThat(this.version.getExpirationDate(), is("11/11/1111"));
     }
 
 }

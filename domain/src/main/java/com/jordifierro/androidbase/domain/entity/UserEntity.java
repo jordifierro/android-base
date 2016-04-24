@@ -6,6 +6,8 @@ public class UserEntity {
     private String authToken;
     private String password;
     private String passwordConfirmation;
+    private String newPassword;
+    private String newPasswordConfirmation;
 
     public UserEntity() {}
 
@@ -43,5 +45,21 @@ public class UserEntity {
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getNewPasswordConfirmation() {
+        return newPasswordConfirmation;
+    }
+
+    public void setNewPasswordConfirmation(String newPasswordConfirmation) {
+        this.newPasswordConfirmation = newPasswordConfirmation;
     }
 }

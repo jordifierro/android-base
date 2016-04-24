@@ -2,6 +2,7 @@ package com.jordifierro.androidbase.data.repository;
 
 import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
+import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
 
@@ -42,6 +43,18 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
                     public Void call(Response<Void> voidResponse) {
                         handleResponseError(voidResponse);
                         return null;
+                    }
+                });
+    }
+
+    @Override
+    public Observable<MessageEntity> resetPassword(UserEntity user) {
+        return this.restApi.resetPassword(user.getAuthToken(), new UserWrapper(user))
+                .map(new Func1<Response<MessageEntity>, MessageEntity>() {
+                    @Override
+                    public MessageEntity call(Response<MessageEntity> messageEntityResponse) {
+                        handleResponseError(messageEntityResponse);
+                        return messageEntityResponse.body();
                     }
                 });
     }

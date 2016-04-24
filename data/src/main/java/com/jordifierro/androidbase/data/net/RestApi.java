@@ -1,6 +1,7 @@
 package com.jordifierro.androidbase.data.net;
 
 import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
+import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.entity.VersionEntity;
@@ -28,6 +29,10 @@ public interface RestApi {
 
     @DELETE("/users/0")
     Observable<Response<Void>> deleteUser(@Header("Authorization") String token);
+
+    @POST("/users/reset_password")
+    Observable<Response<MessageEntity>> resetPassword(@Header("Authorization") String token,
+                                                      @Body UserWrapper userWrapper);
 
     @POST("/users/login")
     Observable<Response<UserEntity>> doLogin(@Body UserWrapper userWrapper);

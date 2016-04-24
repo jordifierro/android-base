@@ -7,6 +7,7 @@ import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
 import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
 import com.jordifierro.androidbase.data.utils.TestUtils;
+import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.executor.DefaultThreadExecutor;
 
@@ -166,6 +167,62 @@ public class UserDataRepositoryTest {
                 this.testSubscriber.getOnErrorEvents().get(0);
         assertEquals(401, error.getStatusCode());
         assertTrue(error.getMessage().length() > 0);
+    }
+
+    @Test
+    public void testResetPasswordRequest() throws Exception {
+        this.fakeUser.setNewPassword("new_password");
+        this.fakeUser.setNewPasswordConfirmation("new_password_confirmation");
+        this.mockWebServer.enqueue(new MockResponse());
+
+        this.userDataRepository.resetPassword(this.fakeUser)
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+
+        RecordedRequest request = this.mockWebServer.takeRequest();
+        assertEquals("/users/reset_password", request.getPath());
+        assertEquals("POST", request.getMethod());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        assertEquals(gson.toJson(new UserWrapper(this.fakeUser)).toString(),
+                request.getBody().readUtf8());
+    }
+
+    @Test
+    public void testResetPasswordSuccess() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse().setResponseCode(201).setBody(
+                FileUtils.readFileToString(
+                        TestUtils.getFileFromPath(this, "res/reset_password_ok.json"))));
+
+        this.userDataRepository.resetPassword(this.fakeUser)
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+        this.testSubscriber.awaitTerminalEvent();
+
+        MessageEntity responseMessage =
+                (MessageEntity) this.testSubscriber.getOnNextEvents().get(0);
+        assertEquals("Check your email to confirm the new password", responseMessage.getMessage());
+    }
+
+    @Test
+    public void testResetPasswordError() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse().setResponseCode(422).setBody(
+                FileUtils.readFileToString(
+                        TestUtils.getFileFromPath(this, "res/reset_password_error.json"))));
+
+        this.userDataRepository.resetPassword(this.fakeUser)
+                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
+                .observeOn(Schedulers.io())
+                .subscribe(this.testSubscriber);
+        this.testSubscriber.awaitTerminalEvent();
+
+        this.testSubscriber.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException)
+                this.testSubscriber.getOnErrorEvents().get(0);
+        assertEquals(422, error.getStatusCode());
+        assertEquals("New password confirmation doesn't match New password", error.getMessage());
     }
 
     @Test

@@ -57,8 +57,14 @@ public class LoginFragment extends BaseFragment implements LoginView {
         ((Listener)getActivity()).displayRegister();
     }
 
+    @OnClick(R.id.tv_forgot_password)
+    public void forgotPasswordPressed() {
+        ((Listener)getActivity()).forgotPassword();
+    }
+
     public interface Listener {
         void viewNotes();
         void displayRegister();
+        void forgotPassword();
     }
 }

@@ -7,6 +7,7 @@
     <string name="title_activity_main">Tus notas</string>
     <string name="title_activity_terms">Términos y condiciones</string>
     <string name="title_activity_privacy">Política de privacidad</string>
+    <string name="title_activity_resetpassword">Cambiar contraseña</string>
 
     <string name="title_activity_note_detail">Detalle de la nota</string>
     <string name="title_activity_note_create">Crear una nueva nota</string>
@@ -14,6 +15,7 @@
 
     <string name="button_login">Entrar</string>
     <string name="button_register">Registrarse</string>
+    <string name="button_reset_password">Cambiar contraseña</string>
     <string name="button_goto_login">Ya tengo una cuenta</string>
     <string name="button_settings">Ajustes</string>
 
@@ -26,6 +28,7 @@
     <string name="edittext_email">Email…</string>
     <string name="edittext_password">Contraseña…</string>
     <string name="edittext_password_confirmation">Confirmar contraseña…</string>
+    <string name="edittext_newpassword">Nueva contraseña…</string>
 
     <string name="edittext_title">Título de la nota…</string>
     <string name="edittext_content">Contenido de la nota…</string>
@@ -34,6 +37,7 @@
         <u>Términos y Condiciones</u> de la aplicación</string>
     <string name="textview_logout">Cerrar sesión</string>
     <string name="textview_delete_account">Borrar cuenta</string>
+    <string name="textview_forgot_password">Olvidaste tu contraseña?</string>
 
     <string name="textview_title">Título:</string>
     <string name="textview_content">Contenido:</string>

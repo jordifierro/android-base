@@ -8,20 +8,24 @@
     <string name="title_activity_main">Main Activity</string>
     <string name="title_activity_terms">Términos y condiciones</string>
     <string name="title_activity_privacy">Política de privacidad</string>
+    <string name="title_activity_resetpassword">Cambiar contraseña</string>
 
     <string name="button_login">Entrar</string>
     <string name="button_register">Registrarse</string>
+    <string name="button_reset_password">Cambiar contraseña</string>
     <string name="button_goto_login">Ya tengo una cuenta</string>
     <string name="button_settings">Ajustes</string>
 
     <string name="edittext_email">Email…</string>
     <string name="edittext_password">Contraseña…</string>
     <string name="edittext_password_confirmation">Confirmar contraseña…</string>
+    <string name="edittext_newpassword">Nueva contraseña…</string>
 
     <string name="textview_register_terms">Registrándote aceptas los \
             <u>Términos y Condiciones</u> de la aplicación</string>
     <string name="textview_logout">Cerrar sesión</string>
     <string name="textview_delete_account">Borrar cuenta</string>
+    <string name="textview_forgot_password">Olvidaste tu contraseña?</string>
 
     <string name="message_error">Ha ocurrido un error</string>
     <string name="message_expiration">Esta versión expira el: </string>

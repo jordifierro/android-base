@@ -7,20 +7,24 @@
     <string name="title_activity_main">Main Activity</string>
     <string name="title_activity_terms">Terms and conditions</string>
     <string name="title_activity_privacy">Privacy policy</string>
+    <string name="title_activity_resetpassword">Reset Password</string>
 
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
+    <string name="button_reset_password">Reset password</string>
     <string name="button_goto_login">I already have an account</string>
     <string name="button_settings">Settings</string>
 
     <string name="edittext_email">Email…</string>
     <string name="edittext_password">Password…</string>
     <string name="edittext_password_confirmation">Confirm password…</string>
+    <string name="edittext_newpassword">New password…</string>
 
     <string name="textview_register_terms">By registering you accept the application \
             <u>Terms &amp; Conditions</u></string>
     <string name="textview_logout">Logout</string>
     <string name="textview_delete_account">Delete account</string>
+    <string name="textview_forgot_password">Forgot password?</string>
 
     <string name="message_error">Some error occurred</string>
     <string name="message_expiration">This version expires on: </string>

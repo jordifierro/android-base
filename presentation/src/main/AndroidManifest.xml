@@ -56,6 +56,10 @@
             android:name=".view.activity.PrivacyActivity"
             android:label="@string/title_activity_privacy"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.ResetPasswordActivity"
+            android:label="@string/title_activity_resetpassword"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

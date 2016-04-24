@@ -161,10 +161,6 @@ That will run both java and Android tests.
 #### Todo List
 
 - [ ] Add sample integration testing.
-- [ ] Add sample privacy policy.
-- [ ] Implement caching.
-- [ ] Version expiration alert messages and redirect.
-- [ ] Implement deep linking navigation.
 - [ ] Add code style, test coverage and other code quality tools.
 
 

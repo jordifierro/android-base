@@ -68,4 +68,14 @@ public class LoginActivityTest {
         intended(hasComponent(RegisterActivity.class.getName()));
         Intents.release();
     }
+
+    @Test
+    public void testForgotPasswordButton() {
+        Intents.init();
+
+        onView(withId(R.id.tv_forgot_password)).perform(click());
+
+        intended(hasComponent(ResetPasswordActivity.class.getName()));
+        Intents.release();
+    }
 }

@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.presentation;
 import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.presenter.LoginPresenter;
 import com.jordifierro.androidbase.presentation.presenter.RegisterPresenter;
+import com.jordifierro.androidbase.presentation.presenter.ResetPasswordPresenter;
 import com.jordifierro.androidbase.presentation.presenter.SettingsPresenter;
 
 import org.mockito.Mockito;
@@ -26,6 +27,11 @@ public class TestMockerModule {
     @Provides @ActivityScope
     SettingsPresenter provideSettingsPresenter() {
         return Mockito.mock(SettingsPresenter.class);
+    }
+
+    @Provides @ActivityScope
+    ResetPasswordPresenter provideResetPasswordPresenter() {
+        return Mockito.mock(ResetPasswordPresenter.class);
     }
 
 }

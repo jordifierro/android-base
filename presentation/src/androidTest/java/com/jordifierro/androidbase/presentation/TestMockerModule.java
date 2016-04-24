@@ -7,6 +7,7 @@ import com.jordifierro.androidbase.presentation.presenter.NoteDetailPresenter;
 import com.jordifierro.androidbase.presentation.presenter.NoteEditPresenter;
 import com.jordifierro.androidbase.presentation.presenter.NotesPresenter;
 import com.jordifierro.androidbase.presentation.presenter.RegisterPresenter;
+import com.jordifierro.androidbase.presentation.presenter.ResetPasswordPresenter;
 import com.jordifierro.androidbase.presentation.presenter.SettingsPresenter;
 
 import org.mockito.Mockito;
@@ -50,6 +51,11 @@ public class TestMockerModule {
     @Provides @ActivityScope
     NoteEditPresenter provideNoteEditPresenter() {
         return Mockito.mock(NoteEditPresenter.class);
+    }
+
+    @Provides @ActivityScope
+    ResetPasswordPresenter provideResetPasswordPresenter() {
+        return Mockito.mock(ResetPasswordPresenter.class);
     }
 
 }

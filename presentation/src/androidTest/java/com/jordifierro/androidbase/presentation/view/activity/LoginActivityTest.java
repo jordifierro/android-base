@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -70,12 +71,14 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void testForgotPasswordButton() {
+    public void testForgotPasswordClick() {
         Intents.init();
 
+        closeSoftKeyboard();
         onView(withId(R.id.tv_forgot_password)).perform(click());
 
         intended(hasComponent(ResetPasswordActivity.class.getName()));
         Intents.release();
     }
+
 }

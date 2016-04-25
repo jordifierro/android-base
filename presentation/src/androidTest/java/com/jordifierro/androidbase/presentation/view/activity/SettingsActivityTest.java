@@ -47,11 +47,8 @@ public class SettingsActivityTest {
 
     @Test
     public void testViewElements() throws PackageManager.NameNotFoundException {
-        String title = this.activityTestRule.getActivity().getPackageManager().getActivityInfo(
-                this.activityTestRule.getActivity().getComponentName(), PackageManager.GET_META_DATA)
-                .loadLabel(this.activityTestRule.getActivity().getPackageManager()).toString();
-        onView(allOf(isAssignableFrom(TextView.class),
-                withParent(isAssignableFrom(Toolbar.class)))).check(matches(withText(title)));
+        onView(allOf(isAssignableFrom(TextView.class),withParent(isAssignableFrom(Toolbar.class))))
+                .check(matches(withText(R.string.title_activity_settings)));
         onView(withId(R.id.tv_logout)).check(matches(withText(R.string.textview_logout)));
         onView(withId(R.id.tv_delete_account))
                 .check(matches(withText(R.string.textview_delete_account)));

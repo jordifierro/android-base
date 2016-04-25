@@ -52,11 +52,8 @@ public class TermsActivityTest {
         onView(withId(R.id.webview)).inRoot(
                 withDecorView(is(this.activityTestRule.getActivity().getWindow().getDecorView())))
                 .check(matches(isDisplayed()));
-        String title = this.activityTestRule.getActivity().getPackageManager().getActivityInfo(
-                this.activityTestRule.getActivity().getComponentName(), PackageManager.GET_META_DATA)
-                .loadLabel(this.activityTestRule.getActivity().getPackageManager()).toString();
-        onView(allOf(isAssignableFrom(TextView.class),
-                withParent(isAssignableFrom(Toolbar.class)))).check(matches(withText(title)));
+        onView(allOf(isAssignableFrom(TextView.class),withParent(isAssignableFrom(Toolbar.class))))
+                .check(matches(withText(R.string.title_activity_terms)));
         
         onWebView().check(webMatches(getCurrentUrl(), equalTo(RestApi.URL_BASE + "/terms")));
         assertEquals(RestApi.URL_BASE + "/terms", this.webViewFragment.getWebView().getUrl());

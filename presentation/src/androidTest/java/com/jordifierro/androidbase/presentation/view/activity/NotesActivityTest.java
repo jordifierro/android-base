@@ -58,11 +58,8 @@ public class NotesActivityTest {
 
     @Test
     public void testViewElements() throws PackageManager.NameNotFoundException {
-        String title = this.activityTestRule.getActivity().getPackageManager().getActivityInfo(
-                this.activityTestRule.getActivity().getComponentName(), PackageManager.GET_META_DATA)
-                .loadLabel(this.activityTestRule.getActivity().getPackageManager()).toString();
-        onView(Matchers.allOf(isAssignableFrom(TextView.class),
-                withParent(isAssignableFrom(Toolbar.class)))).check(matches(withText(title)));
+        onView(Matchers.allOf(isAssignableFrom(TextView.class),withParent(isAssignableFrom(Toolbar.class))))
+                .check(matches(withText(R.string.title_activity_main)));
         onView(withId(R.id.btn_create_new_note))
                 .check(matches(withText(R.string.button_create_new_note)));
     }

@@ -9,40 +9,48 @@ PKG_NAME=$2
 LC_ALL=C find . -not -path '*/rename_project' -type f -exec \
 sed -i '' -e "s/com.jordifierro.androidbase/$PKG_NAME/g" {} +
 
-PKG_FOLDERS=$(echo $PKG_NAME | tr . / )
+PKG_FOLDERS=$(echo "$PKG_NAME" | tr . / )
 cp -r . ../abtemp
 
 rm -rf domain/src/main/java/com
-mkdir -p domain/src/main/java/$PKG_FOLDERS
-cp -r ../abtemp/domain/src/main/java/com/jordifierro/androidbase/domain domain/src/main/java/$PKG_FOLDERS/domain
+mkdir -p domain/src/main/java/"$PKG_FOLDERS"
+cp -r ../abtemp/domain/src/main/java/com/jordifierro/androidbase/domain \
+      domain/src/main/java/"$PKG_FOLDERS"/domain
 
 rm -rf domain/src/test/java/com
-mkdir -p domain/src/test/java/$PKG_FOLDERS
-cp -r ../abtemp/domain/src/test/java/com/jordifierro/androidbase/domain domain/src/test/java/$PKG_FOLDERS/domain
+mkdir -p domain/src/test/java/"$PKG_FOLDERS"
+cp -r ../abtemp/domain/src/test/java/com/jordifierro/androidbase/domain \
+      domain/src/test/java/"$PKG_FOLDERS"/domain
 
 rm -rf data/src/main/java/com
-mkdir -p data/src/main/java/$PKG_FOLDERS
-cp -r ../abtemp/data/src/main/java/com/jordifierro/androidbase/data data/src/main/java/$PKG_FOLDERS/data
+mkdir -p data/src/main/java/"$PKG_FOLDERS"
+cp -r ../abtemp/data/src/main/java/com/jordifierro/androidbase/data \
+      data/src/main/java/"$PKG_FOLDERS"/data
 
 rm -rf data/src/test/java/com
-mkdir -p data/src/test/java/$PKG_FOLDERS
-cp -r ../abtemp/data/src/test/java/com/jordifierro/androidbase/data data/src/test/java/$PKG_FOLDERS/data
+mkdir -p data/src/test/java/"$PKG_FOLDERS"
+cp -r ../abtemp/data/src/test/java/com/jordifierro/androidbase/data \
+      data/src/test/java/"$PKG_FOLDERS"/data
 
 rm -rf data/src/androidTest/java/com
-mkdir -p data/src/androidTest/java/$PKG_FOLDERS
-cp -r ../abtemp/data/src/androidTest/java/com/jordifierro/androidbase/data data/src/androidTest/java/$PKG_FOLDERS/data
+mkdir -p data/src/androidTest/java/"$PKG_FOLDERS"
+cp -r ../abtemp/data/src/androidTest/java/com/jordifierro/androidbase/data \
+      data/src/androidTest/java/"$PKG_FOLDERS"/data
 
 rm -rf presentation/src/main/java/com
-mkdir -p presentation/src/main/java/$PKG_FOLDERS
-cp -r ../abtemp/presentation/src/main/java/com/jordifierro/androidbase/presentation presentation/src/main/java/$PKG_FOLDERS/presentation
+mkdir -p presentation/src/main/java/"$PKG_FOLDERS"
+cp -r ../abtemp/presentation/src/main/java/com/jordifierro/androidbase/presentation \
+      presentation/src/main/java/"$PKG_FOLDERS"/presentation
 
 rm -rf presentation/src/test/java/com
-mkdir -p presentation/src/test/java/$PKG_FOLDERS
-cp -r ../abtemp/presentation/src/test/java/com/jordifierro/androidbase/presentation presentation/src/test/java/$PKG_FOLDERS/presentation
+mkdir -p presentation/src/test/java/"$PKG_FOLDERS"
+cp -r ../abtemp/presentation/src/test/java/com/jordifierro/androidbase/presentation \
+      presentation/src/test/java/"$PKG_FOLDERS"/presentation
 
 rm -rf presentation/src/androidTest/java/com
-mkdir -p presentation/src/androidTest/java/$PKG_FOLDERS
-cp -r ../abtemp/presentation/src/androidTest/java/com/jordifierro/androidbase/presentation presentation/src/androidTest/java/$PKG_FOLDERS/presentation
+mkdir -p presentation/src/androidTest/java/"$PKG_FOLDERS"
+cp -r ../abtemp/presentation/src/androidTest/java/com/jordifierro/androidbase/presentation \
+      presentation/src/androidTest/java/"$PKG_FOLDERS"/presentation
 
 rm -rf ../abtemp
 rm -rf bin/rename_project

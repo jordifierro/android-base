@@ -1,13 +1,17 @@
 #!/bin/sh
 
-androidTestResult=$(adb shell 'am instrument -w com.jordifierro.androidbase.presentation.test/com.jordifierro.androidbase.presentation.TestMockerRunner ; printf "$?"')
-printf "$androidTestResult\n"
-exitCode=$(printf "$androidTestResult" | tail -1)
-if [ $exitCode != "0" ]; then
+androidTestResult=$(adb shell "am instrument -w \
+    com.jordifierro.androidbase.presentation.test/\
+com.jordifierro.androidbase.presentation.TestMockerRunner ; printf \"$?\"")
+
+printf "%s\n" "$androidTestResult"
+
+exitCode=$(printf "%s" "$androidTestResult" | tail -1)
+if [ "$exitCode" != "0" ]; then
     echo "status code error!"
     exit 1
 fi
-if echo "$androidTestResult" | grep -q "FAILURE"; then
-    echo "failures error!"
+if echo "$androidTestResult" | grep -q -e "Error" -e "Process crashed"; then
+    echo "Some error ocurred!"
     exit 1
 fi

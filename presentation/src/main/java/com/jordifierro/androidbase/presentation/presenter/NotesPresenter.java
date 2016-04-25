@@ -22,7 +22,7 @@ public class NotesPresenter extends BasePresenter implements Presenter {
     @Inject
     public NotesPresenter(GetNotesUseCase getNotesUseCase,
                           CheckVersionExpirationUseCase checkVersionExpirationUseCase) {
-        super(getNotesUseCase);
+        super(getNotesUseCase, checkVersionExpirationUseCase);
         this.getNotesUseCase = getNotesUseCase;
         this.checkVersionExpirationUseCase = checkVersionExpirationUseCase;
     }
@@ -44,7 +44,6 @@ public class NotesPresenter extends BasePresenter implements Presenter {
     public void destroy() {
         super.destroy();
         this.notesView = null;
-        this.checkVersionExpirationUseCase.unsubscribe();
     }
 
     protected class NotesSubscriber extends BaseSubscriber<List<NoteEntity>> {

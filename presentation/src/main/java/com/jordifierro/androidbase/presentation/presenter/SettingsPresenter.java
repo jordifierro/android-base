@@ -17,7 +17,7 @@ public class SettingsPresenter extends BasePresenter implements Presenter {
 
     @Inject
     public SettingsPresenter(DoLogoutUseCase doLogoutUseCase, DeleteUserUseCase deleteUserUseCase) {
-        super(doLogoutUseCase);
+        super(doLogoutUseCase, deleteUserUseCase);
         this.doLogoutUseCase = doLogoutUseCase;
         this.deleteUserUseCase = deleteUserUseCase;
     }
@@ -31,7 +31,6 @@ public class SettingsPresenter extends BasePresenter implements Presenter {
     @Override
     public void destroy() {
         super.destroy();
-        this.deleteUserUseCase.unsubscribe();
         this.settingsView = null;
     }
 

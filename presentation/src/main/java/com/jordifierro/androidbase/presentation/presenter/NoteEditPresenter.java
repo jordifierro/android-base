@@ -21,7 +21,7 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
     @Inject
     public NoteEditPresenter(UpdateNoteUseCase updateNoteUseCase,
                              GetNoteUseCase getNoteUseCase, DeleteNoteUseCase deleteNoteUseCase) {
-        super(updateNoteUseCase);
+        super(updateNoteUseCase, getNoteUseCase, deleteNoteUseCase);
         this.updateNoteUseCase = updateNoteUseCase;
         this.getNoteUseCase = getNoteUseCase;
         this.deleteNoteUseCase = deleteNoteUseCase;
@@ -40,8 +40,6 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
     @Override
     public void destroy() {
         super.destroy();
-        this.getNoteUseCase.unsubscribe();
-        this.deleteNoteUseCase.unsubscribe();
         this.noteEditView = null;
     }
 

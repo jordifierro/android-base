@@ -6,10 +6,21 @@ import com.jordifierro.androidbase.presentation.view.BaseView;
 public class BasePresenter implements Presenter {
 
     BaseView view;
-    private UseCase useCase;
+    private UseCase useCase0, useCase1, useCase2;
 
-    public BasePresenter(UseCase useCase) {
-        this.useCase = useCase;
+    public BasePresenter(UseCase useCase0) {
+        this.useCase0 = useCase0;
+    }
+
+    public BasePresenter(UseCase useCase0, UseCase useCase1) {
+        this.useCase0 = useCase0;
+        this.useCase1 = useCase1;
+    }
+
+    public BasePresenter(UseCase useCase0, UseCase useCase1, UseCase useCase2) {
+        this.useCase0 = useCase0;
+        this.useCase1 = useCase1;
+        this.useCase2 = useCase2;
     }
 
     @Override
@@ -25,7 +36,9 @@ public class BasePresenter implements Presenter {
 
     @Override
     public void destroy() {
-        this.useCase.unsubscribe();
+        if (this.useCase0 != null) this.useCase0.unsubscribe();
+        if (this.useCase1 != null) this.useCase1.unsubscribe();
+        if (this.useCase2 != null) this.useCase2.unsubscribe();
         this.view = null;
     }
 

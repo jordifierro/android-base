@@ -21,22 +21,23 @@
         android:background="@color/white"
         android:text="@string/textview_delete_account"/>
 
-    <TextView android:id="@+id/tv_terms"
+    <TextView android:id="@+id/tv_privacy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_delete_account"
         android:padding="@dimen/padding_large"
         android:layout_marginBottom="5dp"
         android:background="@color/white"
-        android:text="@string/title_activity_terms"/>
+        android:text="@string/title_activity_privacy"/>
 
-    <TextView android:id="@+id/tv_privacy"
+    <TextView android:id="@+id/tv_terms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_terms"
+        android:layout_below="@+id/tv_privacy"
         android:padding="@dimen/padding_large"
         android:layout_marginBottom="5dp"
         android:background="@color/white"
-        android:text="@string/title_activity_privacy"/>
+        android:text="@string/title_activity_terms"/>
+
 
 </RelativeLayout>

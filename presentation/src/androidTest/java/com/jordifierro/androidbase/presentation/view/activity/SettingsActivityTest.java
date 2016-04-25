@@ -17,8 +17,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -73,22 +75,22 @@ public class SettingsActivityTest {
     }
 
     @Test
-    public void testTermsClicked() {
-        Intents.init();
-
-        onView(withId(R.id.tv_terms)).perform(click());
-
-        intended(hasComponent(TermsActivity.class.getName()));
-        Intents.release();
-    }
-
-    @Test
     public void testPrivacyClicked() {
         Intents.init();
 
         onView(withId(R.id.tv_privacy)).perform(click());
 
         intended(hasComponent(PrivacyActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void testTermsClicked() {
+        Intents.init();
+
+        onView(withId(R.id.tv_terms)).perform(click());
+
+        intended(hasComponent(TermsActivity.class.getName()));
         Intents.release();
     }
 

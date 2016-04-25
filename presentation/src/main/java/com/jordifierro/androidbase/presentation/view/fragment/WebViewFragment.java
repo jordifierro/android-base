@@ -34,11 +34,10 @@ public class WebViewFragment extends Fragment {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int progress) {
-                if (!((WebViewActivity)getActivity()).isLoaderShowing()) {
-                    ((WebViewActivity)getActivity()).showLoader();
-                }
-                if (progress == 100) {
-                    ((WebViewActivity)getActivity()).hideLoader();
+                WebViewActivity activity = (WebViewActivity) getActivity();
+                if (activity != null) {
+                    if (!activity.isLoaderShowing()) activity.showLoader();
+                    if (progress == 100) activity.hideLoader();
                 }
             }
         });

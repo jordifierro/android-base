@@ -1,9 +1,12 @@
 package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.widget.TextView;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.presentation.R;
@@ -19,10 +22,13 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.allOf;
 import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
@@ -39,6 +45,16 @@ public class NoteEditActivityTest {
         activityTestRule.launchActivity(new Intent().putExtra(NoteEditActivity.PARAM_NOTE_ID, 2));
         this.noteEditFragment = ((NoteEditFragment) this.activityTestRule.getActivity()
                                 .getFragmentManager().findFragmentById(R.id.fragment_container));
+    }
+
+    @Test
+    public void testViewElements() throws PackageManager.NameNotFoundException {
+        String title = this.activityTestRule.getActivity().getPackageManager().getActivityInfo(
+                this.activityTestRule.getActivity().getComponentName(), PackageManager.GET_META_DATA)
+                .loadLabel(this.activityTestRule.getActivity().getPackageManager()).toString();
+        onView(allOf(isAssignableFrom(TextView.class),
+                withParent(isAssignableFrom(Toolbar.class)))).check(matches(withText(title)));
+        onView(withId(R.id.btn_submit)).check(matches(withText(R.string.button_save)));
     }
 
     @Test

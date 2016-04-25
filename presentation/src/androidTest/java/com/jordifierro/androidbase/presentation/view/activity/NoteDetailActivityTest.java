@@ -1,15 +1,19 @@
 package com.jordifierro.androidbase.presentation.view.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.widget.TextView;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.fragment.NoteDetailFragment;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,8 +25,10 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -41,6 +47,15 @@ public class NoteDetailActivityTest {
         activityTestRule.launchActivity(new Intent().putExtra(NoteDetailActivity.PARAM_NOTE_ID, 2));
         this.noteDetailFragment = ((NoteDetailFragment) this.activityTestRule.getActivity()
                                 .getFragmentManager().findFragmentById(R.id.fragment_container));
+    }
+
+    @Test
+    public void testViewElements() throws PackageManager.NameNotFoundException {
+        String title = this.activityTestRule.getActivity().getPackageManager().getActivityInfo(
+                this.activityTestRule.getActivity().getComponentName(), PackageManager.GET_META_DATA)
+                .loadLabel(this.activityTestRule.getActivity().getPackageManager()).toString();
+        onView(Matchers.allOf(isAssignableFrom(TextView.class),
+                withParent(isAssignableFrom(Toolbar.class)))).check(matches(withText(title)));
     }
 
     @Test

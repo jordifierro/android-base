@@ -9,7 +9,6 @@ import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
 import com.jordifierro.androidbase.data.utils.TestUtils;
 import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
-import com.jordifierro.androidbase.domain.executor.DefaultThreadExecutor;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -25,7 +24,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.observers.TestSubscriber;
-import rx.schedulers.Schedulers;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -42,22 +40,27 @@ public class UserDataRepositoryTest {
     private TestSubscriber testSubscriber;
     private MockWebServer mockWebServer;
     private UserEntity fakeUser;
+    private Gson gson;
 
     @Before
     public void setUp() throws IOException {
+        this.gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+
         this.mockWebServer = new MockWebServer();
         this.mockWebServer.start();
+
         this.userDataRepository = new UserDataRepository(
                 new Retrofit.Builder()
                         .baseUrl(mockWebServer.url("/"))
-                        .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
-                                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                                .create()))
+                        .addConverterFactory(GsonConverterFactory.create(this.gson))
                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                         .build()
                         .create(RestApi.class)
         );
+
         this.testSubscriber = new TestSubscriber();
+
         this.fakeUser = new UserEntity(FAKE_EMAIL);
         this.fakeUser.setPassword(FAKE_PASS);
         this.fakeUser.setPasswordConfirmation(FAKE_CONFPASS);
@@ -73,18 +76,13 @@ public class UserDataRepositoryTest {
     public void testCreateUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.createUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testSubscriber);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users", request.getPath());
         assertEquals("POST", request.getMethod());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        assertEquals(gson.toJson(new UserWrapper(this.fakeUser)).toString(),
-                                                                    request.getBody().readUtf8());
+        assertEquals(this.gson.toJson(new UserWrapper(this.fakeUser)).toString(),
+                     request.getBody().readUtf8());
     }
 
     @Test
@@ -93,10 +91,7 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/user_create_ok.json"))));
 
-        this.userDataRepository.createUser(this.fakeUser)
-                                    .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                                    .observeOn(Schedulers.io())
-                                    .subscribe(this.testSubscriber);
+        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         UserEntity responseUser = (UserEntity) this.testSubscriber.getOnNextEvents().get(0);
@@ -110,10 +105,7 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/user_create_error.json"))));
 
-        this.userDataRepository.createUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
@@ -127,10 +119,7 @@ public class UserDataRepositoryTest {
     public void testDeleteUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.deleteUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testSubscriber);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/0", request.getPath());
@@ -143,10 +132,7 @@ public class UserDataRepositoryTest {
     public void testDeleteUserSuccess() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.userDataRepository.deleteUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(1);
@@ -156,10 +142,7 @@ public class UserDataRepositoryTest {
     public void testDeleteUserError() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.userDataRepository.deleteUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
@@ -175,18 +158,13 @@ public class UserDataRepositoryTest {
         this.fakeUser.setNewPasswordConfirmation("new_password_confirmation");
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.resetPassword(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testSubscriber);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/reset_password", request.getPath());
         assertEquals("POST", request.getMethod());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        assertEquals(gson.toJson(new UserWrapper(this.fakeUser)).toString(),
-                request.getBody().readUtf8());
+        assertEquals(this.gson.toJson(new UserWrapper(this.fakeUser)).toString(),
+                     request.getBody().readUtf8());
     }
 
     @Test
@@ -195,10 +173,7 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/reset_password_ok.json"))));
 
-        this.userDataRepository.resetPassword(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         MessageEntity responseMessage =
@@ -212,10 +187,7 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/reset_password_error.json"))));
 
-        this.userDataRepository.resetPassword(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
@@ -229,18 +201,13 @@ public class UserDataRepositoryTest {
     public void testLoginUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.loginUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testSubscriber);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/login", request.getPath());
         assertEquals("POST", request.getMethod());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         assertEquals(gson.toJson(new UserWrapper(this.fakeUser)).toString(),
-                request.getBody().readUtf8());
+                     request.getBody().readUtf8());
     }
 
     @Test
@@ -250,10 +217,7 @@ public class UserDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/session_login_ok.json"))));
 
 
-        this.userDataRepository.loginUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         UserEntity responseUser = (UserEntity) this.testSubscriber.getOnNextEvents().get(0);
@@ -268,10 +232,7 @@ public class UserDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/session_login_error.json"))));
 
 
-        this.userDataRepository.loginUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);
@@ -285,10 +246,7 @@ public class UserDataRepositoryTest {
     public void testLogoutUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.logoutUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testSubscriber);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/logout", request.getPath());
@@ -301,10 +259,7 @@ public class UserDataRepositoryTest {
     public void testLogoutUserSuccess() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.userDataRepository.logoutUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(1);
@@ -314,10 +269,7 @@ public class UserDataRepositoryTest {
     public void testLogoutUserError() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.userDataRepository.logoutUser(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
-                .subscribe(this.testSubscriber);
+        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
         this.testSubscriber.assertValueCount(0);

@@ -6,7 +6,6 @@ import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.utils.TestUtils;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.entity.VersionEntity;
-import com.jordifierro.androidbase.domain.executor.DefaultThreadExecutor;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -22,7 +21,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.observers.TestSubscriber;
-import rx.schedulers.Schedulers;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -67,8 +65,6 @@ public class VersionDataRepositoryTest {
         this.mockWebServer.enqueue(new MockResponse());
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
@@ -84,8 +80,6 @@ public class VersionDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/version_expiration_set.json"))));
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
-                                    .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                                    .observeOn(Schedulers.io())
                                     .subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 
@@ -101,8 +95,6 @@ public class VersionDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/version_expiration_unset.json"))));
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
-                .subscribeOn(Schedulers.from(new DefaultThreadExecutor()))
-                .observeOn(Schedulers.io())
                 .subscribe(this.testSubscriber);
         this.testSubscriber.awaitTerminalEvent();
 

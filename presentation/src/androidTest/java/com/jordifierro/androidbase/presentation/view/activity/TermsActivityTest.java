@@ -18,6 +18,8 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.web.assertion.WebViewAssertions.webMatches;
@@ -46,14 +48,12 @@ public class TermsActivityTest {
     public void testViewElements() throws InterruptedException {
         onView(allOf(isAssignableFrom(TextView.class),withParent(isAssignableFrom(Toolbar.class))))
                 .check(matches(withText(R.string.title_activity_terms)));
+        onView(withId(R.id.webview)).check(matches(isDisplayed()));
+    }
 
-        this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                assertEquals(RestApi.URL_BASE + "/terms",
-                             TermsActivityTest.this.webViewFragment.getWebView().getUrl());
-            }
-        });
+    @Test
+    public void testUrl() {
+        assertEquals(RestApi.URL_BASE + "/terms", this.activityTestRule.getActivity().getUrl());
     }
 
 }

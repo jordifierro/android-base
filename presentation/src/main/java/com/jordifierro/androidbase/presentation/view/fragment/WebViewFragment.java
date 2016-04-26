@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.activity.base.WebViewActivity;
@@ -21,6 +22,9 @@ public class WebViewFragment extends Fragment {
     @Bind(R.id.webview)
     WebView webView;
 
+    @Bind(R.id.progress_bar)
+    ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,19 +34,18 @@ public class WebViewFragment extends Fragment {
         return fragmentView;
     }
 
-    private void initWebView(){
+    private void initWebView() {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int progress) {
-                WebViewActivity activity = (WebViewActivity) getActivity();
-                if (activity != null) {
-                    if (!activity.isLoaderShowing()) activity.showLoader();
-                    if (progress == 100) activity.hideLoader();
-                }
+                if (progress == 100) WebViewFragment.this.hideProgressBar();
             }
         });
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(((Listener)getActivity()).getUrl());
+    }
+
+    private void hideProgressBar() {
+        this.progressBar.setVisibility(View.GONE);
     }
 
     public interface Listener {

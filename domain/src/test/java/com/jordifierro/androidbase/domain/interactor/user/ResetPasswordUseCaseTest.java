@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 import rx.observers.TestSubscriber;
-import rx.schedulers.TestScheduler;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -34,13 +33,11 @@ public class ResetPasswordUseCaseTest {
     @Mock private UserEntity mockUser;
 
     private TestSubscriber<MessageEntity> testSubscriber;
-    private TestScheduler testScheduler;
     private ResetPasswordUseCase resetPasswordUseCase;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        this.testScheduler = new TestScheduler();
         this.testSubscriber = new TestSubscriber<>();
         this.resetPasswordUseCase = new ResetPasswordUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
@@ -54,13 +51,10 @@ public class ResetPasswordUseCaseTest {
 
         this.resetPasswordUseCase.setParams(this.mockUser);
         this.resetPasswordUseCase.buildUseCaseObservable()
-                .observeOn(this.testScheduler)
                 .subscribe(this.testSubscriber);
-        this.testScheduler.triggerActions();
 
         verify(this.mockUserRepository).resetPassword(this.mockUser);
-        MessageEntity responseMessage = this.testSubscriber.getOnNextEvents().get(0);
-        Assert.assertEquals(FAKE_MSG, responseMessage.getMessage());
+        Assert.assertEquals(FAKE_MSG, this.testSubscriber.getOnNextEvents().get(0).getMessage());
         verifyNoMoreInteractions(this.mockUserRepository);
         verifyZeroInteractions(this.mockSessionRepository);
         verifyZeroInteractions(this.mockThreadExecutor);
@@ -75,10 +69,7 @@ public class ResetPasswordUseCaseTest {
         given(this.mockUserRepository.resetPassword(this.mockUser))
                 .willReturn(Observable.just(new MessageEntity(FAKE_MSG)));
 
-        this.resetPasswordUseCase.buildUseCaseObservable()
-                .observeOn(this.testScheduler)
-                .subscribe(this.testSubscriber);
-        this.testScheduler.triggerActions();
+        this.resetPasswordUseCase.buildUseCaseObservable().subscribe(this.testSubscriber);
 
         verify(this.mockUserRepository).resetPassword(this.mockUser);
         MessageEntity responseMessage = this.testSubscriber.getOnNextEvents().get(0);

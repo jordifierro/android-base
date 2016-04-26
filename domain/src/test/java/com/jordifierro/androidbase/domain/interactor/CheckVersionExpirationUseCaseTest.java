@@ -1,15 +1,24 @@
 package com.jordifierro.androidbase.domain.interactor;
 
+import com.jordifierro.androidbase.domain.entity.UserEntity;
+import com.jordifierro.androidbase.domain.entity.VersionEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 import com.jordifierro.androidbase.domain.repository.VersionRepository;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import rx.Observable;
+import rx.observers.TestSubscriber;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -29,12 +38,17 @@ public class CheckVersionExpirationUseCaseTest {
         CheckVersionExpirationUseCase checkVersionExpirationUseCase =
                 new CheckVersionExpirationUseCase(mockThreadExecutor, mockPostExecutionThread,
                                                 mockVersionRepository, mockSessionRepository);
+        given(mockVersionRepository.checkVersionExpiration(any(UserEntity.class)))
+                .willReturn(Observable.just(new VersionEntity("01/01/2001")));
+        TestSubscriber<VersionEntity> testSubscriber = new TestSubscriber<>();
 
-        checkVersionExpirationUseCase.buildUseCaseObservable();
+        checkVersionExpirationUseCase.buildUseCaseObservable().subscribe(testSubscriber);
 
         verify(mockSessionRepository).getCurrentUser();
         verifyNoMoreInteractions(mockSessionRepository);
         verify(mockVersionRepository).checkVersionExpiration(null);
+        Assert.assertEquals("01/01/2001",
+                            testSubscriber.getOnNextEvents().get(0).getExpirationDate());
         verifyNoMoreInteractions(mockVersionRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

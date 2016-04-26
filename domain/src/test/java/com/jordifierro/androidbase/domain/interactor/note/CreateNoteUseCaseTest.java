@@ -1,16 +1,25 @@
 package com.jordifierro.androidbase.domain.interactor.note;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
+import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import rx.Observable;
+import rx.observers.TestSubscriber;
+
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -34,10 +43,15 @@ public class CreateNoteUseCaseTest {
         NoteEntity note = new NoteEntity(FAKE_ID, FAKE_TITLE, FAKE_CONTENT);
         CreateNoteUseCase createNoteUseCase = new CreateNoteUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
+        given(mockNoteRepository.createNote(any(UserEntity.class), eq(note)))
+                .willReturn(Observable.just(note));
+        TestSubscriber<NoteEntity> testSubscriber = new TestSubscriber<>();
 
         createNoteUseCase.setParams(note);
-        createNoteUseCase.buildUseCaseObservable();
+        createNoteUseCase.buildUseCaseObservable().subscribe(testSubscriber);
 
+        Assert.assertEquals(FAKE_TITLE, testSubscriber.getOnNextEvents().get(0).getTitle());
+        Assert.assertEquals(FAKE_CONTENT, testSubscriber.getOnNextEvents().get(0).getContent());
         verify(mockSessionRepository).getCurrentUser();
         verifyNoMoreInteractions(mockSessionRepository);
         verify(mockNoteRepository).createNote(null, note);

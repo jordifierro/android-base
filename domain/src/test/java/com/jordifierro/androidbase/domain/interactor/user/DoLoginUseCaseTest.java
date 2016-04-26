@@ -6,6 +6,8 @@ import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 import rx.observers.TestSubscriber;
-import rx.schedulers.TestScheduler;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -38,17 +39,15 @@ public class DoLoginUseCaseTest {
     public void testDoLoginUseCaseSuccess() {
         DoLoginUseCase doLoginUseCase = new DoLoginUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
-        TestScheduler testScheduler = new TestScheduler();
+        TestSubscriber<UserEntity> testSubscriber = new TestSubscriber<>();
         given(mockUserRepository.loginUser(mockUser))
                 .willReturn(Observable.just(mockUser));
 
         doLoginUseCase.setParams(mockUser);
-        doLoginUseCase.buildUseCaseObservable()
-                .observeOn(testScheduler)
-                .subscribe(new TestSubscriber<UserEntity>());
-        testScheduler.triggerActions();
+        doLoginUseCase.buildUseCaseObservable().subscribe(testSubscriber);
 
         verify(mockUserRepository).loginUser(mockUser);
+        Assert.assertEquals(mockUser, testSubscriber.getOnNextEvents().get(0));
         verifyNoMoreInteractions(mockUserRepository);
         verify(mockSessionRepository).setCurrentUser(mockUser);
         verifyNoMoreInteractions(mockSessionRepository);

@@ -13,14 +13,16 @@ This projects aims to be:
 
 Specification summary:
 
+* App boilerplate (users, settings, info...)
 * Notes app example.
 * MVP Clean Architecture.
 * Dependency Inversion (Dagger 2 and Butterknife).
 * Reactive Programming (RxJava and RxAndroid).
 * RESTful client with version, language and authentication (Retrofit).
-* Whole app unit tested (Espresso, Mockito and Dagger 2).
+* Full unit testing coverage (Espresso, Mockito and Dagger 2).
 * Other patterns and good practices.
 * Continuous Integration system.
+* Scripts to reset project.
 
 Here is its counterpart server api from where this app consumes the data
 -> [rails-api-base](https://github.com/jordifierro/rails-api-base)
@@ -82,14 +84,33 @@ it only aims to provide some basic modules,
 implement the structures with some patterns and give sample code.
 Here are the specifications:
 
+#### App boilerplate
+The main goal of this application is to avoid writing app basic boilerplate
+code, so the following functionalities are already implemented:
+
+* User login
+* User register
+* User password recovery
+* Settings screen with logout, delete account and information links
+* Terms and conditions screen
+* Privacy policy screen
+* Session persistence
+* Navigation
+* RESTful client
+* App architecture skeleton
+* Multiple testing examples
+
+This can be used from now,
+and it also provides a structured way to add more code.
+
 #### Notes Example Code
-To provide the app sample code, it has been developed code to manage `notes`
+To provide more sample code, it has been developed code to manage `notes`
 (like handwritten paper notes representation),
 composed by a `title` and a `content`.
 Thus, the app has notes index, detail, create and edit screens.
 
-Its unique purpose is to be a guide of how to add new code,
-so you can delete it when it's useless.
+Its unique purpose is to be a sample code,
+so it will be deleted when you run `./bin/remove_notes` script.
 
 #### MVP Clean Architecture
 The code has been structured following the Clean Architecture approach
@@ -124,7 +145,7 @@ library is used to implement the api call methods.
 Authentication, api version and internationalization
 are included to the requests.
 
-#### Whole app unit tested
+#### Full unit testing coverage
 One of the most interesting things of this project is that
 it has full unit testing coverage, from data modules to android views,
 including all intermediate layers. That is the result of the usage
@@ -132,6 +153,10 @@ of clean architecture, dependency inversion and good testing practices.
 One example of that is the view testing, where the view presenter is
 mocked by mockito and injected by testing dagger component, provided by
 a custom junit runner.
+
+Here you can find tutorials that explain some of this tests:
+* [View unit testing](http://jordifierro.com/android-view-unit-testing)
+* [HttpInterceptor testing](http://jordifierro.com/android-http-interceptor-testing)
 
 #### Patterns and good practices
 Another patterns and good practices are used in the project
@@ -157,11 +182,18 @@ or run the emulator and execute:
 ```
 That will run both java and Android tests.
 
+#### Scripts to reset project
+There are some scripts under `/bin` folder to make really easy start a new
+project from scratch using this template.
+Just follow the 'Quick start' section placed above.
+
+All shell scripts are verified by
+[ShellCheck tool](https://github.com/koalaman/shellcheck).
+
 
 #### Todo List
 
 - [ ] Add sample integration testing.
-- [ ] Add code style, test coverage and other code quality tools.
 
 
 Here is its counterpart server api from where this app consumes the data
@@ -173,6 +205,11 @@ All suggestions and contributions are more than welcome!
 
 * Fork this repo.
 * Create your feature branch (git checkout -b feature-name).
+* Develop your feature and test it.
+* Run tests successfully:
+```
+./gradlew clean build cAT
+```
 * Commit your changes (git commit -m 'Implement new function').
 * Push the changes (git push origin feature-name).
 * Create a pull request and I'll merge it with the project.

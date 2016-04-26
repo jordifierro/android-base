@@ -1,6 +1,5 @@
 package com.jordifierro.androidbase.domain.interactor;
 
-import com.jordifierro.androidbase.domain.executor.DefaultThreadExecutor;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 
@@ -67,6 +66,17 @@ public class UseCaseTest {
         @Override protected Observable buildUseCaseObservable() {
             return Observable.just(1, 2, 3);
         }
+
     }
+
+    private class DefaultThreadExecutor implements ThreadExecutor {
+
+        @Override
+        public void execute(Runnable command) {
+            command.run();
+        }
+        
+    }
+
 
 }

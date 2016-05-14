@@ -2,20 +2,32 @@ package com.jordifierro.androidbase.domain.entity;
 
 public class VersionEntity {
 
-    private String expirationDate;
+    public static final String VERSION_OK = "OK";
+    public static final String VERSION_WARNED = "WARNED";
+    public static final String VERSION_EXPIRED = "EXPIRED";
+
+    private String state;
 
     public VersionEntity() {}
 
-    public VersionEntity(String expirationDate) {
-        this.expirationDate = expirationDate;
+    public VersionEntity(String state) {
+        this.state = state;
     }
 
-    public String getExpirationDate() {
-        return expirationDate;
+    public String getState() {
+        return state;
     }
 
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public boolean isWarned() {
+        return state == VERSION_WARNED;
+    }
+
+    public boolean hasExpired() {
+        return state == VERSION_EXPIRED;
     }
 
 }

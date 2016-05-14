@@ -19,14 +19,14 @@ public class VersionEntityTest {
 
     @Test
     public void testMessageConstructor() {
-        assertThat(this.version.getExpirationDate(), is(FAKE_EXPIRATION_DATE));
+        assertThat(this.version.getState(), is(FAKE_EXPIRATION_DATE));
     }
 
     @Test
     public void testUserSetters() {
-        this.version.setExpirationDate("11/11/1111");
+        this.version.setState("11/11/1111");
 
-        assertThat(this.version.getExpirationDate(), is("11/11/1111"));
+        assertThat(this.version.getState(), is("11/11/1111"));
     }
 
 }

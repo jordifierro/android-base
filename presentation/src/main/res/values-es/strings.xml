@@ -43,7 +43,7 @@
     <string name="textview_content">Contenido:</string>
 
     <string name="message_error">Ha ocurrido un error</string>
-    <string name="message_expiration">Esta versión expira el: </string>
+    <string name="message_expiration">Esta versión está a punto de expirar</string>
     <string name="message_expired">Esta versión ha expirado</string>
     <string name="message_update">Por favor, actualiza la aplicación</string>
     <string name="message_ok">Aceptar</string>

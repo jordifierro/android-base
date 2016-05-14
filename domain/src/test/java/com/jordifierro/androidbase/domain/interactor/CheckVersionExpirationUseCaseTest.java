@@ -48,7 +48,7 @@ public class CheckVersionExpirationUseCaseTest {
         verifyNoMoreInteractions(mockSessionRepository);
         verify(mockVersionRepository).checkVersionExpiration(null);
         Assert.assertEquals("01/01/2001",
-                            testSubscriber.getOnNextEvents().get(0).getExpirationDate());
+                            testSubscriber.getOnNextEvents().get(0).getState());
         verifyNoMoreInteractions(mockVersionRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

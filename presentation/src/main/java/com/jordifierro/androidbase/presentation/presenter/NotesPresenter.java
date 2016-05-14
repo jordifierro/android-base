@@ -58,10 +58,7 @@ public class NotesPresenter extends BasePresenter implements Presenter {
 
         @Override public void onNext(VersionEntity version) {
             NotesPresenter.this.hideLoader();
-            if (version.getExpirationDate() != null &&
-                    version.getExpirationDate().length() > 0) {
-                NotesPresenter.this.notesView.showExpirationDate(version.getExpirationDate());
-            }
+            if (version.isWarned()) NotesPresenter.this.notesView.showExpirationWarning();
         }
     }
 

@@ -93,12 +93,12 @@ public class NotesPresenterTest {
 
     @Test
     public void testVersionSubscriberOnNextWithDate() {
-        VersionEntity versionEntity = new VersionEntity("02/02/2000");
+        VersionEntity versionEntity = new VersionEntity(VersionEntity.VERSION_WARNED);
 
         this.versionExpirationSubscriber.onNext(versionEntity);
 
         verify(this.mockNotesView).hideLoader();
-        verify(this.mockNotesView).showExpirationDate(versionEntity.getExpirationDate());
+        verify(this.mockNotesView).showExpirationWarning();
     }
 
     @Test

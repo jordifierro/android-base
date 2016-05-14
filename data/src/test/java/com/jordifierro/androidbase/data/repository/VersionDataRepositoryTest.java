@@ -68,16 +68,16 @@ public class VersionDataRepositoryTest {
                 .subscribe(this.testSubscriber);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
-        assertEquals("/versions/expiration", request.getPath());
+        assertEquals("/versions/state", request.getPath());
         assertEquals("GET", request.getMethod());
         assertEquals(AUTH_TOKEN, request.getHeader("Authorization"));
     }
 
     @Test
-    public void testCheckVersionExpirationSet() throws Exception {
+    public void testCheckVersionExpirationOk() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody(
                 FileUtils.readFileToString(
-                        TestUtils.getFileFromPath(this, "res/version_expiration_set.json"))));
+                        TestUtils.getFileFromPath(this, "res/version_expiration_ok.json"))));
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
                                     .subscribe(this.testSubscriber);
@@ -85,14 +85,14 @@ public class VersionDataRepositoryTest {
 
         VersionEntity responseVersion =
                 (VersionEntity) this.testSubscriber.getOnNextEvents().get(0);
-        assertTrue(responseVersion.getExpirationDate().length() > 0);
+        assertEquals(VersionEntity.VERSION_OK, responseVersion.getState());
     }
 
     @Test
-    public void testCheckVersionExpirationUnset() throws Exception {
+    public void testCheckVersionExpirationWarned() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody(
                 FileUtils.readFileToString(
-                        TestUtils.getFileFromPath(this, "res/version_expiration_unset.json"))));
+                        TestUtils.getFileFromPath(this, "res/version_expiration_warned.json"))));
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
                 .subscribe(this.testSubscriber);
@@ -100,7 +100,22 @@ public class VersionDataRepositoryTest {
 
         VersionEntity responseVersion =
                 (VersionEntity) this.testSubscriber.getOnNextEvents().get(0);
-        assertTrue(responseVersion.getExpirationDate().length() == 0);
+        assertEquals(VersionEntity.VERSION_WARNED, responseVersion.getState());
+    }
+
+    @Test
+    public void testCheckVersionExpirationExpired() throws Exception {
+        this.mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody(
+                FileUtils.readFileToString(
+                        TestUtils.getFileFromPath(this, "res/version_expiration_expired.json"))));
+
+        this.versionDataRepository.checkVersionExpiration(this.fakeUser)
+                .subscribe(this.testSubscriber);
+        this.testSubscriber.awaitTerminalEvent();
+
+        VersionEntity responseVersion =
+                (VersionEntity) this.testSubscriber.getOnNextEvents().get(0);
+        assertEquals(VersionEntity.VERSION_EXPIRED, responseVersion.getState());
     }
 
 }

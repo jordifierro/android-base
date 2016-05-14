@@ -123,7 +123,7 @@ public class NotesActivityTest {
         this.activityTestRule.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NotesActivityTest.this.notesFragment.showExpirationDate("02/02/2000");
+                NotesActivityTest.this.notesFragment.showExpirationWarning();
             }
         });
 
@@ -132,9 +132,6 @@ public class NotesActivityTest {
         String update = this.activityTestRule.getActivity()
                 .getResources().getString(R.string.message_update);
 
-        onView(withText(containsString("02/02/2000"))).inRoot(
-                withDecorView(not(this.activityTestRule.getActivity().getWindow().getDecorView())))
-                .check(matches(isDisplayed()));
         onView(withText(containsString(expiration))).inRoot(
                 withDecorView(not(this.activityTestRule.getActivity().getWindow().getDecorView())))
                 .check(matches(isDisplayed()));

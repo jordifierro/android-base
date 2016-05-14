@@ -67,8 +67,8 @@ public class NotesFragment extends BaseFragment implements NotesView {
     }
 
     @Override
-    public void showExpirationDate(String date) {
-        showMessage(getResources().getString(R.string.message_expiration) + " " + date + ".\n" +
+    public void showExpirationWarning() {
+        showMessage(getResources().getString(R.string.message_expiration) + ".\n" +
                     getResources().getString(R.string.message_update) + ".");
     }
 

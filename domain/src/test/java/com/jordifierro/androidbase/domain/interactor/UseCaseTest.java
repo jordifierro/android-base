@@ -75,7 +75,7 @@ public class UseCaseTest {
         public void execute(Runnable command) {
             command.run();
         }
-        
+
     }
 
 

@@ -40,7 +40,7 @@ public interface RestApi {
     @DELETE("/users/logout")
     Observable<Response<Void>> doLogout(@Header("Authorization") String token);
 
-    @GET("/versions/expiration")
+    @GET("/versions/state")
     Observable<Response<VersionEntity>> checkVersionExpiration(
                                                             @Header("Authorization") String token);
 

@@ -8,20 +8,20 @@ ext {
     //Android
     appVersionCode = 1
     appVersionName = '1.0'
-    androidBuildToolsVersion = '23.0.2'
+    androidBuildToolsVersion = '25.0.2'
     androidMinSdkVersion = 15
     androidTargetSdkVersion = 23
     androidCompileSdkVersion = 23
-    androidSupportVersion = '23.2.0'
+    androidSupportVersion = '23.2.1'
 
     //Libraries
-    daggerVersion = '2.0.2'
+    daggerVersion = '2.8'
     butterKnifeVersion = '7.0.1'
     rxJavaVersion = '1.1.1'
     rxAndroidVersion = '1.1.0'
     javaxAnnotationVersion = '1.0'
     javaxInjectVersion = '1'
-    retrofitVersion = '2.0.0-beta4'
+    retrofitVersion = '2.1.0'
 
     //Testing
     jUnitVersion = '4.10'

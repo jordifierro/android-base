@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
@@ -13,6 +14,9 @@ android {
         versionName rootProject.ext.appVersionName
         testInstrumentationRunner 'com.jordifierro.androidbase.presentation.TestMockerRunner'
     }
+    compileOptions {
+        incremental false
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -25,6 +29,10 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

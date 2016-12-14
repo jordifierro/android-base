@@ -1,5 +1,5 @@
 language: android
-
+sudo: false
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8

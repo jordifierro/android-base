@@ -25,12 +25,9 @@ public class VersionDataRepository extends RestApiRepository implements VersionR
     @Override
     public Observable<VersionEntity> checkVersionExpiration(UserEntity user) {
         return this.restApi.checkVersionExpiration(user.getAuthToken())
-                .map(new Func1<Response<VersionEntity>, VersionEntity>() {
-                    @Override
-                    public VersionEntity call(Response<VersionEntity> versionEntityResponse) {
-                        handleResponseError(versionEntityResponse);
-                        return versionEntityResponse.body();
-                    }
+                .map(versionEntityResponse -> {
+                    handleResponseError(versionEntityResponse);
+                    return versionEntityResponse.body();
                 });
     }
 

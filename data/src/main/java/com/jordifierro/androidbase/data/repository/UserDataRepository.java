@@ -26,12 +26,9 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
     @Override
     public Observable<UserEntity> createUser(UserEntity user) {
         return this.restApi.createUser(new UserWrapper(user))
-                .map(new Func1<Response<UserEntity>, UserEntity>() {
-                    @Override
-                    public UserEntity call(Response<UserEntity> userEntityResponse) {
-                        handleResponseError(userEntityResponse);
-                        return userEntityResponse.body();
-                    }
+                .map(userEntityResponse -> {
+                    handleResponseError(userEntityResponse);
+                    return userEntityResponse.body();
                 });
     }
 
@@ -50,24 +47,18 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
     @Override
     public Observable<MessageEntity> resetPassword(UserEntity user) {
         return this.restApi.resetPassword(user.getAuthToken(), new UserWrapper(user))
-                .map(new Func1<Response<MessageEntity>, MessageEntity>() {
-                    @Override
-                    public MessageEntity call(Response<MessageEntity> messageEntityResponse) {
-                        handleResponseError(messageEntityResponse);
-                        return messageEntityResponse.body();
-                    }
+                .map(messageEntityResponse -> {
+                    handleResponseError(messageEntityResponse);
+                    return messageEntityResponse.body();
                 });
     }
 
     @Override
     public Observable<UserEntity> loginUser(UserEntity user) {
         return this.restApi.doLogin(new UserWrapper(user))
-                .map(new Func1<Response<UserEntity>, UserEntity>() {
-                    @Override
-                    public UserEntity call(Response<UserEntity> userEntityResponse) {
-                        handleResponseError(userEntityResponse);
-                        return userEntityResponse.body();
-                    }
+                .map(userEntityResponse -> {
+                    handleResponseError(userEntityResponse);
+                    return userEntityResponse.body();
                 });
     }
 

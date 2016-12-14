@@ -12,7 +12,7 @@ import retrofit2.Response;
 public abstract class RestApiRepository {
 
     protected void handleResponseError(Response response) {
-        if (!response.isSuccess()) {
+        if (!response.isSuccessful()) {
             ResponseErrorWrapper errorWrapper;
             try {
                 errorWrapper = new Gson().fromJson(response.errorBody().string(), ResponseErrorWrapper.class);

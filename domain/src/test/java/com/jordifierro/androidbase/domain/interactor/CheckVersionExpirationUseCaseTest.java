@@ -14,8 +14,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
+import java.util.List;
+
+import io.reactivex.observers.TestObserver;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -40,15 +43,15 @@ public class CheckVersionExpirationUseCaseTest {
                                                 mockVersionRepository, mockSessionRepository);
         given(mockVersionRepository.checkVersionExpiration(any(UserEntity.class)))
                 .willReturn(Observable.just(new VersionEntity("01/01/2001")));
-        TestSubscriber<VersionEntity> testSubscriber = new TestSubscriber<>();
+        TestObserver<VersionEntity> testObserver = new TestObserver<>();
 
-        checkVersionExpirationUseCase.buildUseCaseObservable().subscribe(testSubscriber);
+        checkVersionExpirationUseCase.buildUseCaseObservable().subscribe(testObserver);
 
         verify(mockSessionRepository).getCurrentUser();
         verifyNoMoreInteractions(mockSessionRepository);
         verify(mockVersionRepository).checkVersionExpiration(null);
         Assert.assertEquals("01/01/2001",
-                            testSubscriber.getOnNextEvents().get(0).getState());
+                ((VersionEntity)(testObserver.getEvents().get(0)).get(0)).getState());
         verifyNoMoreInteractions(mockVersionRepository);
         verifyZeroInteractions(mockThreadExecutor);
         verifyZeroInteractions(mockPostExecutionThread);

@@ -2,14 +2,15 @@ package com.jordifierro.androidbase.domain.interactor.note;
 
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
+import com.jordifierro.androidbase.domain.interactor.UseCase;
 import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
-public class DeleteNoteUseCase extends com.jordifierro.androidbase.domain.interactor.UseCase {
+public class DeleteNoteUseCase extends UseCase<Void> {
 
     private NoteRepository noteRepository;
     private SessionRepository sessionRepository;

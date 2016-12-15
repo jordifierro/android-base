@@ -2,6 +2,7 @@ package com.jordifierro.androidbase.data.repository;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.utils.TestUtils;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
@@ -13,17 +14,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
 
+import io.reactivex.observers.TestObserver;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("unchecked")
 public class VersionDataRepositoryTest {
@@ -32,7 +32,7 @@ public class VersionDataRepositoryTest {
     private static final String AUTH_TOKEN = "fake_auth_token";
 
     private VersionDataRepository versionDataRepository;
-    private TestSubscriber testSubscriber;
+    private TestObserver testObserver;
     private MockWebServer mockWebServer;
     private UserEntity fakeUser;
 
@@ -46,11 +46,11 @@ public class VersionDataRepositoryTest {
                         .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                                 .create()))
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build()
                         .create(RestApi.class)
         );
-        this.testSubscriber = new TestSubscriber();
+        this.testObserver = new TestObserver();
         this.fakeUser = new UserEntity(FAKE_EMAIL);
         this.fakeUser.setAuthToken(AUTH_TOKEN);
     }
@@ -65,7 +65,7 @@ public class VersionDataRepositoryTest {
         this.mockWebServer.enqueue(new MockResponse());
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
-                .subscribe(this.testSubscriber);
+                .subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/versions/state", request.getPath());
@@ -80,11 +80,11 @@ public class VersionDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/version_expiration_ok.json"))));
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
-                                    .subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+                                    .subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
         VersionEntity responseVersion =
-                (VersionEntity) this.testSubscriber.getOnNextEvents().get(0);
+                (VersionEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertEquals(VersionEntity.VERSION_OK, responseVersion.getState());
     }
 
@@ -95,11 +95,11 @@ public class VersionDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/version_expiration_warned.json"))));
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
-                .subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+                .subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
         VersionEntity responseVersion =
-                (VersionEntity) this.testSubscriber.getOnNextEvents().get(0);
+                (VersionEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertEquals(VersionEntity.VERSION_WARNED, responseVersion.getState());
     }
 
@@ -110,11 +110,11 @@ public class VersionDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/version_expiration_expired.json"))));
 
         this.versionDataRepository.checkVersionExpiration(this.fakeUser)
-                .subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+                .subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
         VersionEntity responseVersion =
-                (VersionEntity) this.testSubscriber.getOnNextEvents().get(0);
+                (VersionEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertEquals(VersionEntity.VERSION_EXPIRED, responseVersion.getState());
     }
 

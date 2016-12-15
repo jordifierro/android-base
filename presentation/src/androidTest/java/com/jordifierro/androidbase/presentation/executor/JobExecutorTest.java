@@ -6,8 +6,6 @@ import org.mockito.Mockito;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
-import rx.android.schedulers.AndroidSchedulers;
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

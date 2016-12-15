@@ -49,7 +49,7 @@ dependencies {
     compile dataDependencies.rxJava
     compile dataDependencies.retrofit
     compile dataDependencies.retrofitGson
-    compile dataDependencies.retrofitRxJava
+    compile dataDependencies.retrofitRxJava2
 
     testCompile dataTestDependencies.junit
     testCompile dataTestDependencies.mockito

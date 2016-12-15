@@ -3,42 +3,42 @@ package com.jordifierro.androidbase.domain.interactor;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.Subscriptions;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
-public abstract class UseCase {
+public abstract class UseCase<T> {
 
     private final ThreadExecutor threadExecutor;
     private final PostExecutionThread postExecutionThread;
 
-    protected Subscription subscription = Subscriptions.empty();
+    protected Disposable disposable = Disposables.empty();
 
     protected UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         this.threadExecutor = threadExecutor;
         this.postExecutionThread = postExecutionThread;
     }
 
-    protected abstract Observable buildUseCaseObservable();
+    protected abstract Observable<T> buildUseCaseObservable();
 
-    @SuppressWarnings("unchecked")
-    public void execute(Subscriber useCaseSubscriber) {
-        this.subscription = this.buildUseCaseObservable()
+    public <S extends Observer<T> & Disposable> void execute(S useCaseDisposable) {
+        this.disposable = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler())
-                .subscribe(useCaseSubscriber);
+                .subscribeWith(useCaseDisposable);
     }
 
     public void unsubscribe() {
-        if (!this.subscription.isUnsubscribed()) {
-            this.subscription.unsubscribe();
+        if (!this.disposable.isDisposed()) {
+            this.disposable.dispose();
         }
     }
 
     public boolean isUnsubscribed() {
-        return this.subscription.isUnsubscribed();
+        return this.disposable.isDisposed();
     }
 
 }

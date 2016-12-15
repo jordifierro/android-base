@@ -3,6 +3,8 @@ package com.jordifierro.androidbase.presentation.presenter;
 import com.jordifierro.androidbase.domain.interactor.UseCase;
 import com.jordifierro.androidbase.presentation.view.BaseView;
 
+import io.reactivex.observers.DisposableObserver;
+
 public class BasePresenter implements Presenter {
 
     BaseView view;
@@ -58,9 +60,9 @@ public class BasePresenter implements Presenter {
         this.view.showMessage(message);
     }
 
-    protected class BaseSubscriber<T> extends rx.Subscriber<T> {
+    protected class BaseSubscriber<T> extends DisposableObserver<T> {
 
-        @Override public void onCompleted() {
+        @Override public void onComplete() {
             BasePresenter.this.hideLoader();
         }
 

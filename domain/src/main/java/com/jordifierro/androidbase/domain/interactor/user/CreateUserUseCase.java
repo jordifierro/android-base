@@ -3,15 +3,16 @@ package com.jordifierro.androidbase.domain.interactor.user;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
+import com.jordifierro.androidbase.domain.interactor.UseCase;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
-public class CreateUserUseCase extends com.jordifierro.androidbase.domain.interactor.UseCase {
+public class CreateUserUseCase extends UseCase<UserEntity> {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -31,11 +32,11 @@ public class CreateUserUseCase extends com.jordifierro.androidbase.domain.intera
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<UserEntity> buildUseCaseObservable() {
         return this.userRepository.createUser(this.user)
-                .doOnNext(new Action1<UserEntity>() {
+                .doOnNext(new Consumer<UserEntity>() {
                     @Override
-                    public void call(UserEntity userEntity) {
+                    public void accept(UserEntity userEntity) throws Exception {
                         sessionRepository.setCurrentUser(userEntity);
                     }
                 });

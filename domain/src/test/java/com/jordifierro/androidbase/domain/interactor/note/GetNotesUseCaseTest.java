@@ -17,8 +17,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.Observable;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -40,17 +40,18 @@ public class GetNotesUseCaseTest {
     public void testGetNotesUseCaseSuccess() {
         GetNotesUseCase getNotesUseCase = new GetNotesUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
-        TestSubscriber<List<NoteEntity>> testSubscriber = new TestSubscriber<>();
+        TestObserver<List<NoteEntity>> testObserver = new TestObserver<>();
         List<NoteEntity> notes = Arrays.asList(new NoteEntity[]
                 { new NoteEntity("t1", "c1"), new NoteEntity("t2", "c2")});
         given(mockNoteRepository.getNotes(any(UserEntity.class)))
                 .willReturn(Observable.just(notes));
 
-        getNotesUseCase.buildUseCaseObservable().subscribe(testSubscriber);
+        getNotesUseCase.buildUseCaseObservable().subscribe(testObserver);
 
-        Assert.assertEquals(notes.size(), testSubscriber.getOnNextEvents().get(0).size());
+        Assert.assertEquals(notes.size(),
+                ((List<NoteEntity>)(testObserver.getEvents().get(0)).get(0)).size());
         Assert.assertEquals(notes.get(1).getContent(),
-                            testSubscriber.getOnNextEvents().get(0).get(1).getContent());
+                ((List<NoteEntity>)(testObserver.getEvents().get(0)).get(0)).get(1).getContent());
         verify(mockSessionRepository).getCurrentUser();
         verifyNoMoreInteractions(mockSessionRepository);
         verify(mockNoteRepository).getNotes(null);

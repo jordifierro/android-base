@@ -9,9 +9,9 @@ import com.jordifierro.androidbase.domain.repository.UserRepository;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import retrofit2.Response;
-import rx.Observable;
-import rx.functions.Func1;
 
 @Singleton
 public class UserDataRepository extends RestApiRepository implements UserRepository {
@@ -35,9 +35,9 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
     @Override
     public Observable<Void> deleteUser(final UserEntity user) {
         return this.restApi.deleteUser(user.getAuthToken())
-                .map(new Func1<Response<Void>, Void>() {
+                .map(new Function<Response<Void>, Void>() {
                     @Override
-                    public Void call(Response<Void> voidResponse) {
+                    public Void apply(Response<Void> voidResponse) throws Exception {
                         handleResponseError(voidResponse);
                         return null;
                     }
@@ -65,9 +65,9 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
     @Override
     public Observable<Void> logoutUser(UserEntity user) {
         return this.restApi.doLogout(user.getAuthToken())
-                .map(new Func1<Response<Void>, Void>() {
+                .map(new Function<Response<Void>, Void>() {
                     @Override
-                    public Void call(Response<Void> voidResponse) {
+                    public Void apply(Response<Void> voidResponse) throws Exception {
                         handleResponseError(voidResponse);
                         return null;
                     }

@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
@@ -46,7 +46,7 @@ public class NoteCreatePresenterTest {
     @Test
     public void testSubscriberOnCompleted() {
 
-        this.noteCreateSubscriber.onCompleted();
+        this.noteCreateSubscriber.onComplete();
 
         verify(this.mockNoteCreateView).hideLoader();
     }

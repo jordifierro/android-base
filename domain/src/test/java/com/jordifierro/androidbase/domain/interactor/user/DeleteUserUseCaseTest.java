@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
-import rx.schedulers.TestScheduler;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -36,8 +36,7 @@ public class DeleteUserUseCaseTest {
         DeleteUserUseCase deleteUserUseCase = new DeleteUserUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
         given(mockSessionRepository.getCurrentUser()).willReturn(mockUser);
-        given(mockUserRepository.deleteUser(mockUser))
-                .willReturn(Observable.just(null));
+        given(mockUserRepository.deleteUser(mockUser)).willReturn(Observable.just(0));
         TestScheduler testScheduler = new TestScheduler();
 
         deleteUserUseCase.buildUseCaseObservable()

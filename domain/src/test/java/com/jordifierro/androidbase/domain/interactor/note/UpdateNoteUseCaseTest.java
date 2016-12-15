@@ -14,8 +14,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -43,15 +45,17 @@ public class UpdateNoteUseCaseTest {
         NoteEntity note = new NoteEntity(FAKE_ID, FAKE_TITLE, FAKE_CONTENT);
         UpdateNoteUseCase updateNoteUseCase = new UpdateNoteUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
-        TestSubscriber<NoteEntity> testSubscriber = new TestSubscriber<>();
+        TestObserver<NoteEntity> testObserver = new TestObserver<>();
         given(mockNoteRepository.updateNote(any(UserEntity.class), eq(note)))
                 .willReturn(Observable.just(note));
 
         updateNoteUseCase.setParams(note);
-        updateNoteUseCase.buildUseCaseObservable().subscribe(testSubscriber);
+        updateNoteUseCase.buildUseCaseObservable().subscribe(testObserver);
 
-        Assert.assertEquals(FAKE_TITLE, testSubscriber.getOnNextEvents().get(0).getTitle());
-        Assert.assertEquals(FAKE_CONTENT, testSubscriber.getOnNextEvents().get(0).getContent());
+        Assert.assertEquals(FAKE_TITLE,
+                ((NoteEntity)(testObserver.getEvents().get(0)).get(0)).getTitle());
+        Assert.assertEquals(FAKE_CONTENT,
+                ((NoteEntity)(testObserver.getEvents().get(0)).get(0)).getContent());
         verify(mockSessionRepository).getCurrentUser();
         verifyNoMoreInteractions(mockSessionRepository);
         verify(mockNoteRepository).updateNote(null, note);

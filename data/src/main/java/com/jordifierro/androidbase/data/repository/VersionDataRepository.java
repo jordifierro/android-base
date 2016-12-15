@@ -8,9 +8,7 @@ import com.jordifierro.androidbase.domain.repository.VersionRepository;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit2.Response;
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
 
 @Singleton
 public class VersionDataRepository extends RestApiRepository implements VersionRepository {

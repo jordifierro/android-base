@@ -3,7 +3,7 @@ package com.jordifierro.androidbase.domain.repository;
 import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface UserRepository {
     Observable<UserEntity> createUser(UserEntity user);

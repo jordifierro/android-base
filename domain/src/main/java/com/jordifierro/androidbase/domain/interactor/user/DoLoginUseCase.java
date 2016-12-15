@@ -9,11 +9,10 @@ import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
-public class DoLoginUseCase extends UseCase {
+public class DoLoginUseCase extends UseCase<UserEntity> {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -33,16 +32,11 @@ public class DoLoginUseCase extends UseCase {
     }
 
     @Override
-    public void execute(Subscriber useCaseSubscriber) {
-        super.execute(useCaseSubscriber);
-    }
-
-    @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<UserEntity> buildUseCaseObservable() {
         return this.userRepository.loginUser(this.user)
-                .doOnNext(new Action1<UserEntity>() {
+                .doOnNext(new Consumer<UserEntity>() {
                     @Override
-                    public void call(UserEntity userEntity) {
+                    public void accept(UserEntity userEntity) throws Exception {
                         sessionRepository.setCurrentUser(userEntity);
                     }
                 });

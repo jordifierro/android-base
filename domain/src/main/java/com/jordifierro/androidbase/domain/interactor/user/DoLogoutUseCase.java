@@ -9,9 +9,9 @@ import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
-public class DoLogoutUseCase extends UseCase {
+public class DoLogoutUseCase extends UseCase<Void> {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;

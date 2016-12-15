@@ -10,9 +10,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import retrofit2.Response;
-import rx.Observable;
-import rx.functions.Func1;
 
 @Singleton
 public class NoteDataRepository extends RestApiRepository implements NoteRepository {
@@ -63,9 +63,9 @@ public class NoteDataRepository extends RestApiRepository implements NoteReposit
     @Override
     public Observable<Void> deleteNote(UserEntity user, int noteId) {
         return this.restApi.deleteNote(user.getAuthToken(), noteId)
-                .map(new Func1<Response, Void>() {
+                .map(new Function<Response<Void>, Void>() {
                     @Override
-                    public Void call(Response response) {
+                    public Void apply(Response<Void> response) throws Exception {
                         handleResponseError(response);
                         return null;
                     }

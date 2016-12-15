@@ -3,14 +3,16 @@ package com.jordifierro.androidbase.domain.interactor.note;
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
+import com.jordifierro.androidbase.domain.interactor.UseCase;
 import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.observers.DisposableObserver;
 
-public class CreateNoteUseCase extends com.jordifierro.androidbase.domain.interactor.UseCase {
+public class CreateNoteUseCase extends UseCase<NoteEntity> {
 
     private NoteRepository noteRepository;
     private SessionRepository sessionRepository;
@@ -30,7 +32,7 @@ public class CreateNoteUseCase extends com.jordifierro.androidbase.domain.intera
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<NoteEntity> buildUseCaseObservable() {
         return this.noteRepository.createNote(this.sessionRepository.getCurrentUser(), this.note);
     }
 }

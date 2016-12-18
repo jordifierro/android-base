@@ -5,17 +5,17 @@ import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.entity.VersionEntity;
 
+import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import rx.Observable;
 
 public interface RestApi {
 
-    String URL_BASE = "http://192.168.0.11:3000";
+    String URL_BASE = "http://192.168.0.10:3000";
     int API_VERSION = 1;
     String VERSION_HEADER = "application/vnd.railsapibase.v" + API_VERSION;
 
@@ -38,5 +38,4 @@ public interface RestApi {
     @GET("/versions/state")
     Observable<Response<VersionEntity>> checkVersionExpiration(
                                                             @Header("Authorization") String token);
-
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
@@ -59,7 +59,7 @@ public class ResetPasswordPresenterTest {
     @Test
     public void testSubscriberOnCompleted() {
 
-        this.resetPasswordSubscriber.onCompleted();
+        this.resetPasswordSubscriber.onComplete();
 
         verify(this.mockResetPasswordView).hideLoader();
     }

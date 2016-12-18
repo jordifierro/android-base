@@ -14,8 +14,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.subscribers.TestSubscriber;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
@@ -45,13 +46,15 @@ public class CreateNoteUseCaseTest {
                 mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
         given(mockNoteRepository.createNote(any(UserEntity.class), eq(note)))
                 .willReturn(Observable.just(note));
-        TestSubscriber<NoteEntity> testSubscriber = new TestSubscriber<>();
+        TestObserver<NoteEntity> testObserver = new TestObserver<>();
 
         createNoteUseCase.setParams(note);
-        createNoteUseCase.buildUseCaseObservable().subscribe(testSubscriber);
+        createNoteUseCase.buildUseCaseObservable().subscribeWith(testObserver);
 
-        Assert.assertEquals(FAKE_TITLE, testSubscriber.getOnNextEvents().get(0).getTitle());
-        Assert.assertEquals(FAKE_CONTENT, testSubscriber.getOnNextEvents().get(0).getContent());
+        Assert.assertEquals(FAKE_TITLE,
+                ((NoteEntity)(testObserver.getEvents().get(0)).get(0)).getTitle());
+        Assert.assertEquals(FAKE_CONTENT,
+                ((NoteEntity)(testObserver.getEvents().get(0)).get(0)).getContent());
         verify(mockSessionRepository).getCurrentUser();
         verifyNoMoreInteractions(mockSessionRepository);
         verify(mockNoteRepository).createNote(null, note);

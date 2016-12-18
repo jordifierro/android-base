@@ -8,9 +8,7 @@ import com.jordifierro.androidbase.domain.repository.VersionRepository;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit2.Response;
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
 
 @Singleton
 public class VersionDataRepository extends RestApiRepository implements VersionRepository {
@@ -25,12 +23,9 @@ public class VersionDataRepository extends RestApiRepository implements VersionR
     @Override
     public Observable<VersionEntity> checkVersionExpiration(UserEntity user) {
         return this.restApi.checkVersionExpiration(user.getAuthToken())
-                .map(new Func1<Response<VersionEntity>, VersionEntity>() {
-                    @Override
-                    public VersionEntity call(Response<VersionEntity> versionEntityResponse) {
-                        handleResponseError(versionEntityResponse);
-                        return versionEntityResponse.body();
-                    }
+                .map(versionEntityResponse -> {
+                    handleResponseError(versionEntityResponse);
+                    return versionEntityResponse.body();
                 });
     }
 

@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
@@ -56,7 +56,7 @@ public class LoginPresenterTest {
     @Test
     public void testSubscriberOnCompleted() {
 
-        this.loginSubscriber.onCompleted();
+        this.loginSubscriber.onComplete();
 
         verify(this.mockLoginView).hideLoader();
     }

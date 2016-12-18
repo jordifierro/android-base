@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.data.repository;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
 import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
@@ -16,14 +17,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
 
+import io.reactivex.observers.TestObserver;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -37,7 +38,7 @@ public class UserDataRepositoryTest {
     private static final String AUTH_TOKEN = "fake_auth_token";
 
     private UserDataRepository userDataRepository;
-    private TestSubscriber testSubscriber;
+    private TestObserver testObserver;
     private MockWebServer mockWebServer;
     private UserEntity fakeUser;
     private Gson gson;
@@ -54,12 +55,12 @@ public class UserDataRepositoryTest {
                 new Retrofit.Builder()
                         .baseUrl(mockWebServer.url("/"))
                         .addConverterFactory(GsonConverterFactory.create(this.gson))
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build()
                         .create(RestApi.class)
         );
 
-        this.testSubscriber = new TestSubscriber();
+        this.testObserver = new TestObserver();
 
         this.fakeUser = new UserEntity(FAKE_EMAIL);
         this.fakeUser.setPassword(FAKE_PASS);
@@ -76,7 +77,7 @@ public class UserDataRepositoryTest {
     public void testCreateUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testSubscriber);
+        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users", request.getPath());
@@ -91,10 +92,11 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/user_create_ok.json"))));
 
-        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        UserEntity responseUser = (UserEntity) this.testSubscriber.getOnNextEvents().get(0);
+        UserEntity responseUser =
+                (UserEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertTrue(responseUser.getEmail().length() > 0);
         assertTrue(responseUser.getAuthToken().length() > 0);
     }
@@ -105,12 +107,11 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/user_create_error.json"))));
 
-        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.createUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) this.testObserver.errors().get(0);
         assertEquals(422, error.getStatusCode());
         assertEquals("Email has already been taken", error.getMessage());
     }
@@ -119,7 +120,7 @@ public class UserDataRepositoryTest {
     public void testDeleteUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testSubscriber);
+        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/0", request.getPath());
@@ -132,22 +133,21 @@ public class UserDataRepositoryTest {
     public void testDeleteUserSuccess() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(1);
+        this.testObserver.assertTerminated();
     }
 
     @Test
     public void testDeleteUserError() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.deleteUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) this.testObserver.errors().get(0);
         assertEquals(401, error.getStatusCode());
         assertTrue(error.getMessage().length() > 0);
     }
@@ -158,7 +158,7 @@ public class UserDataRepositoryTest {
         this.fakeUser.setNewPasswordConfirmation("new_password_confirmation");
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testSubscriber);
+        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/reset_password", request.getPath());
@@ -173,11 +173,11 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/reset_password_ok.json"))));
 
-        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
         MessageEntity responseMessage =
-                (MessageEntity) this.testSubscriber.getOnNextEvents().get(0);
+                (MessageEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertEquals("Check your email to confirm the new password", responseMessage.getMessage());
     }
 
@@ -187,12 +187,11 @@ public class UserDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/reset_password_error.json"))));
 
-        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.resetPassword(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) this.testObserver.errors().get(0);
         assertEquals(422, error.getStatusCode());
         assertEquals("New password confirmation doesn't match New password", error.getMessage());
     }
@@ -201,7 +200,7 @@ public class UserDataRepositoryTest {
     public void testLoginUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testSubscriber);
+        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/login", request.getPath());
@@ -217,10 +216,11 @@ public class UserDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/session_login_ok.json"))));
 
 
-        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        UserEntity responseUser = (UserEntity) this.testSubscriber.getOnNextEvents().get(0);
+        UserEntity responseUser =
+                (UserEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertTrue(responseUser.getEmail().length() > 0);
         assertTrue(responseUser.getAuthToken().length() > 0);
     }
@@ -232,12 +232,11 @@ public class UserDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/session_login_error.json"))));
 
 
-        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.loginUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) this.testObserver.errors().get(0);
         assertEquals(422, error.getStatusCode());
         assertEquals("Invalid email or password.", error.getMessage());
     }
@@ -246,7 +245,7 @@ public class UserDataRepositoryTest {
     public void testLogoutUserRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testSubscriber);
+        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/users/logout", request.getPath());
@@ -259,22 +258,21 @@ public class UserDataRepositoryTest {
     public void testLogoutUserSuccess() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(1);
+        this.testObserver.assertTerminated();
     }
 
     @Test
     public void testLogoutUserError() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.userDataRepository.logoutUser(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) this.testObserver.errors().get(0);
         assertEquals(401, error.getStatusCode());
         assertTrue(error.getMessage().length() > 0);
     }

@@ -1,6 +1,7 @@
 package com.jordifierro.androidbase.domain.interactor.user;
 
 import com.jordifierro.androidbase.domain.entity.UserEntity;
+import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 import com.jordifierro.androidbase.domain.interactor.UseCase;
@@ -9,9 +10,9 @@ import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
-public class DoLogoutUseCase extends UseCase {
+public class DoLogoutUseCase extends UseCase<VoidEntity> {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -25,7 +26,7 @@ public class DoLogoutUseCase extends UseCase {
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<VoidEntity> buildUseCaseObservable() {
         UserEntity currentUser = this.sessionRepository.getCurrentUser();
         this.sessionRepository.invalidateSession();
         return this.userRepository.logoutUser(currentUser);

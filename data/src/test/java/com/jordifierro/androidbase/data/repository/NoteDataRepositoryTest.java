@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.data.repository;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.net.error.RestApiErrorException;
 import com.jordifierro.androidbase.data.utils.TestUtils;
@@ -17,13 +18,12 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.List;
 
+import io.reactivex.observers.TestObserver;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -38,7 +38,7 @@ public class NoteDataRepositoryTest {
 
     private MockWebServer mockWebServer;
     private NoteDataRepository noteDataRepository;
-    private TestSubscriber testSubscriber;
+    private TestObserver testObserver;
 
     private UserEntity fakeUser;
     private NoteEntity fakeNote;
@@ -54,12 +54,12 @@ public class NoteDataRepositoryTest {
                         .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
                                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                                 .create()))
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build()
                         .create(RestApi.class)
         );
 
-        this.testSubscriber = new TestSubscriber();
+        this.testObserver = new TestObserver();
 
         this.fakeUser = new UserEntity("some@mail");
         this.fakeUser.setAuthToken(AUTH_TOKEN);
@@ -76,7 +76,7 @@ public class NoteDataRepositoryTest {
         this.mockWebServer.enqueue(new MockResponse());
 
         this.noteDataRepository.createNote(this.fakeUser, this.fakeNote)
-                .subscribe(this.testSubscriber);
+                .subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/notes", request.getPath());
@@ -92,10 +92,11 @@ public class NoteDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/note_create_ok.json"))));
 
         this.noteDataRepository.createNote(this.fakeUser, this.fakeNote)
-                .subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+                .subscribeWith(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        NoteEntity responseNote = (NoteEntity) this.testSubscriber.getOnNextEvents().get(0);
+        NoteEntity responseNote =
+                (NoteEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertTrue(responseNote.getId() > 0);
         assertTrue(responseNote.getTitle().length() > 0);
         assertTrue(responseNote.getContent().length() > 0);
@@ -108,12 +109,11 @@ public class NoteDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/note_create_error.json"))));
 
         this.noteDataRepository.createNote(this.fakeUser, this.fakeNote)
-                .subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+                .subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                                                    this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) this.testObserver.errors().get(0);
         assertEquals(422, error.getStatusCode());
         assertEquals("Title can't be blank", error.getMessage());
     }
@@ -123,7 +123,7 @@ public class NoteDataRepositoryTest {
         this.mockWebServer.enqueue(new MockResponse());
 
         this.noteDataRepository.getNote(this.fakeUser, this.fakeNote.getId())
-                .subscribe(this.testSubscriber);
+                .subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/notes/" + this.fakeNote.getId(), request.getPath());
@@ -139,10 +139,11 @@ public class NoteDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/note_get_ok.json"))));
 
 
-        this.noteDataRepository.getNote(this.fakeUser, 1).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.noteDataRepository.getNote(this.fakeUser, 1).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        NoteEntity responseNote = (NoteEntity) this.testSubscriber.getOnNextEvents().get(0);
+        NoteEntity responseNote =
+                (NoteEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertTrue(responseNote.getId() > 0);
         assertTrue(responseNote.getTitle().length() > 0);
         assertTrue(responseNote.getContent().length() > 0);
@@ -155,12 +156,12 @@ public class NoteDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/note_get_error.json"))));
 
 
-        this.noteDataRepository.getNote(this.fakeUser, 1).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.noteDataRepository.getNote(this.fakeUser, 1).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
+        this.testObserver.assertValueCount(0);
         RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+                this.testObserver.errors().get(0);
         assertEquals(404, error.getStatusCode());
         assertEquals("not found.", error.getMessage());
     }
@@ -169,7 +170,7 @@ public class NoteDataRepositoryTest {
     public void testCreateNotesRequest() throws Exception {
         this.mockWebServer.enqueue(new MockResponse());
 
-        this.noteDataRepository.getNotes(this.fakeUser).subscribe(this.testSubscriber);
+        this.noteDataRepository.getNotes(this.fakeUser).subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/notes", request.getPath());
@@ -184,10 +185,11 @@ public class NoteDataRepositoryTest {
                 FileUtils.readFileToString(
                         TestUtils.getFileFromPath(this, "res/note_getall_ok.json"))));
 
-        this.noteDataRepository.getNotes(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.noteDataRepository.getNotes(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        List<NoteEntity> responseNotes = (List<NoteEntity>) this.testSubscriber.getOnNextEvents().get(0);
+        List<NoteEntity> responseNotes =
+                (List<NoteEntity>) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertTrue(responseNotes.size() > 0);
         assertTrue(responseNotes.get(0).getTitle().length() > 0);
         assertTrue(responseNotes.get(0).getContent().length() > 0);
@@ -197,12 +199,11 @@ public class NoteDataRepositoryTest {
     public void testGetNotesErrorResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.noteDataRepository.getNotes(this.fakeUser).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.noteDataRepository.getNotes(this.fakeUser).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) testObserver.errors().get(0);
         assertEquals(401, error.getStatusCode());
         assertTrue(error.getMessage().length() > 0);
     }
@@ -212,7 +213,7 @@ public class NoteDataRepositoryTest {
         this.mockWebServer.enqueue(new MockResponse());
 
         this.noteDataRepository.updateNote(this.fakeUser, this.fakeNote)
-                .subscribe(this.testSubscriber);
+                .subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/notes/" + this.fakeNote.getId(), request.getPath());
@@ -228,10 +229,11 @@ public class NoteDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/note_update_ok.json"))));
 
         this.noteDataRepository.updateNote(this.fakeUser, this.fakeNote)
-                .subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+                .subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        NoteEntity responseNote = (NoteEntity) this.testSubscriber.getOnNextEvents().get(0);
+        NoteEntity responseNote =
+                (NoteEntity) ((List<Object>)testObserver.getEvents().get(0)).get(0);
         assertTrue(responseNote.getId() > 0);
         assertTrue(responseNote.getTitle().length() > 0);
         assertTrue(responseNote.getContent().length() > 0);
@@ -244,12 +246,11 @@ public class NoteDataRepositoryTest {
                         TestUtils.getFileFromPath(this, "res/note_update_error.json"))));
 
         this.noteDataRepository.updateNote(this.fakeUser, this.fakeNote)
-                .subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+                .subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) testObserver.errors().get(0);
         assertEquals(404, error.getStatusCode());
         assertEquals("not found.", error.getMessage());
     }
@@ -259,7 +260,7 @@ public class NoteDataRepositoryTest {
         this.mockWebServer.enqueue(new MockResponse());
 
         this.noteDataRepository.deleteNote(this.fakeUser, this.fakeNote.getId())
-                .subscribe(this.testSubscriber);
+                .subscribe(this.testObserver);
 
         RecordedRequest request = this.mockWebServer.takeRequest();
         assertEquals("/notes/" + this.fakeNote.getId(), request.getPath());
@@ -272,22 +273,21 @@ public class NoteDataRepositoryTest {
     public void testDeleteNoteSuccessResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(204));
 
-        this.noteDataRepository.deleteNote(this.fakeUser, 1).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.noteDataRepository.deleteNote(this.fakeUser, 1).subscribeWith(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(1);
+        this.testObserver.assertTerminated();
     }
 
     @Test
     public void testDeleteUserErrorResponse() throws Exception {
         this.mockWebServer.enqueue(new MockResponse().setResponseCode(401));
 
-        this.noteDataRepository.deleteNote(this.fakeUser, 1).subscribe(this.testSubscriber);
-        this.testSubscriber.awaitTerminalEvent();
+        this.noteDataRepository.deleteNote(this.fakeUser, 1).subscribe(this.testObserver);
+        this.testObserver.awaitTerminalEvent();
 
-        this.testSubscriber.assertValueCount(0);
-        RestApiErrorException error = (RestApiErrorException)
-                this.testSubscriber.getOnErrorEvents().get(0);
+        this.testObserver.assertValueCount(0);
+        RestApiErrorException error = (RestApiErrorException) testObserver.errors().get(0);
         assertEquals(401, error.getStatusCode());
         assertTrue(error.getMessage().length() > 0);
     }

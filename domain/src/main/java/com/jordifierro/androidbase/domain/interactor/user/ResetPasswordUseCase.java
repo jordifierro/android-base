@@ -10,11 +10,9 @@ import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
+import io.reactivex.Observable;
 
-public class ResetPasswordUseCase extends UseCase {
+public class ResetPasswordUseCase extends UseCase<MessageEntity> {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -34,12 +32,7 @@ public class ResetPasswordUseCase extends UseCase {
     }
 
     @Override
-    public void execute(Subscriber useCaseSubscriber) {
-        super.execute(useCaseSubscriber);
-    }
-
-    @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<MessageEntity> buildUseCaseObservable() {
         if (this.user == null) this.user = sessionRepository.getCurrentUser();
         return this.userRepository.resetPassword(this.user);
     }

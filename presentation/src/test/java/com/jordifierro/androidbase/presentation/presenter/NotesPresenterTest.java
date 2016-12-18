@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
@@ -67,7 +67,7 @@ public class NotesPresenterTest {
     @Test
     public void testSubscriberOnCompleted() {
 
-        this.notesSubscriber.onCompleted();
+        this.notesSubscriber.onComplete();
 
         verify(this.mockNotesView).hideLoader();
     }

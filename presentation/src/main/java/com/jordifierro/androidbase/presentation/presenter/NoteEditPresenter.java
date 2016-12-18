@@ -1,6 +1,7 @@
 package com.jordifierro.androidbase.presentation.presenter;
 
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
+import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.interactor.note.DeleteNoteUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.GetNoteUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.UpdateNoteUseCase;
@@ -75,9 +76,9 @@ public class NoteEditPresenter extends BasePresenter implements Presenter {
         this.deleteNoteUseCase.execute(new DeleteNoteSubscriber());
     }
 
-    protected class DeleteNoteSubscriber extends BaseSubscriber<Void> {
+    protected class DeleteNoteSubscriber extends BaseSubscriber<VoidEntity> {
 
-        @Override public void onNext(Void v) {
+        @Override public void onNext(VoidEntity ignore) {
             NoteEditPresenter.this.hideLoader();
             NoteEditPresenter.this.noteEditView.close();
         }

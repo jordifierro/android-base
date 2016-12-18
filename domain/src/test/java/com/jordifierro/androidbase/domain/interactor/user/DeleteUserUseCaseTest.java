@@ -1,6 +1,7 @@
 package com.jordifierro.androidbase.domain.interactor.user;
 
 import com.jordifierro.androidbase.domain.entity.UserEntity;
+import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
@@ -11,8 +12,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
-import rx.schedulers.TestScheduler;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -31,13 +32,12 @@ public class DeleteUserUseCaseTest {
     public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testDeleteUserUseCaseSuccess() {
         DeleteUserUseCase deleteUserUseCase = new DeleteUserUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
         given(mockSessionRepository.getCurrentUser()).willReturn(mockUser);
         given(mockUserRepository.deleteUser(mockUser))
-                .willReturn(Observable.just(null));
+                .willReturn(Observable.just(new VoidEntity()));
         TestScheduler testScheduler = new TestScheduler();
 
         deleteUserUseCase.buildUseCaseObservable()

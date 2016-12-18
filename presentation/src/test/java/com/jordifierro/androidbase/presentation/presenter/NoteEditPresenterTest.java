@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
@@ -67,7 +67,7 @@ public class NoteEditPresenterTest {
     @Test
     public void testGetSubscriberOnCompleted() {
 
-        this.getNoteSubscriber.onCompleted();
+        this.getNoteSubscriber.onComplete();
 
         verify(this.mockNoteEditView).hideLoader();
     }
@@ -106,7 +106,7 @@ public class NoteEditPresenterTest {
     @Test
     public void testUpdateSubscriberOnCompleted() {
 
-        this.updateNoteSubscriber.onCompleted();
+        this.updateNoteSubscriber.onComplete();
 
         verify(this.mockNoteEditView).hideLoader();
     }
@@ -138,13 +138,13 @@ public class NoteEditPresenterTest {
 
         verify(this.mockNoteEditView, atLeast(1)).getNoteId();
         verify(this.deleteNoteUseCase).setParams(anyInt());
-        verify(this.deleteNoteUseCase).execute(any(NoteEditPresenter.UpdateNoteSubscriber.class));
+        verify(this.deleteNoteUseCase).execute(any(NoteEditPresenter.DeleteNoteSubscriber.class));
     }
 
     @Test
     public void testDeleteSubscriberOnCompleted() {
 
-        this.deleteNoteSubscriber.onCompleted();
+        this.deleteNoteSubscriber.onComplete();
 
         verify(this.mockNoteEditView).hideLoader();
     }

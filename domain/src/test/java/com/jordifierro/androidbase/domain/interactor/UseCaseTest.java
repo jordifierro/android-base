@@ -8,11 +8,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-
-import rx.Observable;
-import rx.observers.TestSubscriber;
-import rx.schedulers.TestScheduler;
+import io.reactivex.Observable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.TestObserver;
+import io.reactivex.schedulers.TestScheduler;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -20,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 
 public class UseCaseTest {
 
-    private TestSubscriber<Integer> testSubscriber;
+    private TestObserver<Integer> testObserver;
     private FakeUseCase fakeUseCase;
 
     @Mock private PostExecutionThread mockPostExecutionThread;
@@ -28,7 +27,7 @@ public class UseCaseTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.testSubscriber = new TestSubscriber<>();
+        this.testObserver = new TestObserver<>();
         this.fakeUseCase = new FakeUseCase(new DefaultThreadExecutor(), mockPostExecutionThread);
     }
 
@@ -37,11 +36,11 @@ public class UseCaseTest {
         TestScheduler testScheduler = new TestScheduler();
         given(this.mockPostExecutionThread.getScheduler()).willReturn(testScheduler);
 
-        this.fakeUseCase.execute(testSubscriber);
+        this.fakeUseCase.execute(testObserver);
         testScheduler.triggerActions();
 
-        this.testSubscriber.assertNoErrors();
-        this.testSubscriber.assertReceivedOnNext(Arrays.asList(1, 2, 3));
+        this.testObserver.assertNoErrors();
+        this.testObserver.assertResult(1, 2, 3);
     }
 
     @Test
@@ -49,21 +48,21 @@ public class UseCaseTest {
         TestScheduler testScheduler = new TestScheduler();
         given(this.mockPostExecutionThread.getScheduler()).willReturn(testScheduler);
 
-        this.fakeUseCase.execute(testSubscriber);
+        this.fakeUseCase.execute(testObserver);
         assertThat(this.fakeUseCase.isUnsubscribed(), is(false));
 
         this.fakeUseCase.unsubscribe();
         assertThat(this.fakeUseCase.isUnsubscribed(), is(true));
     }
 
-    private static class FakeUseCase extends UseCase {
+    private static class FakeUseCase extends UseCase<Integer> {
 
         protected FakeUseCase(ThreadExecutor threadExecutor,
                               PostExecutionThread postExecutionThread) {
             super(threadExecutor, postExecutionThread);
         }
 
-        @Override protected Observable buildUseCaseObservable() {
+        @Override protected Observable<Integer> buildUseCaseObservable() {
             return Observable.just(1, 2, 3);
         }
 

@@ -1,5 +1,6 @@
 package com.jordifierro.androidbase.domain.interactor.user;
 
+import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
 import com.jordifierro.androidbase.domain.interactor.UseCase;
@@ -8,10 +9,11 @@ import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.functions.Action0;
+import io.reactivex.Observable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Function;
 
-public class DeleteUserUseCase extends UseCase {
+public class DeleteUserUseCase extends UseCase<VoidEntity> {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -25,11 +27,11 @@ public class DeleteUserUseCase extends UseCase {
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<VoidEntity> buildUseCaseObservable() {
         return this.userRepository.deleteUser(this.sessionRepository.getCurrentUser())
-                .doOnCompleted(new Action0() {
+                .doOnComplete(new Action() {
                     @Override
-                    public void call() {
+                    public void run() {
                         sessionRepository.invalidateSession();
                     }
                 });

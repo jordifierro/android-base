@@ -1,15 +1,18 @@
 package com.jordifierro.androidbase.domain.interactor.note;
 
+import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
+import com.jordifierro.androidbase.domain.interactor.UseCase;
 import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
 
-public class DeleteNoteUseCase extends com.jordifierro.androidbase.domain.interactor.UseCase {
+public class DeleteNoteUseCase extends UseCase<VoidEntity> {
 
     private NoteRepository noteRepository;
     private SessionRepository sessionRepository;
@@ -29,7 +32,7 @@ public class DeleteNoteUseCase extends com.jordifierro.androidbase.domain.intera
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    protected Observable<VoidEntity> buildUseCaseObservable() {
         return this.noteRepository.deleteNote(this.sessionRepository.getCurrentUser(), this.noteId);
     }
 }

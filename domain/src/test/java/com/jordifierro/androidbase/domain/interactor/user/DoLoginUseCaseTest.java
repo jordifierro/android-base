@@ -13,8 +13,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -35,19 +35,17 @@ public class DoLoginUseCaseTest {
     public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testDoLoginUseCaseSuccess() {
         DoLoginUseCase doLoginUseCase = new DoLoginUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
-        TestSubscriber<UserEntity> testSubscriber = new TestSubscriber<>();
-        given(mockUserRepository.loginUser(mockUser))
-                .willReturn(Observable.just(mockUser));
+        TestObserver<UserEntity> testObserver = new TestObserver<>();
+        given(mockUserRepository.loginUser(mockUser)).willReturn(Observable.just(mockUser));
 
         doLoginUseCase.setParams(mockUser);
-        doLoginUseCase.buildUseCaseObservable().subscribe(testSubscriber);
+        doLoginUseCase.buildUseCaseObservable().subscribeWith(testObserver);
 
         verify(mockUserRepository).loginUser(mockUser);
-        Assert.assertEquals(mockUser, testSubscriber.getOnNextEvents().get(0));
+        Assert.assertEquals(mockUser, (testObserver.getEvents().get(0)).get(0));
         verifyNoMoreInteractions(mockUserRepository);
         verify(mockSessionRepository).setCurrentUser(mockUser);
         verifyNoMoreInteractions(mockSessionRepository);

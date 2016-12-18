@@ -2,7 +2,7 @@ package com.jordifierro.androidbase.presentation.executor;
 
 import android.test.InstrumentationTestCase;
 
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class UIThreadTest extends InstrumentationTestCase {
 

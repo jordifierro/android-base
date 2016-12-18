@@ -35,12 +35,12 @@ public class SettingsPresenter extends BasePresenter implements Presenter {
     }
 
     public void logoutUserButtonPressed() {
-        this.doLogoutUseCase.execute(new BaseSubscriber());
+        this.doLogoutUseCase.execute(new BaseSubscriber<>());
         this.settingsView.closeAndDisplayLogin();
     }
 
     public void deleteAccountButtonPressed() {
-        this.deleteUserUseCase.execute(new BaseSubscriber());
+        this.deleteUserUseCase.execute(new BaseSubscriber<>());
         this.settingsView.closeAndDisplayLogin();
     }
 

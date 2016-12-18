@@ -1,20 +1,26 @@
 language: android
-
+sudo: false
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
-
+jdk:
+  - oraclejdk7
+  - oraclejdk8
 android:
   components:
     - tools
     - platform-tools
-    - build-tools-23.0.2
+    - build-tools-25.0.2
     - android-19
     - android-23
     - extra-android-support
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-20
 
+before_install:
+  - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
+  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+  - export JAVA_HOME=$JAVA8_HOME
 before_script:
   - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a -s WVGA800
   - emulator -avd test -noaudio -no-window -no-boot-anim -noskin &

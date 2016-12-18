@@ -4,6 +4,7 @@ import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.data.net.wrapper.UserWrapper;
 import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
+import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
@@ -33,14 +34,11 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
     }
 
     @Override
-    public Observable<Void> deleteUser(final UserEntity user) {
+    public Observable<VoidEntity> deleteUser(final UserEntity user) {
         return this.restApi.deleteUser(user.getAuthToken())
-                .map(new Function<Response<Void>, Void>() {
-                    @Override
-                    public Void apply(Response<Void> voidResponse) throws Exception {
-                        handleResponseError(voidResponse);
-                        return null;
-                    }
+                .map(voidResponse -> {
+                    handleResponseError(voidResponse);
+                    return new VoidEntity();
                 });
     }
 
@@ -63,14 +61,11 @@ public class UserDataRepository extends RestApiRepository implements UserReposit
     }
 
     @Override
-    public Observable<Void> logoutUser(UserEntity user) {
+    public Observable<VoidEntity> logoutUser(UserEntity user) {
         return this.restApi.doLogout(user.getAuthToken())
-                .map(new Function<Response<Void>, Void>() {
-                    @Override
-                    public Void apply(Response<Void> voidResponse) throws Exception {
-                        handleResponseError(voidResponse);
-                        return null;
-                    }
+                .map(voidResponse -> {
+                    handleResponseError(voidResponse);
+                    return new VoidEntity();
                 });
     }
 }

@@ -63,7 +63,6 @@ public class ResetPasswordUseCaseTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testResetPasswordWhenLoggedUseCase() {
         given(this.mockSessionRepository.getCurrentUser())
                 .willReturn(this.mockUser);

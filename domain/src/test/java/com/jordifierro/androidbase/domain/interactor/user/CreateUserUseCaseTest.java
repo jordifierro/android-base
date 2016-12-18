@@ -35,7 +35,6 @@ public class CreateUserUseCaseTest {
     public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testCreateUserUseCaseSuccess() {
         CreateUserUseCase createUserUseCase = new CreateUserUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);

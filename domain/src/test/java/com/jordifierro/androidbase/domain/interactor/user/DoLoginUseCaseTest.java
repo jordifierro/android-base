@@ -35,7 +35,6 @@ public class DoLoginUseCaseTest {
     public void setup() { MockitoAnnotations.initMocks(this); }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testDoLoginUseCaseSuccess() {
         DoLoginUseCase doLoginUseCase = new DoLoginUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);

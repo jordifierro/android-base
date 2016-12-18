@@ -41,8 +41,8 @@ public class GetNotesUseCaseTest {
         GetNotesUseCase getNotesUseCase = new GetNotesUseCase(mockThreadExecutor,
                 mockPostExecutionThread, mockNoteRepository, mockSessionRepository);
         TestObserver<List<NoteEntity>> testObserver = new TestObserver<>();
-        List<NoteEntity> notes = Arrays.asList(new NoteEntity[]
-                { new NoteEntity("t1", "c1"), new NoteEntity("t2", "c2")});
+        List<NoteEntity> notes =
+                Arrays.asList(new NoteEntity("t1", "c1"), new NoteEntity("t2", "c2"));
         given(mockNoteRepository.getNotes(any(UserEntity.class)))
                 .willReturn(Observable.just(notes));
 

@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.data.repository;
 import com.jordifierro.androidbase.data.net.RestApi;
 import com.jordifierro.androidbase.domain.entity.NoteEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
+import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.repository.NoteRepository;
 
 import java.util.List;
@@ -61,14 +62,11 @@ public class NoteDataRepository extends RestApiRepository implements NoteReposit
     }
 
     @Override
-    public Observable<Void> deleteNote(UserEntity user, int noteId) {
+    public Observable<VoidEntity> deleteNote(UserEntity user, int noteId) {
         return this.restApi.deleteNote(user.getAuthToken(), noteId)
-                .map(new Function<Response<Void>, Void>() {
-                    @Override
-                    public Void apply(Response<Void> response) throws Exception {
-                        handleResponseError(response);
-                        return null;
-                    }
+                .map(response -> {
+                    handleResponseError(response);
+                    return new VoidEntity();
                 });
     }
 }

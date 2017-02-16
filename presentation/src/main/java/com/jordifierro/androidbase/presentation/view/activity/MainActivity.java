@@ -7,16 +7,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
 import com.jordifierro.androidbase.presentation.view.activity.base.CleanActivity;
 import com.jordifierro.androidbase.presentation.view.fragment.NotesFragment;
+import com.jordifierro.androidbase.presentation.view.fragment.NotesViewPagerFragment;
 
 public class MainActivity extends CleanActivity implements NotesFragment.Listener {
 
     @Override
     protected void initializeActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            addFragment(R.id.fragment_container, new NotesFragment());
+            addFragment(R.id.fragment_container, new NotesViewPagerFragment());
         }
     }
 

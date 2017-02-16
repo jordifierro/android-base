@@ -9,7 +9,7 @@ ext {
     appVersionCode = 1
     appVersionName = '1.0'
     androidBuildToolsVersion = '25.0.2'
-    androidMinSdkVersion = 15
+    androidMinSdkVersion = 17
     androidTargetSdkVersion = 23
     androidCompileSdkVersion = 23
     androidSupportVersion = '23.2.1'
@@ -70,7 +70,7 @@ ext {
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
             androidCompatv7:    "com.android.support:appcompat-v7:${androidSupportVersion}",
-            androidSupportv4:   "com.android.support:support-v4:${androidSupportVersion}",
+            androidSupportv13:   "com.android.support:support-v13:${androidSupportVersion}",
             androidDesign:      "com.android.support:design:${androidSupportVersion}"
     ]
     presentationTestDependencies = [

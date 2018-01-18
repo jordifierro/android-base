@@ -7,34 +7,40 @@ import io.reactivex.observers.DisposableObserver;
 
 public class BasePresenter implements Presenter {
 
-    BaseView view;
+    private BaseView view;
     private UseCase useCase0, useCase1, useCase2;
 
-    public BasePresenter(UseCase useCase0) {
+    public BasePresenter(BaseView view, UseCase useCase0) {
         this.useCase0 = useCase0;
+        this.view = view;
     }
 
-    public BasePresenter(UseCase useCase0, UseCase useCase1) {
+    public BasePresenter(BaseView view, UseCase useCase0, UseCase useCase1) {
+        this.view = view;
         this.useCase0 = useCase0;
         this.useCase1 = useCase1;
     }
 
-    public BasePresenter(UseCase useCase0, UseCase useCase1, UseCase useCase2) {
+    public BasePresenter(BaseView view, UseCase useCase0, UseCase useCase1, UseCase useCase2) {
+        this.view = view;
         this.useCase0 = useCase0;
         this.useCase1 = useCase1;
         this.useCase2 = useCase2;
     }
 
+
     @Override
-    public void initWithView(BaseView view) {
-        this.view = view;
+    public void create() {
+
     }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
     public void destroy() {
@@ -60,19 +66,26 @@ public class BasePresenter implements Presenter {
         this.view.showMessage(message);
     }
 
+    public BaseView view() {
+        return view;
+    }
+
     protected class BaseSubscriber<T> extends DisposableObserver<T> {
 
-        @Override public void onComplete() {
+        @Override
+        public void onComplete() {
             BasePresenter.this.hideLoader();
         }
 
-        @Override public void onError(Throwable e) {
+        @Override
+        public void onError(Throwable e) {
             BasePresenter.this.hideLoader();
             BasePresenter.this.handleError(e);
             e.printStackTrace();
         }
 
-        @Override public void onNext(T t) {
+        @Override
+        public void onNext(T t) {
             BasePresenter.this.hideLoader();
             //BasePresenter.this.showMessage(t.toString());
         }

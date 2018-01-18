@@ -6,7 +6,6 @@ import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.presenter.RegisterPresenter;
 import com.jordifierro.androidbase.presentation.view.RegisterView;
-import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
 
 import javax.inject.Inject;
 
@@ -21,11 +20,6 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
     @BindView(R.id.et_email) EditText emailEditText;
     @BindView(R.id.et_password) EditText passwordEditText;
     @BindView(R.id.et_password_confirmation) EditText passwordConfirmationEditText;
-
-    @Override
-    protected void callInjection() {
-        this.getFragmentInjector().inject(this);
-    }
 
     @Override
     protected int layoutId() {

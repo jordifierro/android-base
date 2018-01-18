@@ -14,8 +14,7 @@ import com.jordifierro.androidbase.domain.repository.NoteRepository;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
 import com.jordifierro.androidbase.domain.repository.VersionRepository;
-
-import javax.inject.Singleton;
+import com.jordifierro.androidbase.presentation.dependency.ApplicationScope;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,13 +27,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataModule {
 
     @Provides
-    @Singleton
+    @ApplicationScope
     SessionRepository provideSessionRepository(SharedPreferences sharedPreferences) {
         return new SessionDataRepository(sharedPreferences);
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     RestApi provideRestApi() {
         OkHttpClient client = new OkHttpClient().newBuilder()
                                                 .addInterceptor(new HttpInterceptor())
@@ -53,19 +52,19 @@ public class DataModule {
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     UserRepository provideUserRepository(RestApi restApi) {
         return new UserDataRepository(restApi);
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     NoteRepository provideNoteRepository(RestApi restApi) {
         return new NoteDataRepository(restApi);
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     VersionRepository provideVersionRepository(RestApi restApi) {
         return new VersionDataRepository(restApi);
     }

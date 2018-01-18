@@ -5,43 +5,30 @@ import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.interactor.note.DeleteNoteUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.GetNoteUseCase;
 import com.jordifierro.androidbase.domain.interactor.note.UpdateNoteUseCase;
-import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
-import com.jordifierro.androidbase.presentation.view.BaseView;
 import com.jordifierro.androidbase.presentation.view.NoteEditView;
 
 import javax.inject.Inject;
 
-@ActivityScope
 public class NoteEditPresenter extends BasePresenter implements Presenter {
 
     private UpdateNoteUseCase updateNoteUseCase;
     private GetNoteUseCase getNoteUseCase;
     private DeleteNoteUseCase deleteNoteUseCase;
-    NoteEditView noteEditView;
+    private final NoteEditView noteEditView;
 
     @Inject
-    public NoteEditPresenter(UpdateNoteUseCase updateNoteUseCase,
-                             GetNoteUseCase getNoteUseCase, DeleteNoteUseCase deleteNoteUseCase) {
-        super(updateNoteUseCase, getNoteUseCase, deleteNoteUseCase);
+    public NoteEditPresenter(NoteEditView noteEditView, GetNoteUseCase getNoteUseCase, DeleteNoteUseCase deleteNoteUseCase, UpdateNoteUseCase updateNoteUseCase) {
+        super(noteEditView, updateNoteUseCase, getNoteUseCase, deleteNoteUseCase);
+        this.noteEditView = noteEditView;
         this.updateNoteUseCase = updateNoteUseCase;
         this.getNoteUseCase = getNoteUseCase;
         this.deleteNoteUseCase = deleteNoteUseCase;
     }
 
-    @Override
-    public void initWithView(BaseView view) {
-        super.initWithView(view);
-        this.noteEditView = (NoteEditView) view;
-
+    public void create() {
         this.showLoader();
         this.getNoteUseCase.setParams(this.noteEditView.getNoteId());
         this.getNoteUseCase.execute(new GetNoteSubscriber());
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        this.noteEditView = null;
     }
 
     protected class GetNoteSubscriber extends BaseSubscriber<NoteEntity> {

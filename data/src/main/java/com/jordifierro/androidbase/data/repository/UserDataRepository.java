@@ -8,13 +8,9 @@ import com.jordifierro.androidbase.domain.entity.VoidEntity;
 import com.jordifierro.androidbase.domain.repository.UserRepository;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
-import retrofit2.Response;
 
-@Singleton
 public class UserDataRepository extends RestApiRepository implements UserRepository {
 
     private final RestApi restApi;

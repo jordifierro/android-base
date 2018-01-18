@@ -23,7 +23,8 @@ public class ResetPasswordPresenterTest {
     ResetPasswordUseCase mockResetPasswordUseCase;
     @Mock
     ResetPasswordView mockResetPasswordView;
-    @Mock Observable mockObservable;
+    @Mock
+    Observable mockObservable;
 
     private ResetPasswordPresenter resetPasswordPresenter;
     private ResetPasswordPresenter.ResetPasswordSubscriber resetPasswordSubscriber;
@@ -31,8 +32,7 @@ public class ResetPasswordPresenterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        this.resetPasswordPresenter = new ResetPasswordPresenter(this.mockResetPasswordUseCase);
-        this.resetPasswordPresenter.initWithView(this.mockResetPasswordView);
+        this.resetPasswordPresenter = new ResetPasswordPresenter(mockResetPasswordView, this.mockResetPasswordUseCase);
         this.resetPasswordSubscriber = this.resetPasswordPresenter.new ResetPasswordSubscriber();
     }
 
@@ -42,8 +42,7 @@ public class ResetPasswordPresenterTest {
         this.resetPasswordPresenter.destroy();
 
         verify(this.mockResetPasswordUseCase).unsubscribe();
-        assertNull(this.resetPasswordPresenter.resetPasswordView);
-        assertNull(this.resetPasswordPresenter.view);
+        assertNull(this.resetPasswordPresenter.view());
     }
 
     @Test

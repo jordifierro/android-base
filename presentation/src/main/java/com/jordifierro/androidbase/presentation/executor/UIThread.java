@@ -1,14 +1,14 @@
 package com.jordifierro.androidbase.presentation.executor;
 
 import com.jordifierro.androidbase.domain.executor.PostExecutionThread;
+import com.jordifierro.androidbase.presentation.dependency.ApplicationScope;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-@Singleton
+@ApplicationScope
 public class UIThread implements PostExecutionThread {
 
     @Inject

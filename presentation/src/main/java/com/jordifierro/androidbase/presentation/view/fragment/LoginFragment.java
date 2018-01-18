@@ -17,13 +17,10 @@ public class LoginFragment extends BaseFragment implements LoginView {
     @Inject
     LoginPresenter loginPresenter;
 
-    @BindView(R.id.et_email) EditText emailEditText;
-    @BindView(R.id.et_password) EditText passwordEditText;
-
-    @Override
-    protected void callInjection() {
-        this.getFragmentInjector().inject(this);
-    }
+    @BindView(R.id.et_email)
+    EditText emailEditText;
+    @BindView(R.id.et_password)
+    EditText passwordEditText;
 
     @Override
     protected int layoutId() {
@@ -41,28 +38,30 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
     @OnClick(R.id.btn_login)
     public void loginButtonPressed() {
-        this.loginPresenter.loginUser(  emailEditText.getText().toString(),
-                                        passwordEditText.getText().toString());
+        this.loginPresenter.loginUser(emailEditText.getText().toString(),
+                passwordEditText.getText().toString());
     }
 
     @Override
     public void viewNotes() {
-        ((Listener)getActivity()).viewNotes();
+        ((Listener) getActivity()).viewNotes();
     }
 
     @OnClick(R.id.btn_register)
     public void registerButtonPressed() {
-        ((Listener)getActivity()).displayRegister();
+        ((Listener) getActivity()).displayRegister();
     }
 
     @OnClick(R.id.tv_forgot_password)
     public void forgotPasswordPressed() {
-        ((Listener)getActivity()).forgotPassword();
+        ((Listener) getActivity()).forgotPassword();
     }
 
     public interface Listener {
         void viewNotes();
+
         void displayRegister();
+
         void forgotPassword();
     }
 }

@@ -15,8 +15,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
@@ -24,10 +22,12 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class NotesPresenterTest {
 
-    @Mock GetNotesUseCase getNotesUseCase;
-    @Mock CheckVersionExpirationUseCase checkVersionExpirationUseCase;
-    @Mock NotesView mockNotesView;
-    @Mock Observable mockObservable;
+    @Mock
+    GetNotesUseCase getNotesUseCase;
+    @Mock
+    CheckVersionExpirationUseCase checkVersionExpirationUseCase;
+    @Mock
+    NotesView mockNotesView;
 
     private NotesPresenter notesPresenter;
     private NotesPresenter.NotesSubscriber notesSubscriber;
@@ -36,9 +36,9 @@ public class NotesPresenterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        this.notesPresenter = new NotesPresenter(this.getNotesUseCase,
-                                                 this.checkVersionExpirationUseCase);
-        this.notesPresenter.initWithView(this.mockNotesView);
+        this.notesPresenter = new NotesPresenter(mockNotesView, this.checkVersionExpirationUseCase, this.getNotesUseCase
+        );
+        this.notesPresenter.create();
         this.notesSubscriber = this.notesPresenter.new NotesSubscriber();
         this.versionExpirationSubscriber = this.notesPresenter.new VersionExpirationSubscriber();
     }
@@ -50,8 +50,7 @@ public class NotesPresenterTest {
 
         verify(this.getNotesUseCase).unsubscribe();
         verify(this.checkVersionExpirationUseCase).unsubscribe();
-        assertNull(this.notesPresenter.notesView);
-        assertNull(this.notesPresenter.view);
+        assertNull(this.notesPresenter.view());
     }
 
     @Test

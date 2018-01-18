@@ -1,10 +1,9 @@
-package com.jordifierro.androidbase.presentation;
+package com.jordifierro.androidbase.presentation.dependency.component;
 
 import android.app.Application;
 
+import com.jordifierro.androidbase.presentation.BaseApplication;
 import com.jordifierro.androidbase.presentation.dependency.ApplicationScope;
-import com.jordifierro.androidbase.presentation.dependency.component.DemoActivityInjector;
-import com.jordifierro.androidbase.presentation.dependency.component.DemoFragmentInjector;
 import com.jordifierro.androidbase.presentation.dependency.module.ApplicationModule;
 import com.jordifierro.androidbase.presentation.dependency.module.DataModule;
 import com.jordifierro.androidbase.presentation.dependency.module.DemoApplicationModule;
@@ -23,10 +22,8 @@ import dagger.android.AndroidInjectionModule;
         AndroidInjectionModule.class,
         DataModule.class,
         DemoActivityInjector.class,
-        DemoFragmentInjector.class,
-        TestMockerModule.class
-})
-public interface TestMockerComponent {
+        DemoFragmentInjector.class})
+public interface DemoApplicationComponent {
 
     void inject(BaseApplication app);
 
@@ -36,6 +33,6 @@ public interface TestMockerComponent {
         @BindsInstance
         Builder application(Application application);
 
-        TestMockerComponent build();
+        DemoApplicationComponent build();
     }
 }

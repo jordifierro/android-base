@@ -64,6 +64,8 @@ ext {
     presentationDependencies = [
             daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger:             "com.google.dagger:dagger:${daggerVersion}",
+            daggerAndroid:      "com.google.dagger:dagger-android:${daggerVersion}",
+            daggerProcessor:    "com.google.dagger:dagger-android-processor:${daggerVersion}",
             butterKnife:        "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterCompiler:     "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",

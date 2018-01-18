@@ -10,17 +10,16 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
-
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 public class NoteCreatePresenterTest {
 
-    @Mock CreateNoteUseCase createNoteUseCase;
-    @Mock NoteCreateView mockNoteCreateView;
-    @Mock Observable mockObservable;
+    @Mock
+    CreateNoteUseCase createNoteUseCase;
+    @Mock
+    NoteCreateView mockNoteCreateView;
 
     private NoteCreatePresenter noteCreatePresenter;
     private NoteCreatePresenter.NoteCreateSubscriber noteCreateSubscriber;
@@ -28,8 +27,8 @@ public class NoteCreatePresenterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        this.noteCreatePresenter = new NoteCreatePresenter(this.createNoteUseCase);
-        this.noteCreatePresenter.initWithView(this.mockNoteCreateView);
+        this.noteCreatePresenter = new NoteCreatePresenter(mockNoteCreateView, this.createNoteUseCase);
+        this.noteCreatePresenter.create();
         this.noteCreateSubscriber = this.noteCreatePresenter.new NoteCreateSubscriber();
     }
 
@@ -39,8 +38,7 @@ public class NoteCreatePresenterTest {
         this.noteCreatePresenter.destroy();
 
         verify(this.createNoteUseCase).unsubscribe();
-        assertNull(this.noteCreatePresenter.noteCreateView);
-        assertNull(this.noteCreatePresenter.view);
+        assertNull(this.noteCreatePresenter.view());
     }
 
     @Test

@@ -10,17 +10,16 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
-
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 public class LoginPresenterTest {
 
-    @Mock DoLoginUseCase mockDoLoginUseCase;
-    @Mock LoginView mockLoginView;
-    @Mock Observable mockObservable;
+    @Mock
+    DoLoginUseCase mockDoLoginUseCase;
+    @Mock
+    LoginView mockLoginView;
 
     private LoginPresenter loginPresenter;
     private LoginPresenter.LoginSubscriber loginSubscriber;
@@ -28,8 +27,8 @@ public class LoginPresenterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        this.loginPresenter = new LoginPresenter(this.mockDoLoginUseCase);
-        this.loginPresenter.initWithView(this.mockLoginView);
+        this.loginPresenter = new LoginPresenter(mockLoginView, this.mockDoLoginUseCase);
+        this.loginPresenter.create();
         this.loginSubscriber = this.loginPresenter.new LoginSubscriber();
     }
 
@@ -39,8 +38,7 @@ public class LoginPresenterTest {
         this.loginPresenter.destroy();
 
         verify(this.mockDoLoginUseCase).unsubscribe();
-        assertNull(this.loginPresenter.loginView);
-        assertNull(this.loginPresenter.view);
+        assertNull(this.loginPresenter.view());
     }
 
     @Test

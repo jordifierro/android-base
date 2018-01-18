@@ -1,6 +1,5 @@
 package com.jordifierro.androidbase.presentation;
 
-import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
 import com.jordifierro.androidbase.presentation.presenter.LoginPresenter;
 import com.jordifierro.androidbase.presentation.presenter.NoteCreatePresenter;
 import com.jordifierro.androidbase.presentation.presenter.NoteDetailPresenter;
@@ -18,42 +17,42 @@ import dagger.Provides;
 @Module
 public class TestMockerModule {
 
-    @Provides @ActivityScope
+    @Provides
     LoginPresenter provideLoginPresenter() {
         return Mockito.mock(LoginPresenter.class);
     }
 
-    @Provides @ActivityScope
+    @Provides
     NoteCreatePresenter provideNoteCreatePresenter() {
         return Mockito.mock(NoteCreatePresenter.class);
     }
 
-    @Provides @ActivityScope
+    @Provides
     NoteDetailPresenter provideNoteDetailPresenter() {
         return Mockito.mock(NoteDetailPresenter.class);
     }
 
-    @Provides @ActivityScope
+    @Provides
     NotesPresenter provideNotesPresenter() {
         return Mockito.mock(NotesPresenter.class);
     }
 
-    @Provides @ActivityScope
+    @Provides
     RegisterPresenter provideRegisterPresenter() {
         return Mockito.mock(RegisterPresenter.class);
     }
 
-    @Provides @ActivityScope
+    @Provides
     SettingsPresenter provideSettingsPresenter() {
         return Mockito.mock(SettingsPresenter.class);
     }
 
-    @Provides @ActivityScope
+    @Provides
     NoteEditPresenter provideNoteEditPresenter() {
         return Mockito.mock(NoteEditPresenter.class);
     }
 
-    @Provides @ActivityScope
+    @Provides
     ResetPasswordPresenter provideResetPasswordPresenter() {
         return Mockito.mock(ResetPasswordPresenter.class);
     }

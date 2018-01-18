@@ -16,7 +16,7 @@ import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class NoteEditFragment extends BaseFragment implements NoteEditView {
@@ -24,9 +24,9 @@ public class NoteEditFragment extends BaseFragment implements NoteEditView {
     @Inject
     NoteEditPresenter noteEditPresenter;
 
-    @Bind(R.id.et_title) EditText titleET;
-    @Bind(R.id.et_content) EditText contentET;
-    @Bind(R.id.btn_submit) Button submitButton;
+    @BindView(R.id.et_title) EditText titleET;
+    @BindView(R.id.et_content) EditText contentET;
+    @BindView(R.id.btn_submit) Button submitButton;
 
     @Override
     protected void callInjection() {

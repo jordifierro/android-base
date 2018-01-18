@@ -1,41 +1,16 @@
 package com.jordifierro.androidbase.presentation;
 
-import android.app.Application;
-
 import com.jordifierro.androidbase.presentation.dependency.ApplicationScope;
-import com.jordifierro.androidbase.presentation.dependency.component.DemoActivityInjector;
-import com.jordifierro.androidbase.presentation.dependency.component.DemoFragmentInjector;
-import com.jordifierro.androidbase.presentation.dependency.module.ApplicationModule;
-import com.jordifierro.androidbase.presentation.dependency.module.DataModule;
-import com.jordifierro.androidbase.presentation.dependency.module.DemoApplicationModule;
+import com.jordifierro.androidbase.presentation.dependency.component.DemoApplicationComponent;
+import com.jordifierro.androidbase.presentation.dependency.module.AndroidBaseModule;
 
-import dagger.BindsInstance;
 import dagger.Component;
-import dagger.android.AndroidInjectionModule;
 
-/**
-
- */
 @ApplicationScope
-@Component(modules = {
-        DemoApplicationModule.class,
-        ApplicationModule.class,
-        AndroidInjectionModule.class,
-        DataModule.class,
-        DemoActivityInjector.class,
-        DemoFragmentInjector.class,
-        TestMockerModule.class
-})
-public interface TestMockerComponent {
-
-    void inject(BaseApplication app);
+@Component(modules = {AndroidBaseModule.class, TestMockerModule.class})
+public interface TestMockerComponent extends DemoApplicationComponent {
 
     @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        Builder application(Application application);
-
-        TestMockerComponent build();
+    interface Builder extends DemoApplicationComponent.Builder {
     }
 }

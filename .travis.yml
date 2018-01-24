@@ -1,3 +1,4 @@
+group: deprecated-2017Q4
 language: android
 sudo: false
 env:
@@ -15,14 +16,14 @@ android:
     - android-23
     - extra-android-support
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-20
+    - sys-img-armeabi-v7a-google_apis-23
 
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - export JAVA_HOME=$JAVA8_HOME
 before_script:
-  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a -s WVGA800
+  - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a --tag google_apis -s WVGA800
   - emulator -avd test -noaudio -no-window -no-boot-anim -noskin &
   - adb wait-for-device
   - adb shell input keyevent 82 &

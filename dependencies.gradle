@@ -27,7 +27,7 @@ ext {
     jUnitVersion = '4.10'
     mockitoVersion = '1.9.5'//'2.0.43-beta', wait for dexmaker
     dexmakerVersion = '1.4'
-    mockWebServerVersion = '3.2.0'
+    mockWebServerVersion = '3.6.0'
     commonsIOVersion = '2.4'
     jetAnnotationVersion = '15.0'
     espressoVersion = '2.2.2'

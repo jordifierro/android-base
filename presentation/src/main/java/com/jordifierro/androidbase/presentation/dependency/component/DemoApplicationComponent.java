@@ -4,25 +4,13 @@ import android.app.Application;
 
 import com.jordifierro.androidbase.presentation.BaseApplication;
 import com.jordifierro.androidbase.presentation.dependency.ApplicationScope;
-import com.jordifierro.androidbase.presentation.dependency.module.ApplicationModule;
-import com.jordifierro.androidbase.presentation.dependency.module.DataModule;
-import com.jordifierro.androidbase.presentation.dependency.module.DemoApplicationModule;
+import com.jordifierro.androidbase.presentation.dependency.module.AndroidBaseModule;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import dagger.android.AndroidInjectionModule;
 
-/**
-
- */
 @ApplicationScope
-@Component(modules = {
-        DemoApplicationModule.class,
-        ApplicationModule.class,
-        AndroidInjectionModule.class,
-        DataModule.class,
-        DemoActivityInjector.class,
-        DemoFragmentInjector.class})
+@Component(modules = {AndroidBaseModule.class})
 public interface DemoApplicationComponent {
 
     void inject(BaseApplication app);

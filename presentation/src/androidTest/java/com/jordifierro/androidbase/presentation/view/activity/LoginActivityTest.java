@@ -40,7 +40,7 @@ public class LoginActivityTest {
     @Before
     public void setUp() throws Exception {
         this.loginFragment = ((LoginFragment) this.activityTestRule.getActivity()
-                .getFragmentManager().findFragmentById(R.id.fragment_container));
+                                .getFragmentManager().findFragmentById(R.id.fragment_container));
     }
 
     @Test
@@ -61,8 +61,25 @@ public class LoginActivityTest {
         onView(withId(R.id.btn_login)).perform(click());
 
         verify(this.loginFragment.getLoginPresenter()).loginUser("email@test.com", "87654321");
-        verify(this.loginFragment.getLoginPresenter()).initWithView(loginFragment);
+        verify(this.loginFragment.getLoginPresenter()).create();
         verify(this.loginFragment.getLoginPresenter()).resume();
+        verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
+    }
+
+    @Test
+    public void testPause() {
+        this.loginFragment.onPause();
+        verify(this.loginFragment.getLoginPresenter()).resume();
+        verify(this.loginFragment.getLoginPresenter()).pause();
+        verify(this.loginFragment.getLoginPresenter()).create();
+        verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
+    }
+
+    @Test
+    public void testResume() {
+        this.loginFragment.onResume();
+        verify(this.loginFragment.getLoginPresenter(),times(2)).resume();
+        verify(this.loginFragment.getLoginPresenter()).create();
         verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
     }
 
@@ -85,24 +102,6 @@ public class LoginActivityTest {
         intended(hasComponent(RegisterActivity.class.getName()));
         Intents.release();
     }
-
-    @Test
-    public void testPause() {
-        this.loginFragment.onPause();
-        verify(this.loginFragment.getLoginPresenter()).resume();
-        verify(this.loginFragment.getLoginPresenter()).initWithView(loginFragment);
-        verify(this.loginFragment.getLoginPresenter()).pause();
-        verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
-    }
-
-    @Test
-    public void testResume() {
-        this.loginFragment.onResume();
-        verify(this.loginFragment.getLoginPresenter(),times(2)).resume();
-        verify(this.loginFragment.getLoginPresenter()).initWithView(loginFragment);
-        verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
-    }
-
 
     @Test
     public void testForgotPasswordClick() {

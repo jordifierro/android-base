@@ -37,7 +37,7 @@ public class DeleteUserUseCaseTest {
                 mockPostExecutionThread, mockUserRepository, mockSessionRepository);
         given(mockSessionRepository.getCurrentUser()).willReturn(mockUser);
         given(mockUserRepository.deleteUser(mockUser))
-                .willReturn(Observable.just(new VoidEntity()));
+                .willReturn(Observable.just(VoidEntity.getInstance()));
         TestScheduler testScheduler = new TestScheduler();
 
         deleteUserUseCase.buildUseCaseObservable()

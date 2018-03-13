@@ -3,34 +3,20 @@ package com.jordifierro.androidbase.presentation.presenter;
 import com.jordifierro.androidbase.domain.entity.MessageEntity;
 import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.interactor.user.ResetPasswordUseCase;
-import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
-import com.jordifierro.androidbase.presentation.view.BaseView;
 import com.jordifierro.androidbase.presentation.view.ResetPasswordView;
 
 import javax.inject.Inject;
 
-@ActivityScope
 public class ResetPasswordPresenter extends BasePresenter implements Presenter {
 
+    private final ResetPasswordView resetPasswordView;
     private ResetPasswordUseCase resetPasswordUseCase;
-    ResetPasswordView resetPasswordView;
 
     @Inject
-    public ResetPasswordPresenter(ResetPasswordUseCase resetPasswordUseCase) {
-        super(resetPasswordUseCase);
+    public ResetPasswordPresenter(ResetPasswordView resetPasswordView, ResetPasswordUseCase resetPasswordUseCase) {
+        super(resetPasswordView, resetPasswordUseCase);
+        this.resetPasswordView = resetPasswordView;
         this.resetPasswordUseCase = resetPasswordUseCase;
-    }
-
-    @Override
-    public void initWithView(BaseView view) {
-        super.initWithView(view);
-        this.resetPasswordView = (ResetPasswordView) view;
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        this.resetPasswordView = null;
     }
 
     public void resetPassword(String email, String newPassword, String newPasswordConfirmation) {

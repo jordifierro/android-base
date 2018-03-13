@@ -4,9 +4,7 @@ import android.content.pm.PackageManager;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.widget.TextView;
 
 import com.jordifierro.androidbase.presentation.R;
 import com.jordifierro.androidbase.presentation.view.fragment.LoginFragment;
@@ -23,13 +21,12 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -64,6 +61,26 @@ public class LoginActivityTest {
         onView(withId(R.id.btn_login)).perform(click());
 
         verify(this.loginFragment.getLoginPresenter()).loginUser("email@test.com", "87654321");
+        verify(this.loginFragment.getLoginPresenter()).create();
+        verify(this.loginFragment.getLoginPresenter()).resume();
+        verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
+    }
+
+    @Test
+    public void testPause() {
+        this.loginFragment.onPause();
+        verify(this.loginFragment.getLoginPresenter()).resume();
+        verify(this.loginFragment.getLoginPresenter()).pause();
+        verify(this.loginFragment.getLoginPresenter()).create();
+        verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
+    }
+
+    @Test
+    public void testResume() {
+        this.loginFragment.onResume();
+        verify(this.loginFragment.getLoginPresenter(),times(2)).resume();
+        verify(this.loginFragment.getLoginPresenter()).create();
+        verifyNoMoreInteractions(this.loginFragment.getLoginPresenter());
     }
 
     @Test

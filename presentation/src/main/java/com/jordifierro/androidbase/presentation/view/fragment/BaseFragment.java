@@ -9,24 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.jordifierro.androidbase.presentation.dependency.component.FragmentInjector;
 import com.jordifierro.androidbase.presentation.presenter.BasePresenter;
 import com.jordifierro.androidbase.presentation.view.BaseView;
-import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
 import com.jordifierro.androidbase.presentation.view.activity.base.CleanActivity;
 
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 public abstract class BaseFragment extends Fragment implements BaseView {
 
     private ProgressDialog progressDialog;
 
-    protected abstract void callInjection();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        callInjection();
     }
 
     protected abstract int layoutId();
@@ -44,7 +41,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter().initWithView(this);
+        presenter().create();
     }
 
     @Override
@@ -100,7 +97,4 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         ((CleanActivity)getActivity()).closeAndDisplayLogin();
     }
 
-    protected FragmentInjector getFragmentInjector() {
-        return ((CleanActivity)getActivity()).getFragmentInjector();
-    }
 }

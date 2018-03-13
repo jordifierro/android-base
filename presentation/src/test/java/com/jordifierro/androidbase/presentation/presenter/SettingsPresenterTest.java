@@ -9,18 +9,18 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
-
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 public class SettingsPresenterTest {
 
-    @Mock DoLogoutUseCase mockDoLogoutUseCase;
-    @Mock DeleteUserUseCase mockDeleteUserUseCase;
-    @Mock SettingsView mockSettingsView;
-    @Mock Observable mockObservable;
+    @Mock
+    DoLogoutUseCase mockDoLogoutUseCase;
+    @Mock
+    DeleteUserUseCase mockDeleteUserUseCase;
+    @Mock
+    SettingsView mockSettingsView;
 
     private SettingsPresenter settingsPresenter;
 
@@ -28,8 +28,8 @@ public class SettingsPresenterTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         this.settingsPresenter =
-                new SettingsPresenter(this.mockDoLogoutUseCase, this.mockDeleteUserUseCase);
-        this.settingsPresenter.initWithView(this.mockSettingsView);
+                new SettingsPresenter(mockSettingsView, this.mockDoLogoutUseCase, this.mockDeleteUserUseCase);
+        this.settingsPresenter.create();
     }
 
     @Test
@@ -39,8 +39,7 @@ public class SettingsPresenterTest {
 
         verify(this.mockDoLogoutUseCase).unsubscribe();
         verify(this.mockDeleteUserUseCase).unsubscribe();
-        assertNull(this.settingsPresenter.settingsView);
-        assertNull(this.settingsPresenter.view);
+        assertNull(this.settingsPresenter.view());
     }
 
     @Test

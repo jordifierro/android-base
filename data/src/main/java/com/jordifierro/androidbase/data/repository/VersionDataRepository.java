@@ -6,11 +6,9 @@ import com.jordifierro.androidbase.domain.entity.VersionEntity;
 import com.jordifierro.androidbase.domain.repository.VersionRepository;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
-@Singleton
 public class VersionDataRepository extends RestApiRepository implements VersionRepository {
 
     private final RestApi restApi;

@@ -1,11 +1,16 @@
 package com.jordifierro.androidbase.presentation;
 
-import com.jordifierro.androidbase.presentation.dependency.ActivityScope;
-import com.jordifierro.androidbase.presentation.dependency.component.ApplicationComponent;
-import com.jordifierro.androidbase.presentation.dependency.component.FragmentInjector;
+import com.jordifierro.androidbase.presentation.dependency.ApplicationScope;
+import com.jordifierro.androidbase.presentation.dependency.component.DemoApplicationComponent;
+import com.jordifierro.androidbase.presentation.dependency.module.AndroidBaseModule;
 
 import dagger.Component;
 
-@ActivityScope
-@Component(modules = TestMockerModule.class, dependencies = ApplicationComponent.class)
-public interface TestMockerComponent extends FragmentInjector {}
+@ApplicationScope
+@Component(modules = {AndroidBaseModule.class, TestMockerModule.class})
+public interface TestMockerComponent extends DemoApplicationComponent {
+
+    @Component.Builder
+    interface Builder extends DemoApplicationComponent.Builder {
+    }
+}

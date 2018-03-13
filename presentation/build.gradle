@@ -43,7 +43,9 @@ dependencies {
 
     annotationProcessor presentationDependencies.butterCompiler
     annotationProcessor presentationDependencies.daggerCompiler
+    annotationProcessor presentationDependencies.daggerProcessor
 
+    compile presentationDependencies.daggerAndroid
     compile presentationDependencies.androidDesign
     compile presentationDependencies.androidSupportv4
     compile presentationDependencies.androidCompatv7

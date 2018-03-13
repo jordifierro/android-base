@@ -5,4 +5,14 @@ package com.jordifierro.androidbase.domain.entity;
  */
 
 public class VoidEntity {
+
+    private static VoidEntity voidEntity = new VoidEntity();
+
+    private VoidEntity() {
+
+    }
+
+    public static VoidEntity getInstance() {
+        return voidEntity;
+    }
 }

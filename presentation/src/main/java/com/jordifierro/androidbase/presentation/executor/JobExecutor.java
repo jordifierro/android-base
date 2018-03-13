@@ -3,6 +3,7 @@ package com.jordifierro.androidbase.presentation.executor;
 import android.support.annotation.NonNull;
 
 import com.jordifierro.androidbase.domain.executor.ThreadExecutor;
+import com.jordifierro.androidbase.presentation.dependency.ApplicationScope;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -11,9 +12,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
+@ApplicationScope
 public class JobExecutor implements ThreadExecutor {
 
     static final int INITIAL_POOL_SIZE = 3;

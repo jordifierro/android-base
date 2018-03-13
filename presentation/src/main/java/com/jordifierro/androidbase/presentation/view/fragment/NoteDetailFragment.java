@@ -21,11 +21,6 @@ public class NoteDetailFragment extends BaseFragment implements NoteDetailView {
     @BindView(R.id.tv_content) TextView contentTV;
 
     @Override
-    protected void callInjection() {
-        this.getFragmentInjector().inject(this);
-    }
-
-    @Override
     protected int layoutId() {
         return R.layout.fragment_note_detail;
     }

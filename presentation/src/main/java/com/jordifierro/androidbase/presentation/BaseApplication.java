@@ -1,16 +1,25 @@
 package com.jordifierro.androidbase.presentation;
 
+import android.app.Activity;
 import android.app.Application;
+import android.app.Fragment;
 
-import com.jordifierro.androidbase.presentation.dependency.component.ApplicationComponent;
-import com.jordifierro.androidbase.presentation.dependency.component.DaggerActivityComponent;
-import com.jordifierro.androidbase.presentation.dependency.component.DaggerApplicationComponent;
-import com.jordifierro.androidbase.presentation.dependency.component.FragmentInjector;
-import com.jordifierro.androidbase.presentation.dependency.module.ApplicationModule;
+import com.jordifierro.androidbase.presentation.dependency.component.DaggerDemoApplicationComponent;
 
-public class BaseApplication extends Application {
+import javax.inject.Inject;
 
-    protected ApplicationComponent applicationComponent;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import dagger.android.HasFragmentInjector;
+
+public class BaseApplication extends Application implements HasActivityInjector, HasFragmentInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
@@ -18,19 +27,23 @@ public class BaseApplication extends Application {
         this.initializeInjector();
     }
 
-    protected void initializeInjector() {
-        this.applicationComponent = DaggerApplicationComponent.builder()
-                                        .applicationModule(new ApplicationModule(this))
-                                        .build();
+    public void initializeInjector() {
+        DaggerDemoApplicationComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this);
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return this.applicationComponent;
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
     }
 
-    public FragmentInjector getFragmentInjector() {
-        return DaggerActivityComponent.builder()
-                .applicationComponent(this.applicationComponent).build();
+    @Override
+    public AndroidInjector<Fragment> fragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
     }
+
 
 }

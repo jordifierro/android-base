@@ -6,9 +6,7 @@ import com.jordifierro.androidbase.domain.entity.UserEntity;
 import com.jordifierro.androidbase.domain.repository.SessionRepository;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
 public class SessionDataRepository implements SessionRepository {
 
     private static final String EMAIL = "email";

@@ -1,7 +1,7 @@
 apply plugin: "java"
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
@@ -10,6 +10,7 @@ dependencies {
     compile domainDependencies.javaxInject
     compile domainDependencies.rxJava
 
+    testCompile domainTestDependencies.truth
     testCompile domainTestDependencies.junit
     testCompile domainTestDependencies.mockito
     testCompile domainTestDependencies.jetAnnotations

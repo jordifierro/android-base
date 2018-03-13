@@ -25,6 +25,8 @@ ext {
 
     //Testing
     jUnitVersion = '4.10'
+    truthVersion = '0.34'
+
     mockitoVersion = '1.9.5'//'2.0.43-beta', wait for dexmaker
     dexmakerVersion = '1.4'
     mockWebServerVersion = '3.6.0'
@@ -42,6 +44,7 @@ ext {
 
     domainTestDependencies = [
             junit:              "junit:junit:${jUnitVersion}",
+            truth         : "com.google.truth:truth:${truthVersion}",
             mockito:            "org.mockito:mockito-core:${mockitoVersion}",
             jetAnnotations:     "org.jetbrains:annotations-java5:${jetAnnotationVersion}"
     ]
@@ -64,6 +67,8 @@ ext {
     presentationDependencies = [
             daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger:             "com.google.dagger:dagger:${daggerVersion}",
+            daggerAndroid:      "com.google.dagger:dagger-android:${daggerVersion}",
+            daggerProcessor:    "com.google.dagger:dagger-android-processor:${daggerVersion}",
             butterKnife:        "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterCompiler:     "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",

@@ -12,8 +12,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
-
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -22,11 +20,14 @@ import static org.mockito.Mockito.verify;
 
 public class NoteEditPresenterTest {
 
-    @Mock GetNoteUseCase getNoteUseCase;
-    @Mock UpdateNoteUseCase updateNoteUseCase;
-    @Mock DeleteNoteUseCase deleteNoteUseCase;
-    @Mock NoteEditView mockNoteEditView;
-    @Mock Observable mockObservable;
+    @Mock
+    GetNoteUseCase getNoteUseCase;
+    @Mock
+    UpdateNoteUseCase updateNoteUseCase;
+    @Mock
+    DeleteNoteUseCase deleteNoteUseCase;
+    @Mock
+    NoteEditView mockNoteEditView;
 
     private NoteEditPresenter noteEditPresenter;
     private NoteEditPresenter.GetNoteSubscriber getNoteSubscriber;
@@ -36,9 +37,9 @@ public class NoteEditPresenterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        this.noteEditPresenter = new NoteEditPresenter(this.updateNoteUseCase,
-                                                       this.getNoteUseCase, this.deleteNoteUseCase);
-        this.noteEditPresenter.initWithView(this.mockNoteEditView);
+        this.noteEditPresenter = new NoteEditPresenter(mockNoteEditView, this.getNoteUseCase, this.deleteNoteUseCase, this.updateNoteUseCase
+        );
+        this.noteEditPresenter.create();
         this.getNoteSubscriber = this.noteEditPresenter.new GetNoteSubscriber();
         this.updateNoteSubscriber = this.noteEditPresenter.new UpdateNoteSubscriber();
         this.deleteNoteSubscriber = this.noteEditPresenter.new DeleteNoteSubscriber();
@@ -51,8 +52,7 @@ public class NoteEditPresenterTest {
 
         verify(this.getNoteUseCase).unsubscribe();
         verify(this.updateNoteUseCase).unsubscribe();
-        assertNull(this.noteEditPresenter.noteEditView);
-        assertNull(this.noteEditPresenter.view);
+        assertNull(this.noteEditPresenter.view());
     }
 
     @Test

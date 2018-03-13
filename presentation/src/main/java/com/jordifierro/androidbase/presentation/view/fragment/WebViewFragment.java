@@ -1,9 +1,7 @@
 package com.jordifierro.androidbase.presentation.view.fragment;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +10,16 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.jordifierro.androidbase.presentation.R;
-import com.jordifierro.androidbase.presentation.view.activity.base.WebViewActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WebViewFragment extends Fragment {
 
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView webView;
 
-    @Bind(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
     @Override

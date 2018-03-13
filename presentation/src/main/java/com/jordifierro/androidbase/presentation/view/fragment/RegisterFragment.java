@@ -10,7 +10,7 @@ import com.jordifierro.androidbase.presentation.view.activity.base.BaseActivity;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RegisterFragment extends BaseFragment implements RegisterView {
@@ -18,9 +18,9 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
     @Inject
     RegisterPresenter registerPresenter;
 
-    @Bind(R.id.et_email) EditText emailEditText;
-    @Bind(R.id.et_password) EditText passwordEditText;
-    @Bind(R.id.et_password_confirmation) EditText passwordConfirmationEditText;
+    @BindView(R.id.et_email) EditText emailEditText;
+    @BindView(R.id.et_password) EditText passwordEditText;
+    @BindView(R.id.et_password_confirmation) EditText passwordConfirmationEditText;
 
     @Override
     protected void callInjection() {

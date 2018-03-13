@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
@@ -43,7 +41,8 @@ dependencies {
     compile project(':domain')
     compile project(':data')
 
-    apt presentationDependencies.daggerCompiler
+    annotationProcessor presentationDependencies.butterCompiler
+    annotationProcessor presentationDependencies.daggerCompiler
 
     compile presentationDependencies.androidDesign
     compile presentationDependencies.androidSupportv4
@@ -58,7 +57,7 @@ dependencies {
     testCompile presentationTestDependencies.mockito
 
 
-    androidTestApt presentationTestDependencies.daggerCompiler
+    androidTestAnnotationProcessor presentationTestDependencies.daggerCompiler
 
     androidTestCompile presentationTestDependencies.androidAnnotations
     androidTestCompile presentationTestDependencies.mockito
